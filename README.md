@@ -1,4 +1,4 @@
 Bulletin
 ========
 
-Keep everyone in the loop.
+IT'S LIKE TWITTER
