@@ -12,4 +12,4 @@ Bulletin is being developed by
 - Brian Oliphant  
 - Kyle Boone  
 
-*When this project is done, Caylan is getting everyone on the team a bear*
+*When this project is done, Caylan is getting everyone on the team a beer*
