@@ -1,9 +1,5 @@
-.DS_STORE
-
-*.log
-*.pot
 *.pyc
+*.pyo
 *~
-local_settings.py
 PYENV
 
