@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>{% block title %}Bulletin{% endblock %}</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
@@ -21,6 +21,6 @@
       </div><!-- id="content" -->
     </div><!-- class="container" -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
   </body>
 </html>
