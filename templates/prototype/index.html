@@ -1,7 +1,14 @@
-{% if post_list %}
+{% if discussion %}
     <ul>
-    {% for post in post_list %}
+    {% for post, comments in discussion %}
         <li><{{ post }}</li>
+        {% if comments %}
+            <ul>
+            {% for comment in comments %}
+                <li>{{ comment }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     {% endfor %}
     </ul>
 {% else %}

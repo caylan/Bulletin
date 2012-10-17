@@ -3,4 +3,7 @@ from prototype.models import Post, Comment
 
 def index(request):
     post_list = Post.objects.all()
-    return render_to_response('prototype/index.html', {'post_list': post_list})
+    discussion = []
+    for post in post_list:
+        discussion.append((post, post.comment_set.all()))
+    return render_to_response('prototype/index.html', {'discussion': discussion})

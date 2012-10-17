@@ -2,4 +2,5 @@
 *.pyo
 *~
 PYENV
+*.db
 
