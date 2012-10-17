@@ -9,6 +9,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# dj_database_url overrite at bottom
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -116,9 +117,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'prototype',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -149,3 +151,6 @@ LOGGING = {
         },
     }
 }
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
