@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Bulletin{% endblock %}</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div id="sidebar" class="tabs-left">
+        <ul class="nav nav-tabs">
+          <li><a href="#">Inbox</a></li>
+          <li class="active"><a href="#">Group 1</a></li>
+          <li><a href="#">Group 2</a></li>
+        </ul>
+      </div><!-- id="sidebar" -->
+      <div id="content">
+        {% block content %}
+        <p>Content goes here</p>
+        <p>I really hope this doesn't show up</p>
+        {% endblock %}
+      </div><!-- id="content" -->
+    </div><!-- class="container" -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
