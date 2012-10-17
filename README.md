@@ -13,3 +13,8 @@ Bulletin is being developed by
 - Kyle Boone  
 
 *When this project is done, Caylan is getting everyone on the team a beer*
+
+* /bulletin_project - project settings
+* /bulletin - app directory
+* /prototype - app prototype directory
+* /templates
