@@ -4,7 +4,8 @@
 {% if discussion %}
     <ul>
     {% for post, comments in discussion %}
-        <li><{{ post }}</li>
+        <li>
+        {{ post }}
         {% if comments %}
             <ul>
             {% for comment in comments %}
@@ -12,6 +13,7 @@
             {% endfor %}
             </ul>
         {% endif %}
+        </li>
     {% endfor %}
     </ul>
 {% else %}
