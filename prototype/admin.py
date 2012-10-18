@@ -6,10 +6,13 @@ class CommentInline(admin.TabularInline):
     model = Comment
 
 class PostAdmin(admin.ModelAdmin):
-    fields = ['author', 'message',]
+    fields = ['group', 'author', 'message',]
     inlines = [CommentInline]
 
 admin.site.register(Post, PostAdmin)
+
+
+
 
 # Comments
 class CommentAdmin(PostAdmin):

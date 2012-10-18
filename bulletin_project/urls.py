@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'bulletin_project.views.home', name='home'),
     # url(r'^bulletin_project/', include('bulletin_project.foo.urls')),
     url(r'^prototype/$', 'prototype.views.index'),
+    url(r'^prototype/group/(?P<grpid>\d+)/$', 'prototype.views.group'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

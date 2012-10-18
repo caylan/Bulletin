@@ -1,0 +1,28 @@
+{% extends "prototype/base.html" %}
+
+{% block nav %}
+    <li><a href="/prototype/">Inbox</a></li>
+    <li{% if grpid == 1 %}class="active"{% endif %}><a href="/prototype/group/1/">Group 1</a></li>
+    <li{% if grpid == 2 %}class="active"{% endif %}><a href="/prototype/group/2/">Group 2</a></li>
+{% endblock %}
+
+{% block content %}
+{% if discussion %}
+    <ul>
+    {% for post, comments in discussion %}
+        <li>
+        {{ post }}
+        {% if comments %}
+            <ul>
+            {% for comment in comments %}
+                <li>{{ comment }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
+{% endblock %}

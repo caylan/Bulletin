@@ -12,7 +12,8 @@ class UserPost(models.Model):
         ordering = ['-time_posted']
 
 class Post(UserPost):
-    pass
+    # use integer to represent group the post belongs to
+    group = models.PositiveIntegerField()
 
 class Comment(UserPost):
     post = models.ForeignKey(Post)

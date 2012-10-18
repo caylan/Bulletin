@@ -8,9 +8,11 @@
     <div class="container">
       <div id="sidebar" class="tabs-left">
         <ul class="nav nav-tabs">
-          <li><a href="#">Inbox</a></li>
-          <li class="active"><a href="#">Group 1</a></li>
-          <li><a href="#">Group 2</a></li>
+          {% block nav %}
+          <li><a href="/prototype/">Inbox</a></li>
+          <li><a href="/prototype/group/1/">Group 1</a></li>
+          <li><a href="/prototype/group/2/">Group 2</a></li>
+          {% endblock %}
         </ul>
       </div><!-- id="sidebar" -->
       <div id="content">
