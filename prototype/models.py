@@ -17,4 +17,7 @@ class Post(UserPost):
 
 class Comment(UserPost):
     post = models.ForeignKey(Post)
+    
+    class Meta:
+        ordering = ['time_posted']
 
