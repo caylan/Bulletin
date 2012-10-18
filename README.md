@@ -27,8 +27,8 @@ Bulletin is being developed by
 *Pretty much how Heroku says to do it. PLEASE edit this, anybody*
 
 Project settings are currently setup for running on Heroku. In order to run locally on your machine, 
-you may need to comment out the two lines at the bottom of the settings file for dj_database_url, 
-and change where static files are loaded
+you may need to comment out the two lines at the bottom of the settings file for dj_database_url. 
+**Remember** to not upload your settings to the repo!
 
 cd Bulletin
 
