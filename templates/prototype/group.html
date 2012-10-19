@@ -7,6 +7,10 @@
 {% endblock %}
 
 {% block content %}
+<form method="post">
+    {{ form.as_p }}
+    <input type="submit" value="Post" />
+</form>
 {% if post_list %}
     <ul>
     {% for post in post_list %}
