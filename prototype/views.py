@@ -13,8 +13,4 @@ def index(request):
 
 def group(request, grpid):
     post_list = get_list_or_404(Post, group=grpid)
-    # discussion = list of tuples of posts and their comments
-    discussion = []
-    for post in post_list:
-        discussion.append((post, post.comment_set.all()))
-    return render_to_response('prototype/group.html', {'discussion': discussion, 'grpid': grpid})
+    return render_to_response('prototype/group.html', {'post_list': post_list, 'grpid': grpid})

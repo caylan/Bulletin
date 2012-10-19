@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block content %}
-{% if discussion %}
+{% if post_list %}
     <ul>
-    {% for post, comments in discussion %}
+    {% for post in post_list %}
         <li>
         {{ post }}
-        {% if comments %}
+        {% if post.comment_set %}
             <ul>
-            {% for comment in comments %}
+            {% for comment in post.comment_set.all %}
                 <li>{{ comment }}</li>
             {% endfor %}
             </ul>

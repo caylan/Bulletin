@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 class UserPost(models.Model):
     author = models.EmailField()
@@ -21,3 +22,7 @@ class Comment(UserPost):
     class Meta:
         ordering = ['time_posted']
 
+class PostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ('message', 'author')
