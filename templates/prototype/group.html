@@ -3,7 +3,7 @@
 {% block nav %}
     <li><a href="/prototype/">Inbox</a></li>
     <li{% if grpid == "1" %} class="active" {% endif %}><a href="/prototype/group/1/">Group 1</a></li>
-    <li{% if grpid == "2" %}class="active"{% endif %}><a href="/prototype/group/2/">Group 2</a></li>
+    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/prototype/group/2/">Group 2</a></li>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     {% for post in post_list %}
         <li>
         {{ post }}
-        {% if post.comment_set %}
+        {% if post.comment_set.all %}
             <ul>
             {% for comment in post.comment_set.all %}
                 <li>{{ comment }}</li>
