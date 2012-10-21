@@ -1,0 +1,16 @@
+{% extends "prototype/base.html" %}
+
+{% block nav %}
+<!-- empty -->
+{% endblock %}
+
+{% block content %}
+{% if user %}
+    <h1>Welcome back, {{ user.first_name }}!</h1>
+{% else %}
+    <form method="post">
+        {{ form.as_p }}
+        <input type="submit" value="Log In" />
+    </form>
+{% endif %}
+{% endblock %}

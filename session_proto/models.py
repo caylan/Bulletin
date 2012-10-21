@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django import forms
 
 class User(models.Model):
     first_name = models.CharField(max_length=30)
@@ -26,7 +26,15 @@ class Session(models.Model):
     class Meta:
         ordering = ['time_created']
 
-class RegisterForm(ModelForm):
+class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'password')
+
+class LoginForm(forms.Form):
+    email = forms.CharField(label='Email')
+    password = forms.CharField(label='Password')
+    #class Meta:
+    #    model = User
+    #    fields = ('email', 'password')
+
