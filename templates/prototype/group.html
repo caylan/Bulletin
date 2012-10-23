@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "prototype/base.html" %}
 
 {% block nav %}
@@ -30,3 +31,40 @@
     <p>No posts are available.</p>
 {% endif %}
 {% endblock %}
+=======
+{% extends "prototype/base.html" %}
+
+{% block nav %}
+    <li><a href="/prototype/">Inbox</a></li>
+    <li{% if grpid == 1 %}class="active"{% endif %}><a href="/prototype/group/1/">Group 1</a></li>
+    <li{% if grpid == 2 %}class="active"{% endif %}><a href="/prototype/group/2/">Group 2</a></li>
+{% endblock %}
+
+{% block content %}
+{% if discussion %}
+    {% for post, comments in discussion %}
+        <div class='post'>
+            <div class="span1 avatar">
+                <div class="well well-small">
+                    avatar
+                </div>
+            </div>
+            <div class="span9 post">
+                <div class="well well-small">
+                    {{ post }}
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div class="well well-small comment">
+                                {{ comment }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
+{% endblock %}
+>>>>>>> Hopefully unbroken work-in-progress UI.

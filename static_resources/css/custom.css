@@ -1,0 +1,59 @@
+.container-fluid > div {
+    
+}
+
+.nav-tabs {
+    margin-right: 0;
+}
+
+.tabs-left {
+    float: right;
+}
+
+#login > input {
+    width: 40%;
+}
+
+#white {
+    color: white;
+}
+
+#tabs {
+    margin-right: 0;
+}
+
+#content {
+    border-top: 1px solid #DDD;
+}
+
+.hero-unit {
+    margin: 10px;
+    padding: 5px;
+}
+
+.avatar {
+    margin-right: 0;
+}
+
+.comment {
+    background: white;
+    margin: 5px 0 0 0 ;
+}
+
+.post {
+    margin-left: 0px;
+}
+
+textarea {
+    width: auto;
+    display: block;
+    height: 100px;
+    resize: none;
+    margin: 10px;
+}
+
+
+.span10 {
+    margin-left: 0px;
+    margin-right: 20px;
+}
