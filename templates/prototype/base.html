@@ -15,43 +15,38 @@
             <div class="span5">
                 <form method="post" id='login'>
                     <input id="login" placeholder="username" type="text" name="login" maxlength="25">
-                    <input id="password" placeholder="password" type="text" name="password" maxlength="50">
+                    <input id="password" placeholder="password" type="password" name="password" maxlength="50">
                     <!--<input class='pull-right' type="submit" value="Login">-->
                 </form>
             </div>
         </div>
         <div class="container-fluid">
-            <div class="span2">
-                <div class="tabbable tabs-left">
-                    <ul id='tabs' class="nav nav-tabs">
-                      {% block nav %}
-                      <li><a href="/prototype/">Inbox</a></li>
-                      <li><a href="/prototype/group/1/">Group 1</a></li>
-                      <li><a href="/prototype/group/2/">Group 2</a></li>
-                      {% endblock %}
+            <div class="span12">
+                <div class="tabbable tabs-left row-fluid">
+                    <ul id='tabs' class="nav nav-tabs span2">
+                        {% block nav %}
+                        <li><a href="/prototype/">Inbox</a></li>
+                        <li><a href="/prototype/group/1/">Group 1</a></li>
+                        <li><a href="/prototype/group/2/">Group 2</a></li>
+                        {% endblock %}
                     </ul>
-                    </div>
-            </div>
-            <div id='content' class="span10">
-              <div class="hero-unit">
-                <h3>Announcement</h3>
-                <p>
-                  Battle stations
-                </p>
-              </div>
-              <form method="post">
-                    <p>
-                        <textarea id="id_message" class='span10' rows="10" cols="40" placeholder="Talk with your team" name="message"></textarea>
-                    </p>
-                <p>
-                    <input id="id_author" placeholder="email@address.com" type="text" name="author" maxlength="75">
-                </p>
-                <input type="submit" value="Post">
-              </form>
-              {% block content %}
-              <p>Content goes here</p>
-              <p>I really hope this doesn't show up</p>
-              {% endblock %}
+                    <div id='content-container' class="tab-content span10">
+                        <div class="tab-pane active">
+		                    <div id="announcement" class="hero-unit hero-unit-small">
+		                        <h3>Announcement</h3>
+		                        <p>
+		                            Battle stations
+		                        </p>
+		                    </div>
+		                    <div id="content">
+			                    {% block content %}
+			                    <p>Content goes here</p>
+			                    <p>I really hope this doesn't show up</p>
+			                    {% endblock %}
+		                    </div>
+		                </div>
+	                </div>
+                </div>
             </div>
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
