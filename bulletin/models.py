@@ -41,7 +41,7 @@ class Invite(models.Model):
 Post stuffz
 """
 
-class AbstractPost(models.Model)
+class AbstractPost(models.Model):
     author = models.ForeignKey('Member')
     date_posted = DateTimeField(auto_now_add=True)
     message = models.TextField()
