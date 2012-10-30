@@ -1,11 +1,11 @@
-{% extends "prototype/base.html" %}
+{% extends "base.html" %}
 
 {% load gravatar %}
 
 {% block nav %}
-    <li><a href="/prototype/">Inbox</a></li>
-    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/prototype/group/1/">Group 1</a></li>
-    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/prototype/group/2/">Group 2</a></li>
+    <li><a href="/">Inbox</a></li>
+    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/group/1/">Group 1</a></li>
+    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/group/2/">Group 2</a></li>
 {% endblock %}
 
 {% block content %}
@@ -14,12 +14,13 @@
     <input type="submit" value="Post" />
 </form>
 {% if post_list %}
+
     {% for post in post_list %}
     <div class="post clearfix">
         <div class="span1 avatar">
             <div class="well well-small">
                 <!--<img src="http://www.acme-articles.com/default_photo/profile.jpg" alt="author's avatar" />-->
-                <img src="{{ post.author|gravatar:'50' }}" alt="author's gravatar" />
+                <img src="{{ post.author.email|gravatar:'50' }}" alt="author's gravatar" />
                 <!-- gravatar filter takes user's eamil and img size as an argument -->
             </div>
         </div>
@@ -45,6 +46,7 @@
         </div>
     </div>
     {% endfor %}
+
 {% else %}
     <p>No posts are available.</p>
 {% endif %}

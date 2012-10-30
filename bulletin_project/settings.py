@@ -1,4 +1,4 @@
-# Django settings for bulletin_project project.
+# Django settings for bulletin project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,6 +9,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+'''
+This is where all of the session info gets handled.  The session file
+path is where all temporary data is stored.  The sessions are not, however
+stored in cookies, like they might be for something, say, http only.
+'''
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
+SESSION_FILE_PATH = "/tmp"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -17,6 +25,16 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+AUTHENTICATION_BACKENDS = (
+    'bulletin_project.backends.EmailAuthBackend',
+)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
 
@@ -122,7 +140,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'prototype', 'session_proto',
+    #'prototype', 'session_proto',  # prototypes
+    'groups',   # General user and account management.
+    'posts',   # Inter-user communication (handles posts/invites/comments) 
+    'session',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
