@@ -1,9 +1,20 @@
+''' Standard '''
 import datetime
-from django.contrib.auth.models import User
+from random import random
+
+''' Django! '''
 from django.db import models
+from django.utils.hashcompat import sha_constructor
+
+''' Contrib! '''
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 '''
 TODO: We need to delete expired confirmations.  We also need to go
 and make sure that we can actually send a confirmation email out there.
+
+How will we handle multiple invites to the same user (likely just
+ignore them when the user enters the webpage).
 '''
 
 class EmailConfirmationManager(models.Manager):
@@ -17,6 +28,13 @@ class EmailConfirmationManager(models.Manager):
             user = confirmation.user
             user.is_active = True
             user.save()
+            return user
+
+    def send_confirmation(self, user, sent_by=None):
+        salty_mail = sha_constructor(str(random())).hexdigest()[:5]
+        salty_mail = salty_mail + user.email
+        confirmation_key = sha_constructor(salty_mail).hexdigest()
+        ''' TODO: We have a confirmation key!  Now send it off... '''
 
 
 class AbstractEmailConfirmation(models.Model):
