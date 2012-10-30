@@ -28,8 +28,13 @@ class AbstractPost(models.Model):
                                   self.date_posted)
 
 class Post(AbstractPost):
-    ''' Remove this once user login works! '''
-    #group = models.PositiveIntegerField()
+    ''' 
+    Remove this once user login works! For now all users will have access
+    to the (as of late) two static groups.  These groups will be here
+    in order to ease up code mangling by trying to get both login
+    and user->group posting working simultaneously.
+    '''
+    group = models.PositiveIntegerField()
     pass
 
 class Comment(AbstractPost):

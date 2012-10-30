@@ -3,7 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from forms import LoginForm
 
-__VALID__   = "You've logged in successfully!"
+def get_user_id(request):
+    try:
+        uid = request.session["user_id"]
+        return uid
+    except KeyError:
+        return None
 
 def login(request):
     '''
@@ -17,11 +22,9 @@ def login(request):
     '''
 
     # If we have a cookie, redirect to main page.
-    try:
-        uid = request.session["user_id"]
-        return render_to_response('index.html', {'user_id': request.session['user_id'],})
-    except KeyError:
-        pass
+    uid = get_user_id(request)
+    if uid:
+        return render_to_response('index.html', {'user_id': uid,})
 
     valid = True
     cookies = True

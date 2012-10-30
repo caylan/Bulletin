@@ -1,14 +1,12 @@
 from django.shortcuts import render_to_response, get_list_or_404, redirect
 from django.contrib.auth.models import User
 from posts.models import Post, Comment
+from session.views import get_user_id
 import md5
 
 def index(request):
-    try:
-        user_id = request.session['user_id']
-    except KeyError:
-        pass
-    return render_to_response('index.html', {'user_id': user_id})
+    uid = get_user_id(request)
+    return render_to_response('index.html', {'user_id': uid})
 
 def group(request, grpid):
     '''
@@ -29,4 +27,5 @@ def group(request, grpid):
     # post_list = get_list_or_404(Post, group=grpid)
     post_list = list(Post.objects.filter(group=grpid))
     return render_to_response('group.html', {'post_list': post_list,
-                                                       'grpid': grpid,})
+                                             'grpid': grpid,
+                                             'user_id': get_user_id(request)})
