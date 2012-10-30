@@ -17,9 +17,13 @@ def login(request):
     '''
 
     # If we have a cookie, redirect to main page.
-    if request.session["user_id"]:
+    try:
+        uid = request.session["user_id"]
         return HttpResponse("You're already in!"
                             "Your session id is {0}".format(request.session["user_id"]))
+    except KeyError:
+        pass
+
     valid = True
     cookies = True
 
