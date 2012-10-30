@@ -14,6 +14,7 @@
     <input type="submit" value="Post" />
 </form>
 {% if post_list %}
+
     {% for post in post_list %}
     <div class="post clearfix">
         <div class="span1 avatar">
@@ -45,6 +46,7 @@
         </div>
     </div>
     {% endfor %}
+
 {% else %}
     <p>No posts are available.</p>
 {% endif %}

@@ -9,6 +9,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+'''
+This is where all of the session info gets handled.  The session file
+path is where all temporary data is stored.  The sessions are not, however
+stored in cookies, like they might be for something, say, http only.
+'''
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
+SESSION_FILE_PATH = "/tmp"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
