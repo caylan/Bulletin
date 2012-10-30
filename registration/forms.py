@@ -18,12 +18,12 @@ class RegistrationForm(forms.ModelForm):
     last_name = forms.CharField(label=_("Last Name"),
                                 max_length=40,
                                 required=True)
-    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Passowrd"))
+    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Confirm Password"))
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password', 'password1',)
+        fields = ('first_name', 'last_name', 'email', 'password1', 'password2',)
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -42,6 +42,7 @@ class RegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
+        user.username = self.cleaned_data['email']
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
