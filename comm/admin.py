@@ -1,5 +1,5 @@
 from django.contrib import admin
-from bulletin import models
+import models
 
 # Posts
 class CommentInline(admin.TabularInline):
