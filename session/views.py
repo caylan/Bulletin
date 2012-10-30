@@ -15,23 +15,42 @@ def login(request):
     session and redirect them to a useless web page that doesn't do
     anything.
     '''
+
+    # If we have a cookie, redirect to main page.
+    if request.session["user_id"]:
+        return HttpResponse("You're already in!"
+                            "Your session id is {0}".format(request.session["user_id"]))
     valid = True
+    cookies = True
+
+    # If this was a post (they filled out the data), then redirect
+    # them to the main page if valid.
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            try:
-                user = User.objects.get(email=request.POST['email'])
-                if user.check_password(request.POST['password']):
-                    request.session["user_id"] = user.id
-                    ''' This needs to send the user to the main page! '''
-                    return HttpResponse(__VALID__)
-                else:
-                    valid = False
-            except User.DoesNotExist:
-                valid = False
-                pass
-        else:
+
+        # If cookies are enabled, then check to see if the form is
+        # valid.  If so, then redirect the user to the main page.
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+            form = LoginForm(request.POST)
+
+            # If the form was valid, then take the user to the main
+            # login page iff their username exists, and their password
+            # is valid.  If not, give them the invalid username/pass
+            # page.
+            if form.is_valid():
+                try:
+                    user = User.objects.get(email=request.POST['email'])
+                    if user.check_password(request.POST['password']):
+                        request.session["user_id"] = user.id
+                        ''' This needs to send the user to the main page! '''
+                        return HttpResponse(__VALID__)
+                except User.DoesNotExist:
+                    pass
             valid = False
-    else:
+        else: # cookie was invalid.
+            form = LoginForm()
+            cookies = False
+    else: # If this was a GET request. Give them the blank form.
+        request.session.set_test_cookie()
         form = LoginForm()
-    return render_to_response('login.html', {'form' : form, 'valid' : valid})
+    return render_to_response('login.html', {'form' : form, 'valid' : valid, 'cookies' : cookies})
