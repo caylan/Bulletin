@@ -4,7 +4,7 @@ not limited to: posting to groups, inviting other users to a group,
 and commenting on posts in a group.
 '''
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 
 # class SeenBy(models.Model):
 #     pass
@@ -15,7 +15,8 @@ class AbstractPost(models.Model):
     the only big difference being that a comment is related to a particular
     post.
     '''
-    author = models.ForeignKey(User)
+    #author = models.ForeignKey(User)
+    author = models.ForeignKey('groups.Membership')
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
     class Meta:
@@ -28,11 +29,11 @@ class AbstractPost(models.Model):
 
 class Post(AbstractPost):
     ''' Remove this once user login works! '''
-    group = models.PositiveIntegerField()
+    #group = models.PositiveIntegerField()
     pass
 
 class Comment(AbstractPost):
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey('Post')
     class Meta:
         ordering = ['date_posted']  # oldest first
 

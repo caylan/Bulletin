@@ -19,7 +19,9 @@ class Group(models.Model):
     name = models.CharField(max_length=64)
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    members = models.ManyToManyField(User, through='Membership')
+    #members = models.ManyToManyField(User, through='Membership')
+    # this many to many field isn't necessary since Membership already
+    # contains the needed foreign keys
 
     def __unicode__(self):
         return self.name
@@ -32,9 +34,9 @@ class Membership(models.Model):
     There can also be multiple admins.
     '''
     user = models.ForeignKey(User)
-    group = models.ForeignKey(Group)
+    group = models.ForeignKey('Group')
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField()
 
     def __unicode__(self):
-        return self.name
+        return self.group.__unicode__() + " | " + self.user.__unicode__()
