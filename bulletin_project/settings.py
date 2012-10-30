@@ -29,7 +29,7 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    'backends.EmailAuthBackend',
+    'bulletin_project.backends.EmailAuthBackend',
 )
 
 CACHES = {
