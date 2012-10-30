@@ -1,9 +1,9 @@
 from django.shortcuts import render_to_response, get_list_or_404, redirect
-from forms import RegistrationForm, BulletinRegistrationForm
+from forms import RegistrationForm
 
 def register(request):
     if request.method == 'POST':
-        form = BulletinRegistrationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             ''' 
             We need to go to the email-sent page (even though an email
@@ -11,5 +11,5 @@ def register(request):
             '''
             form.save()
     else:
-        form = BulletinRegistrationForm()
+        form = RegistrationForm()
     return render_to_response('prototype/register.html', {'form': form,})
