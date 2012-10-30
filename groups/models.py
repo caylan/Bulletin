@@ -39,4 +39,4 @@ class Membership(models.Model):
     is_admin = models.BooleanField()
 
     def __unicode__(self):
-        return self.user.__unicode__()
+        return self.group.__unicode__() + " | " + self.user.__unicode__()
