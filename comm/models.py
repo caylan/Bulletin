@@ -9,26 +9,6 @@ from django.contrib.auth.models import User
 # class SeenBy(models.Model):
 #     pass
 
-class Invite(models.Model):
-    '''
-    An invite is something sent from one user to another in order
-    to get people to join the website (or, if they're already a member
-    of the website, to get them to join the group)
-    '''
-    is_active = models.BooleanField(default=True)
-    recipient_email = models.EmailField()
-    key = models.CharField(max_length=32)
-    sent_by = models.ForeignKey(User) 
-    expires = models.DateTimeField(null=True)  # null implies never expires
-
-    def __unicode__(self):
-        return "{0}: {1} (Active={2})".format(self.recipient_email.__unicode__(), \
-                                              self.expires.__unicode__(). \
-                                              self.is_active)
-"""
-Post stuffz
-"""
-
 class AbstractPost(models.Model):
     '''
     This is the base class for Post and Comment (they are rather similar),
