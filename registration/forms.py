@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.translation import ugetext, ugetext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 class RegistrationForm(forms.ModelForm):
     error_messages = {
