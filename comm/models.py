@@ -23,8 +23,8 @@ class AbstractPost(models.Model):
         ordering = ['-date_posted']  # newest first
 
     def __unicode__(self):
-        return "{0} ({1})".format(self.author.__unicode__(), \
-                                  self.date_posted.__unicode__())
+        return "{0} ({1})".format(self.author, \
+                                  self.date_posted)
 
 class Post(AbstractPost):
     ''' Remove this once user login works! '''

@@ -20,7 +20,7 @@
         <div class="span1 avatar">
             <div class="well well-small">
                 <!--<img src="http://www.acme-articles.com/default_photo/profile.jpg" alt="author's avatar" />-->
-                <img src="{{ post.author|gravatar:'50' }}" alt="author's gravatar" />
+                <img src="{{ post.author.email|gravatar:'50' }}" alt="author's gravatar" />
                 <!-- gravatar filter takes user's eamil and img size as an argument -->
             </div>
         </div>
