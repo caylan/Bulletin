@@ -4,7 +4,7 @@ not limited to: posting to groups, inviting other users to a group,
 and commenting on posts in a group.
 '''
 from django.db import models
-from bulletin.models import BulletinUser
+from django.contrib.auth.models import User
 
 # class SeenBy(models.Model):
 #     pass
@@ -18,7 +18,7 @@ class Invite(models.Model):
     is_active = models.BooleanField(default=True)
     recipient_email = models.EmailField()
     key = models.CharField(max_length=32)
-    sent_by = models.ForeignKey(BulletinUser) 
+    sent_by = models.ForeignKey(User) 
     expires = models.DateTimeField(null=True)  # null implies never expires
 
     def __unicode__(self):
@@ -35,7 +35,7 @@ class AbstractPost(models.Model):
     the only big difference being that a comment is related to a particular
     post.
     '''
-    author = models.ForeignKey(BulletinUser)
+    author = models.ForeignKey(User)
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
     class Meta:

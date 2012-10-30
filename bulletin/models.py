@@ -6,23 +6,6 @@ from django.contrib.auth.models import (
 """
 This is where the basic user info is made.
 """
-
-class BulletinUser(User):
-    '''
-    This is a custom class overriding the default class inherited
-    from django.contrib.auth.models.User
-
-    This simply adds in a few extra functions that'll be handy for 
-    '''
-    def is_in_group(self):
-        return bool(self.groups.all())
-
-    def is_group_admin(self, group):
-        '''
-        Determines if the user is the admin of a group.
-        '''
-        pass
-
 class Group(models.Model):
     '''
     This is different from the groups in django's contrib.auth
@@ -36,7 +19,7 @@ class Group(models.Model):
     name = models.CharField(max_length=64)
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    members = models.ManyToManyField(BulletinUser, through='Membership')
+    members = models.ManyToManyField(User, through='Membership')
 
     def __unicode__(self):
         return self.name
@@ -48,7 +31,7 @@ class Membership(models.Model):
 
     There can also be multiple admins.
     '''
-    user = models.ForeignKey(BulletinUser)
+    user = models.ForeignKey(User)
     group = models.ForeignKey(Group)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField()
