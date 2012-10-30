@@ -13,4 +13,4 @@ def register(request):
             return render_to_response('prototype/email_sent.html', {'email': form.cleaned_data['email'] })
     else:
         form = RegistrationForm()
-    return render_to_response('prototype/register.html', {'form': form,})
+    return render_to_response('register.html', {'form': form,})
