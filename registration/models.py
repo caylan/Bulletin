@@ -53,7 +53,7 @@ class EmailInvite(AbstractEmailConfirmation):
     '''
     This is an email invite, which can be sent from one user to another.
     '''
-    sent_by = models.ForeignKey(User)
+    sent_by = models.ForeignKey(User, related_name='sent_invite_set')
 
     def __unicode__(self):
         return u"{0} Confirmation from {1}".format(self.user.email, \

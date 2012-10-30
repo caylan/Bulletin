@@ -143,6 +143,8 @@ INSTALLED_APPS = (
     #'prototype', 'session_proto',  # prototypes
     'bulletin',   # General user and account management.
     'comm',   # Inter-user communication (handles posts/invites/comments) 
+    'session',
+    'registration',
 )
 
 # A sample logging configuration. The only tangible logging
