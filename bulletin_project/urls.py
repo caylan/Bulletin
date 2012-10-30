@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^prototype/$', 'bulletin.views.index'),
     url(r'^prototype/group/(?P<grpid>\d+)/$', 'bulletin.views.group'),
     url(r'^prototype/login/$', 'session.views.login'),
-    url(r'^prototype/register/$', 'session.views.register'),
+    url(r'^prototype/register/$', 'registration.views.register'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
