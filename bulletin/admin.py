@@ -10,6 +10,6 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ('date_posted',)
     inlines = (CommentInline,)
 
-admin.site.register(Post, PostAdmin)
+admin.site.register(models.Post, PostAdmin)
 
 ###
