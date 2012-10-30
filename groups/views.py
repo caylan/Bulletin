@@ -1,9 +1,14 @@
 from django.shortcuts import render_to_response, get_list_or_404, redirect
+from django.contrib.auth.models import User
 from posts.models import Post, Comment
 import md5
 
 def index(request):
-    return render_to_response('index.html')
+    try:
+        user_id = request.session['user_id']
+    except KeyError:
+        pass
+    return render_to_response('index.html', {'user_id': user_id})
 
 def group(request, grpid):
     '''

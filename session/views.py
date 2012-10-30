@@ -19,8 +19,7 @@ def login(request):
     # If we have a cookie, redirect to main page.
     try:
         uid = request.session["user_id"]
-        return HttpResponse("You're already in!"
-                            "Your session id is {0}".format(request.session["user_id"]))
+        return render_to_response('index.html', {'user_id': request.session['user_id'],})
     except KeyError:
         pass
 
@@ -46,8 +45,7 @@ def login(request):
                     user = User.objects.get(email=request.POST['email'])
                     if user.check_password(request.POST['password']):
                         request.session["user_id"] = user.id
-                        ''' This needs to send the user to the main page! '''
-                        return HttpResponse(__VALID__)
+                        return render_to_response('index.html', {'user_id': request.session['user_id'],})
                 except User.DoesNotExist:
                     pass
             valid = False
