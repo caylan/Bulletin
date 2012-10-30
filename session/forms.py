@@ -7,7 +7,7 @@ class LoginForm(forms.Form):
         'invalid' : _("Invalid user name or password"),
     }
     email = forms.CharField(label='Email')
-    password = forms.CharField(label='Password')
+    password = forms.CharField(widget=forms.PasswordInput, label='Password')
 
     class Meta:
         fields = ('email', 'password')
