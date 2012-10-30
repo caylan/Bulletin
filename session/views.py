@@ -62,5 +62,7 @@ def login(request):
 def logout(request):
     '''
     This will log out the user, deleting their cookie (Eventually).
+    For now we're not catching anything as we're hoping this will enforce
+    logging out properly and cleanly.
     '''
-    pass
+    del request.session['user_id']
