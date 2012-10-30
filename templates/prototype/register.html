@@ -6,7 +6,21 @@
 
 {% block content %}
 <form method="post">
-    {{ form.as_p }}
+    {% for field in form %}
+    <div class="fieldWrapper">
+        <!--
+        This is simply because the implementation we're using
+        treats the username as the email address when doing
+        authentication.
+        -->
+        {% if field.name != "username" %}
+            <label for="id_subject">
+                    {{ field.label_tag }}
+            </label>
+            {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
     <input type="submit" value="Register" />
 </form> 
 {% endblock %}
