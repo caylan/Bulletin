@@ -71,7 +71,7 @@ Post stuffz
 
 class AbstractPost(models.Model):
     author = models.ForeignKey('Member')
-    date_posted = DateTimeField(auto_now_add=True)
+    date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
     class Meta:
         abstract = True
