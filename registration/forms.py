@@ -1,33 +1,47 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugetext, ugetext_lazy as _
 
-class RegistrationForm(UserCreationForm):
-    '''
-    A form that creates a user, using all of the required
-    fields.
-    '''
-    email = forms.EmailField(label='Email', max_length=40)
+class RegistrationForm(forms.ModelForm):
+    error_messages = {
+        'duplicate_email'   : _("A user with that email already exists"),
+        'password_mismatch' : _("The two passwords did not match"),
+    }
+
+    email = forms.EmailField(label=_('Email'), 
+                             max_length=40, 
+                             required=True)
+    first_name = forms.CharField(label=_("First Name"), 
+                                 max_length=40,
+                                 required=True)
+    last_name = forms.CharField(label=_("Last Name"),
+                                max_length=40,
+                                required=True)
+    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Passowrd"))
+    password2 = forms.CharField(widget=forms.PasswordInput, label=_("Confirm Password"))
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name', 'password', 'password1',)
 
     def clean_email(self):
-        ''' Checks to see if a user with the following email exists '''
-        email = self.cleaned_data["email"]
+        email = self.cleaned_data['email']
         try:
-            user = User.objects.get(email=email)
-            raise forms.ValidationError("This email is registered. "
-                                        "Did you forget your password?")
+            User.objects.get(email=email)
         except User.DoesNotExist:
             return email
+        raise forms.ValidationError(self.error_messages['duplicate_email'])
+
+    def clean_password2(self):
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(self.error_messages['password_mismatch'])
+        return password2
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password"])
-        user.email = self.cleaned_data["email"]
-        user.is_active = False # false until email activation!
+        user = super(RegistrationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-        return user
