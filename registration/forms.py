@@ -41,6 +41,13 @@ class RegistrationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        '''
+        In this instance, the username is set to be the email,
+        so that we don't have to worry about uniqueness.  This
+        is indeed a little bit of a hack, so maybe this can be changed
+        later by making a custom User class (like what was planned
+        in the first place).
+        '''
         user = super(RegistrationForm, self).save(commit=False)
         user.username = self.cleaned_data['email']
         user.set_password(self.cleaned_data["password1"])

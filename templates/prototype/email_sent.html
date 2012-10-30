@@ -1,0 +1,13 @@
+{% extends "prototype/base.html" %}
+
+{% block nav %}
+<!-- empty -->
+{% endblock %}
+
+{% block content %}
+    {% if email %}
+        <h1>Email confirmation sent to {{ email }}</h1>
+    {% else %}
+        <h1>This page has expired</h1>
+    {% endif %}
+{% endblock %}
