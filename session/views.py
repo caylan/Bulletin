@@ -54,3 +54,9 @@ def login(request):
         request.session.set_test_cookie()
         form = LoginForm()
     return render_to_response('login.html', {'form' : form, 'valid' : valid, 'cookies' : cookies})
+
+def logout(request):
+    '''
+    This will log out the user, deleting their cookie (Eventually).
+    '''
+    pass
