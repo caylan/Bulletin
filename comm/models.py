@@ -30,6 +30,11 @@ Post stuffz
 """
 
 class AbstractPost(models.Model):
+    '''
+    This is the base class for Post and Comment (they are rather similar),
+    the only big difference being that a comment is related to a particular
+    post.
+    '''
     author = models.ForeignKey(BulletinUser)
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
