@@ -10,7 +10,7 @@ def register(request):
             isn't sent at the moment.
             '''
             form.save()
-            return render_to_response('prototype/email_sent.html', {'email': form.cleaned_data['email'] })
+            return render_to_response('email_sent.html', {'email': form.cleaned_data['email'] })
     else:
         form = RegistrationForm()
     return render_to_response('register.html', {'form': form,})
