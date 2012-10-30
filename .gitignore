@@ -4,4 +4,4 @@
 PYENV
 *.db
 static
-
+.DS_Store

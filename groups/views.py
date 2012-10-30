@@ -3,7 +3,7 @@ from posts.models import Post, Comment
 import md5
 
 def index(request):
-    return render_to_response('prototype/index.html')
+    return render_to_response('index.html')
 
 def group(request, grpid):
     '''
@@ -23,5 +23,5 @@ def group(request, grpid):
     '''
     # post_list = get_list_or_404(Post, group=grpid)
     post_list = list(Post.objects.filter(group=grpid))
-    return render_to_response('prototype/group.html', {'post_list': post_list,
+    return render_to_response('group.html', {'post_list': post_list,
                                                        'grpid': grpid,})
