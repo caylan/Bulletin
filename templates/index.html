@@ -2,7 +2,10 @@
 
 {% if user_id %}
     {% block login %}
-    Your user id is {{ user_id }}
+    <div class="btn pull-right">Logout</div>
+    <div class="span2 pull-right">
+        {{ user_id }}
+    </div>
     {% endblock %}
 {% endif %}
 {% block nav %}

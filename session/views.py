@@ -1,12 +1,17 @@
 from django.shortcuts import render_to_response, get_list_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
 def get_user_id(request):
     try:
         uid = request.session["user_id"]
-        return uid
+        user = User.objects.get(id=uid)
+        ret_str = "{0} {1} ({2})".format(user.first_name, \
+                                         user.last_name, \
+                                         user.email)
+        return _(ret_str)
     except KeyError:
         return None
 
