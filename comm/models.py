@@ -47,6 +47,8 @@ class AbstractPost(models.Model):
                                   self.date_posted.__unicode__())
 
 class Post(AbstractPost):
+    ''' Remove this once user login works! '''
+    group = models.PositiveIntegerField()
     pass
 
 class Comment(AbstractPost):
