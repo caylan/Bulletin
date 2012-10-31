@@ -1,4 +1,8 @@
-from django.shortcuts import render_to_response, get_list_or_404, redirect
+from django.shortcuts import (
+        render_to_response, 
+        get_list_or_404, 
+        redirect
+)
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import (
@@ -51,4 +55,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("/")
+    return redirect('/')
