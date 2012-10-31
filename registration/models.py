@@ -22,6 +22,9 @@ and make sure that we can actually send a confirmation email out there.
 
 How will we handle multiple invites to the same user (likely just
 ignore them when the user enters the webpage).
+
+We also need to change the base email manager class to be an abstract
+model so that handling invites vs confirmations is a ton easier.
 '''
 
 class EmailConfirmationManager(models.Manager):
@@ -58,7 +61,7 @@ class EmailConfirmationManager(models.Manager):
         )
         print activation_url
         context = {
-            "user": user,
+            "email": user.email,
             "activation_url": activation_url,
             "current_site": current_site,
             "confirmation_key": confirmation_key,
@@ -68,10 +71,14 @@ class EmailConfirmationManager(models.Manager):
         # another user.  The templates are different, so make sure to
         # use the right one!
         if sent_by is not None: 
+            context['first_name'] = sent_by.first_name
+            context['last_name'] = sent_by.last_name
             context['sent_by'] = sent_by 
             subject_path = "registration/email_invite_subject.txt"
             message_path = "registration/email_invite_message.txt"
         else:
+            context['first_name'] = sent_by.first_name
+            context['last_name'] = sent_by.last_name
             subject_path = "registration/email_confirmation_subject.txt"
             message_path = "registration/email_confirmation_message.txt"
         subject = render_to_string(subject_path, context)
