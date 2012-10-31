@@ -59,7 +59,7 @@ class EmailConfirmationManager(models.Manager):
             unicode(current_site.domain),
             path,
         )
-        print activation_url
+
         context = {
             "email": user.email,
             "activation_url": activation_url,
