@@ -8,9 +8,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'bulletin_project.views.home', name='home'),
     # url(r'^bulletin_project/', include('bulletin_project.foo.urls')),
-    url(r'^$', 'groups.views.index'),
+    url(r'^$', 'session.views.login_view'),
     url(r'^group/(?P<grpid>\d+)/$', 'groups.views.group'),
-    url(r'^login/$', 'session.views.login_view'),
     url(r'^register/$', 'registration.views.register'),
     url(r'^logout/$', 'session.views.logout_view'),
 

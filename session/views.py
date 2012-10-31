@@ -27,6 +27,7 @@ def _login_form(valid=True, cookies=True, active=True):
                                              'form': LoginForm()})
 
 def login_view(request):
+    request.session.set_test_cookie()
     if request.user and request.user.is_active:
             return render_to_response('index.html')
 
@@ -50,9 +51,8 @@ def login_view(request):
         If the user exists in the cookies, then check to see if
         they're valid.  If so, redirect to the login page.
         '''
-        request.session.set_test_cookie()
         return _login_form()
 
 def logout_view(request):
     logout(request)
-    return render_to_response('index.html')
+    return _login_form()
