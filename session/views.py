@@ -27,32 +27,32 @@ def _login_form(valid=True, cookies=True, active=True):
                                              'form': LoginForm()})
 
 def login_view(request):
-    request.session.set_test_cookie()
-    if request.user and request.user.is_active:
+    if request.user.is_authenticated():
+        if request.user.is_active:
             return render_to_response('index.html')
+        else:
+            return _login_form(active=False)
 
     if request.method == 'POST':
         if not request.session.test_cookie_worked():
             return _login_form(cookies=False)
+
         request.session.delete_test_cookie()
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=email, password=password)
-        if user:
-            if user.is_active:
+        if user is not None:
+            if user.is_active: 
                 login(request, user)
                 return render_to_response('index.html')
             else:
                 return _login_form(active=False)
         else:
             return _login_form(valid=False)
-    else:
-        '''
-        If the user exists in the cookies, then check to see if
-        they're valid.  If so, redirect to the login page.
-        '''
-        return _login_form()
+
+    request.session.set_test_cookie()
+    return _login_form()
 
 def logout_view(request):
     logout(request)
-    return _login_form()
+    return redirect("/")
