@@ -19,9 +19,9 @@ class Group(models.Model):
     name = models.CharField(max_length=64)
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    #members = models.ManyToManyField(User, through='Membership')
-    # this many to many field isn't necessary since Membership already
-    # contains the needed foreign keys
+
+    ''' So it's called 'members' instead of user_set (implicitly) '''
+    members = models.ManyToManyField(User, through='Membership')
 
     def __unicode__(self):
         return self.name

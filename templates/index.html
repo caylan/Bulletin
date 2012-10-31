@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
-{% if user_id %}
-    {% block login %}
-    Your user id is {{ user_id }}
-    {% endblock %}
-{% endif %}
+{% block username %}
+<a href="/logout"><div class="btn pull-right">Logout</div></a>
+<div class="span2 pull-right">
+    {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
+</div>
+{% endblock %}
+
 {% block nav %}
     <li class="active"><a href="/">Inbox</a></li>
     <li><a href="/group/1/">Group 1</a></li>

@@ -15,6 +15,7 @@ path is where all temporary data is stored.  The sessions are not, however
 stored in cookies, like they might be for something, say, http only.
 '''
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+LOGIN_URL = "/"
 
 DATABASES = {
     'default': {

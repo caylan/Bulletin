@@ -8,13 +8,13 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'bulletin_project.views.home', name='home'),
     # url(r'^bulletin_project/', include('bulletin_project.foo.urls')),
-    url(r'^$', 'groups.views.index'),
+    url(r'^$', 'session.views.login_view'),
     url(r'^group/(?P<grpid>\d+)/$', 'groups.views.group'),
-    url(r'^login/$', 'session.views.login'),
     url(r'^register/$', 'registration.views.register'),
+    url(r'^logout/$', 'session.views.logout_view'),
     
     # Post to group
-    url(r'%group/(?<grpid>\d+)/post/$', 'groups.views.post'),
+    #url(r'^group/(?<grpid>\d+)/post/$', 'groups.views.post'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
