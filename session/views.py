@@ -20,10 +20,8 @@ def get_user_id(request):
                                      user.email)
     return _(ret_str)
 
-def _login_form(valid=True, cookies=True, active=True):
-    return render_to_response('login.html', {'valid': valid,
-                                             'active': active,
-                                             'cookies': cookies,
+def _login_form(state=""):
+    return render_to_response('login.html', {'state': state,
                                              'form': LoginForm()})
 
 def login_view(request):
@@ -34,23 +32,21 @@ def login_view(request):
             return _login_form(active=False)
 
     if request.method == 'POST':
-        if not request.session.test_cookie_worked():
-            return _login_form(cookies=False)
-
-        request.session.delete_test_cookie()
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=email, password=password)
         if user is not None:
-            if user.is_active: 
+            if user.is_active:
                 login(request, user)
                 return render_to_response('index.html')
             else:
-                return _login_form(active=False)
+                state = 'User not active. ' \
+                        'Please check your email for validation'
+                return _login_form(state)
         else:
-            return _login_form(valid=False)
+            state = 'Invalid user name or password.'
+            return _login_form(state)
 
-    request.session.set_test_cookie()
     return _login_form()
 
 def logout_view(request):

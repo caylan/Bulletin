@@ -4,16 +4,7 @@
 <!-- empty -->
 {% endblock %}
 
-{% block content %}
-{% if not valid %}
-    <h3>Invalid email or password</h3>
-{% endif %}
-{% if not cookies %}
-    <h3>Please enable cookies</h3>
-{% endif %}
-{% if not active %}
-    <h3>User not active. Please check your email for validation</h3>
-{% endif %}
+<h3>{{ state }}</h3>
 <form method="post">
     {{ form.as_p }}
     <input type="submit" value="Log In" />
