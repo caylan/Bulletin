@@ -4,7 +4,12 @@ from random import random
 
 ''' Django! '''
 from django.db import models
+from django.cong import settings
 from django.utils.hashcompat import sha_constructor
+from django.core.urlresolvers import (
+    reverse,
+    NoReverseMatch,
+)
 
 ''' Contrib! '''
 from django.contrib.auth.models import User
@@ -34,7 +39,30 @@ class EmailConfirmationManager(models.Manager):
         salty_mail = sha_constructor(str(random())).hexdigest()[:5]
         salty_mail = salty_mail + user.email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
-        ''' TODO: We have a confirmation key!  Now send it off... '''
+        current_site = Site.objects.get_current()
+        try:
+            path = reverse("registration.views.confirm_email", \
+                           args=[confirmation_key])
+        except NoReverseMatch:
+            path = reverse("registration_confirm_email", \
+                           args=[confirmation_key])
+        protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
+
+        # This will be the url from which we activte the account!
+        activation_url = (
+            protocol,
+            unicode(current_site.domain),
+            path,
+        )
+        context = {
+            "user": user,
+            "activation_url": activate_url,
+            "current_site": current_site,
+            "confirmation_key": confirmation_key,
+        }
+        if sent_by is not None: 
+            context['sent_by'] = sent_by 
+
 
 
 class AbstractEmailConfirmation(models.Model):
