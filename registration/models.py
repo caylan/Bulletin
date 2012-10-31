@@ -5,6 +5,7 @@ from random import random
 ''' Django! '''
 from django.db import models
 from django.cong import settings
+from django.template.loader import render_to_string
 from django.utils.hashcompat import sha_constructor
 from django.core.urlresolvers import (
     reverse,
@@ -60,9 +61,19 @@ class EmailConfirmationManager(models.Manager):
             "current_site": current_site,
             "confirmation_key": confirmation_key,
         }
+
+        # If the email is an invite, then it will have been sent by
+        # another user.  The templates are different, so make sure to
+        # use the right one!
         if sent_by is not None: 
             context['sent_by'] = sent_by 
-
+            subject_path = "registration/email_invite_subject.txt"
+            message_path = "registration/email_invite_message.txt"
+        else:
+            subject_path = "registration/email_confirmation_subject.txt"
+            message_path = "registration/email_confirmation_message.txt"
+        subject = render_to_string(subject_path, context)
+        message = render_to_string(message_path, context)
 
 
 class AbstractEmailConfirmation(models.Model):
