@@ -78,8 +78,7 @@ class EmailConfirmationManager(models.Manager):
         
         # Join the subject into one long line.
         subject = "".join(subject.splitlines())
-        # This is commented out until we can send mail properly.
-        #send_mail(subject, message, settings.FROM_EMAIL, [user.email])
+        send_mail(subject, message, settings.FROM_EMAIL, [user.email])
 
         # Determine whether to create an invite or a confirmations (again).
         # However, this time we're creating the actual server object.
