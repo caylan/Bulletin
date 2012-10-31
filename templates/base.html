@@ -12,14 +12,11 @@
             <div class="span5">
                 <h1>Bulletin<small> team communication</small></h1>
             </div>
-            {% block login %}
-            <div class="span5">
-                <form method="post" id='login'>
-                    <input id="login" placeholder="email" type="text" name="login" maxlength="25">
-                    <input id="password" placeholder="password" type="password" name="password" maxlength="50">
-                    <!--<input class='pull-right' type="submit" value="Login">-->
-                </form>
-            </div>
+            {% block username %}
+            <!-- 
+            Empty intentionally.  Should be filled w/ username by
+            sub classes 
+            -->
             {% endblock %}
         </div>
         <div class="container-fluid">

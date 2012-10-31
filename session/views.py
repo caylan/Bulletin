@@ -27,7 +27,7 @@ def _login_form(state=""):
 def login_view(request):
     if request.user.is_authenticated():
         if request.user.is_active:
-            return render_to_response('index.html')
+            return render_to_response('index.html', {'user': request.user})
         else:
             return _login_form(active=False)
 
@@ -38,13 +38,13 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render_to_response('index.html')
+                return render_to_response('index.html', {'user': user,})
             else:
                 state = 'User not active. ' \
                         'Please check your email for validation'
                 return _login_form(state)
         else:
-            state = 'Invalid user name or password.'
+            state = 'Invalid email or password.'
             return _login_form(state)
 
     return _login_form()
