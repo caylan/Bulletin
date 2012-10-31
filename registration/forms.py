@@ -50,6 +50,10 @@ class RegistrationForm(forms.ModelForm):
         '''
         user = super(RegistrationForm, self).save(commit=False)
         user.username = self.cleaned_data['email']
+
+        ''' Don't activate a user until the email is sent! '''
+        user.is_active = False 
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
+        return user

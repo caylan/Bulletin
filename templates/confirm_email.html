@@ -5,5 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    
+{% if email %}
+    <h3>Congratulations!</h3>
+    <p>
+    You have successfully registered your account 
+    for {{ email }} on Bulletin
+    </p>
+{% else %}
+    <p>Invalid confirmation key.</p>
+{% endif %}
 {% endblock %}

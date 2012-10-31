@@ -58,7 +58,7 @@ class EmailConfirmationManager(models.Manager):
         )
         context = {
             "user": user,
-            "activation_url": activate_url,
+            "activation_url": activation_url,
             "current_site": current_site,
             "confirmation_key": confirmation_key,
         }
