@@ -24,7 +24,9 @@ def get_user_id(request):
                                      user.email)
     return _(ret_str)
 
-def _login_form(state=""):
+def _login_form(state="", request=None):
+    if request is not None:
+        request.session.set_test_cookie()
     return render_to_response('login.html', {'state': state,
                                              'form': LoginForm()})
 
@@ -36,6 +38,10 @@ def login_view(request):
             return _login_form(active=False)
 
     if request.method == 'POST':
+        if not request.session.test_cookie_worked():
+            state = 'Please enable cookies'
+            return _login_form(state, request)
+
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(username=email, password=password)
@@ -46,12 +52,12 @@ def login_view(request):
             else:
                 state = 'User not active. ' \
                         'Please check your email for validation'
-                return _login_form(state)
+                return _login_form(state, request)
         else:
             state = 'Invalid email or password.'
-            return _login_form(state)
+            return _login_form(state, request)
 
-    return _login_form()
+    return _login_form(request=request)
 
 def logout_view(request):
     logout(request)
