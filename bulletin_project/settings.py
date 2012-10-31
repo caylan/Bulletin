@@ -16,6 +16,7 @@ stored in cookies, like they might be for something, say, http only.
 '''
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 LOGIN_URL = "/"
+FROM_EMAIL = "bulletin_team@bulletinapp.net"
 
 DATABASES = {
     'default': {

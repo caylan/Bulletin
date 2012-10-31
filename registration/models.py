@@ -4,7 +4,8 @@ from random import random
 
 ''' Django! '''
 from django.db import models
-from django.cong import settings
+from django.conf import settings
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.hashcompat import sha_constructor
 from django.core.urlresolvers import (
@@ -74,7 +75,29 @@ class EmailConfirmationManager(models.Manager):
             message_path = "registration/email_confirmation_message.txt"
         subject = render_to_string(subject_path, context)
         message = render_to_string(message_path, context)
+        
+        # Join the subject into one long line.
+        subject = "".join(subject.splitlines())
+        send_mail(subject, message, settings.FROM_EMAIL, [user.email])
 
+        # Determine whether to create an invite or a confirmations (again).
+        # However, this time we're creating the actual server object.
+        if sent_by is not None:
+            confirmation = EmailInvite(
+                user=user,
+                sent_by=sent_by,
+                sent=datetime.datetime.now(),
+                confirmation_key=confirmation_key
+            )
+        else:
+            confirmation = EmailConfirmation(
+                user=user,
+                sent=datetime.datetime.now(),
+                confirmation_key=confirmation_key
+            )
+        confirmation.save()
+        return confirmation
+        
 
 class AbstractEmailConfirmation(models.Model):
     '''
