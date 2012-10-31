@@ -1,74 +1,58 @@
 from django.shortcuts import render_to_response, get_list_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import (
+        authenticate,
+        login,
+        logout,
+)
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
 def get_user_id(request):
     try:
         uid = request.session["user_id"]
-        user = User.objects.get(id=uid)
-        ret_str = "{0} {1} ({2})".format(user.first_name, \
-                                         user.last_name, \
-                                         user.email)
-        return _(ret_str)
     except KeyError:
         return None
+    user = User.objects.get(id=uid)
+    ret_str = "{0} {1} ({2})".format(user.first_name, \
+                                     user.last_name, \
+                                     user.email)
+    return _(ret_str)
 
-def login(request):
-    '''
-    This is a bit of a hack, but essentially we attempt to log in the
-    user, and if they have an invalid password or email, then the
-    form is labeled as invalid for the associated template.
+def _login_form(valid=True, cookies=True, active=True):
+    return render_to_response('login.html', {'valid': valid,
+                                             'active': active,
+                                             'cookies': cookies,
+                                             'form': LoginForm()})
 
-    If the template is valid, then (for the moment) we create a user
-    session and redirect them to a useless web page that doesn't do
-    anything.
-    '''
+def login_view(request):
+    if request.user and request.user.is_active:
+            return render_to_response('index.html')
 
-    # If we have a cookie, redirect to main page.
-    uid = get_user_id(request)
-    if uid:
-        return render_to_response('index.html', {'user_id': uid,})
-
-    valid = True
-    cookies = True
-
-    # If this was a post (they filled out the data), then redirect
-    # them to the main page if valid.
     if request.method == 'POST':
-
-        # If cookies are enabled, then check to see if the form is
-        # valid.  If so, then redirect the user to the main page.
-        if request.session.test_cookie_worked():
-            request.session.delete_test_cookie()
-            form = LoginForm(request.POST)
-
-            # If the form was valid, then take the user to the main
-            # login page iff their username exists, and their password
-            # is valid.  If not, give them the invalid username/pass
-            # page.
-            if form.is_valid():
-                try:
-                    user = User.objects.get(email=request.POST['email'])
-                    if user.check_password(request.POST['password']):
-                        request.session["user_id"] = user.id
-                        return render_to_response('index.html', {'user_id': request.session['user_id'],})
-                except User.DoesNotExist:
-                    pass
-            valid = False
-        else: # cookie was invalid.
-            form = LoginForm()
-            cookies = False
-    else: # If this was a GET request. Give them the blank form.
+        if not request.session.test_cookie_worked():
+            return _login_form(cookies=False)
+        request.session.delete_test_cookie()
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(username=email, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return render_to_response('index.html')
+            else:
+                return _login_form(active=False)
+        else:
+            return _login_form(valid=False)
+    else:
+        '''
+        If the user exists in the cookies, then check to see if
+        they're valid.  If so, redirect to the login page.
+        '''
         request.session.set_test_cookie()
-        form = LoginForm()
-    return render_to_response('login.html', {'form' : form, 'valid' : valid, 'cookies' : cookies})
+        return _login_form()
 
-def logout(request):
-    '''
-    This will log out the user, deleting their cookie (Eventually).
-    For now we're not catching anything as we're hoping this will enforce
-    logging out properly and cleanly.
-    '''
-    del request.session['user_id']
+def logout_view(request):
+    logout(request)
+    return render_to_response('index.html')

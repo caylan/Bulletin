@@ -2,12 +2,13 @@
 
 {% if user_id %}
     {% block login %}
-    <div class="btn pull-right">Logout</div>
+    <div class="btn pull-right"><a href="/logout">Logout</a></div>
     <div class="span2 pull-right">
         {{ user_id }}
     </div>
     {% endblock %}
 {% endif %}
+
 {% block nav %}
     <li class="active"><a href="/">Inbox</a></li>
     <li><a href="/group/1/">Group 1</a></li>
