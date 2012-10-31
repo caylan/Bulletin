@@ -97,7 +97,11 @@ class EmailConfirmationManager(models.Manager):
             )
         confirmation.save()
         return confirmation
-        
+
+    def delete_expired(self):
+        for confirmation in self.all():
+            if confirmation.key_expired():
+                confirmation.delete()
 
 class AbstractEmailConfirmation(models.Model):
     '''
