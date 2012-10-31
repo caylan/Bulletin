@@ -14,3 +14,6 @@ def register(request):
     else:
         form = RegistrationForm()
     return render_to_response('register.html', {'form': form,})
+
+def confirm_email(request):
+    pass
