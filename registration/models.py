@@ -77,8 +77,8 @@ class EmailConfirmationManager(models.Manager):
             subject_path = "registration/email_invite_subject.txt"
             message_path = "registration/email_invite_message.txt"
         else:
-            context['first_name'] = sent_by.first_name
-            context['last_name'] = sent_by.last_name
+            context['first_name'] = user.first_name
+            context['last_name'] = user.last_name
             subject_path = "registration/email_confirmation_subject.txt"
             message_path = "registration/email_confirmation_message.txt"
         subject = render_to_string(subject_path, context)
