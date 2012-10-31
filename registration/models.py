@@ -31,7 +31,7 @@ class EmailConfirmationManager(models.Manager):
         except self.model.DoesNotExist:
             return None
 
-        if not confirmation.key_expired():
+        if not confirmation.is_key_expired():
             user = confirmation.user
             user.is_active = True
             user.save()
@@ -78,7 +78,8 @@ class EmailConfirmationManager(models.Manager):
         
         # Join the subject into one long line.
         subject = "".join(subject.splitlines())
-        send_mail(subject, message, settings.FROM_EMAIL, [user.email])
+        # This is commented out until we can send mail properly.
+        #send_mail(subject, message, settings.FROM_EMAIL, [user.email])
 
         # Determine whether to create an invite or a confirmations (again).
         # However, this time we're creating the actual server object.
@@ -100,7 +101,7 @@ class EmailConfirmationManager(models.Manager):
 
     def delete_expired(self):
         for confirmation in self.all():
-            if confirmation.key_expired():
+            if confirmation.is_key_expired():
                 confirmation.delete()
 
 class AbstractEmailConfirmation(models.Model):

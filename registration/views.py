@@ -30,11 +30,9 @@ def confirm_email(request, key):
     other users (those will be added later).
     '''
     confirmation_key = key.lower()
-    email = EmailConfirmation.objects.confirm_email(key)
-    if email is not None:
-        email.user.is_active = True  # User is now active!
+    user = EmailConfirmation.objects.confirm_email(key)
     params = {
-        "email": email,
+        "user": user,
     }
     return render_to_response('confirm_email.html',
                               params,

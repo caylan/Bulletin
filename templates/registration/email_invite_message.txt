@@ -1,4 +1,4 @@
-{% load il8n%}
+{% load i18n%}
 Hello, you have been invited by {{ sent_by.first_name }} {{ sent_by.last_name }} to join Bulletin!
 
 To activate an account and log in, please follow the linke below:
