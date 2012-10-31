@@ -1,0 +1,12 @@
+{% load il8n %}
+{% blocktrans with current_site.name as site_name%}
+Hello {{ user.first_name }} {{ user.last_name }}, this message has been sent
+to confirm your email address: {{ user.email }}
+
+This was sent from {{ site_name }}.  To activate your account, simply follow
+this link:
+
+{{ activation_url }}
+
+-The Bulletin Team
+{% endblocktrans %}
