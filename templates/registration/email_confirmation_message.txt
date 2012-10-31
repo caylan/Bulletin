@@ -1,5 +1,4 @@
-{% load i18n %}
-{% blocktrans with current_site.name as site_name%}
+{% load i18n %} {% blocktrans with current_site.name as site_name%}
 Hello {{ user.first_name }} {{ user.last_name }}, this message has been sent
 to confirm your email address: {{ user.email }}
 

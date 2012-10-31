@@ -51,11 +51,12 @@ class EmailConfirmationManager(models.Manager):
         protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
 
         # This will be the url from which we activte the account!
-        activation_url = (
+        activation_url = u"{0}://{1}{2}".format(
             protocol,
             unicode(current_site.domain),
             path,
         )
+        print activation_url
         context = {
             "user": user,
             "activation_url": activation_url,
