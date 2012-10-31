@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from posts.models import Post, Comment
-from session.views import get_user_id
 import md5
 
 @login_required

@@ -13,17 +13,6 @@ from django.contrib.auth import (
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
-def get_user_id(request):
-    try:
-        uid = request.session["user_id"]
-    except KeyError:
-        return None
-    user = User.objects.get(id=uid)
-    ret_str = "{0} {1} ({2})".format(user.first_name, \
-                                     user.last_name, \
-                                     user.email)
-    return _(ret_str)
-
 def _login_form(state="", request=None):
     if request is not None:
         request.session.set_test_cookie()
