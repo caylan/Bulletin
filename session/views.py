@@ -13,23 +13,22 @@ from django.contrib.auth import (
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
-def _login_form(state="", request=None):
-    if request is not None:
-        request.session.set_test_cookie()
+def _login_form(state=""):
     return render_to_response('login.html', {'state': state,
                                              'form': LoginForm()})
 
 def login_view(request):
+
     if request.user.is_authenticated():
         if request.user.is_active:
             return render_to_response('index.html', {'user': request.user})
         else:
-            return _login_form(active=False)
+            return _login_form()
 
     if request.method == 'POST':
         if not request.session.test_cookie_worked():
             state = 'Please enable cookies'
-            return _login_form(state, request)
+            return _login_form(state)
 
         email = request.POST['email']
         password = request.POST['password']
@@ -41,12 +40,14 @@ def login_view(request):
             else:
                 state = 'User not active. ' \
                         'Please check your email for validation'
-                return _login_form(state, request)
         else:
             state = 'Invalid email or password.'
-            return _login_form(state, request)
 
-    return _login_form(request=request)
+        request.session.set_test_cookie()
+        return _login_form(state)
+
+    request.session.set_test_cookie()
+    return _login_form()
 
 def logout_view(request):
     logout(request)

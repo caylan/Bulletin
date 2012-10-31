@@ -1,2 +1,2 @@
 {% load i18n %}{% blocktrans with current_site.name as site_name %}
-DO NOT  REPLY: Email confirmation from {{ site_name }}{% endblocktrans %}
+DO NOT  REPLY: Email confirmation from Bulletin{% endblocktrans %}
