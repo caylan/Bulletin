@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     url(r'^group/(?P<grpid>\d+)/$', 'groups.views.group'),
     url(r'^login/$', 'session.views.login'),
     url(r'^register/$', 'registration.views.register'),
+    
+    # Post to group
+    url(r'%group/(?<grpid>\d+)/post/$', 'groups.views.post'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
