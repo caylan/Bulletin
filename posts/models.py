@@ -4,8 +4,10 @@ not limited to: posting to groups, inviting other users to a group,
 and commenting on posts in a group.
 '''
 from django.db import models
-#from django.contrib.auth.models import User
+from django.forms import ModelForm
+from django.contrib.auth.models import User
 
+# TODO
 # class SeenBy(models.Model):
 #     pass
 
@@ -15,8 +17,9 @@ class AbstractPost(models.Model):
     the only big difference being that a comment is related to a particular
     post.
     '''
-    #author = models.ForeignKey(User)
-    author = models.ForeignKey('groups.Membership')
+    author = models.ForeignKey(User)
+    # TODO(kyle) temp, have author point to a user until Membership stuff is implemented
+    # author = models.ForeignKey('groups.Membership')
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
     class Meta:
@@ -34,8 +37,18 @@ class Post(AbstractPost):
     in order to ease up code mangling by trying to get both login
     and user->group posting working simultaneously.
     '''
+    # TODO(kyle) remove this when groups/membership is implemented
     group = models.PositiveIntegerField()
     pass
+
+class PostForm(ModelForm):
+    """
+    Form for the post model
+    """
+    class Meta:
+        model = Post
+        # the following should be set by the view depending on context
+        exclude = ['author', 'group',]
 
 class Comment(AbstractPost):
     post = models.ForeignKey('Post')
