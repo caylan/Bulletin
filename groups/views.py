@@ -23,26 +23,10 @@ def group(request, grpid):
         # else, form not valid, return with errors
     else:  # not POST, so give a form with some prepopulated stuff
         form = PostForm()
+    # list containin posts in order specified by post model
     post_list = list(Post.objects.filter(group=grpid))
     return render(request, 'group.html', {'post_list': post_list,
                                           'grpid': grpid,
                                           'user': request.user,
                                           'form': form})
 
-
-# post_list = get_list_or_404(Post, group=grpid)
-'''
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = Post(author=form.cleaned_data['author'],
-                        message=form.cleaned_data['message'],
-                        group=grpid)
-            post.save()
-            
-            return redirect(group, grpid)
-    else:
-        form = PostForm()
-
-                                                       'form': form})
-'''
