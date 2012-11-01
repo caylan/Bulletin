@@ -25,6 +25,7 @@ def login_view(request):
         else:
             return _login_form()
 
+    state = ''
     if request.method == 'POST':
         if not request.session.test_cookie_worked():
             state = 'Please enable cookies'
@@ -43,11 +44,8 @@ def login_view(request):
         else:
             state = 'Invalid email or password.'
 
-        request.session.set_test_cookie()
-        return _login_form(state)
-
     request.session.set_test_cookie()
-    return _login_form()
+    return _login_form(state)
 
 def logout_view(request):
     logout(request)
