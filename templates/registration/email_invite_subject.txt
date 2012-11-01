@@ -1,0 +1,2 @@
+{% load i18n %}DO NOT REPLY: Email invite from {{ sent_by.first_name }} {{ sent_by.last_name }} to
+join Bulletin.

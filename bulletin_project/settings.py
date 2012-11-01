@@ -10,12 +10,19 @@ ADMINS = (
 MANAGERS = ADMINS
 
 '''
-This is where all of the session info gets handled.  The session file
-path is where all temporary data is stored.  The sessions are not, however
-stored in cookies, like they might be for something, say, http only.
+Stores the session in a signed cookie in the user session (don't worry,
+logging in and not having cookies enabled is handled accordingly).
 '''
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 LOGIN_URL = "/"
+
+''' EMAIL GOODIES '''
+FROM_EMAIL = "no-reply@bulletinapp.net"
+EMAIL_CONFIRMATION_DAYS = 7  # You get one week to respond!
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_PASSWORD = "bulletinemail"
+EMAIL_HOST_USER = FROM_EMAIL
+EMAIL_USE_TLS = True
 
 DATABASES = {
     'default': {

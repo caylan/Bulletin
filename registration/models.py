@@ -4,7 +4,14 @@ from random import random
 
 ''' Django! '''
 from django.db import models
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.utils.hashcompat import sha_constructor
+from django.core.urlresolvers import (
+    reverse,
+    NoReverseMatch,
+)
 
 ''' Contrib! '''
 from django.contrib.auth.models import User
@@ -15,6 +22,9 @@ and make sure that we can actually send a confirmation email out there.
 
 How will we handle multiple invites to the same user (likely just
 ignore them when the user enters the webpage).
+
+We also need to change the base email manager class to be an abstract
+model so that handling invites vs confirmations is a ton easier.
 '''
 
 class EmailConfirmationManager(models.Manager):
@@ -24,7 +34,7 @@ class EmailConfirmationManager(models.Manager):
         except self.model.DoesNotExist:
             return None
 
-        if not confirmation.key_expired():
+        if not confirmation.is_key_expired():
             user = confirmation.user
             user.is_active = True
             user.save()
@@ -34,8 +44,72 @@ class EmailConfirmationManager(models.Manager):
         salty_mail = sha_constructor(str(random())).hexdigest()[:5]
         salty_mail = salty_mail + user.email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
-        ''' TODO: We have a confirmation key!  Now send it off... '''
+        current_site = Site.objects.get_current()
+        try:
+            path = reverse("registration.views.confirm_email", \
+                           args=[confirmation_key])
+        except NoReverseMatch:
+            path = reverse("registration_confirm_email", \
+                           args=[confirmation_key])
+        protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
 
+        # This will be the url from which we activte the account!
+        activation_url = u"{0}://{1}{2}".format(
+            protocol,
+            unicode(current_site.domain),
+            path,
+        )
+
+        context = {
+            "email": user.email,
+            "activation_url": activation_url,
+            "current_site": current_site,
+            "confirmation_key": confirmation_key,
+        }
+
+        # If the email is an invite, then it will have been sent by
+        # another user.  The templates are different, so make sure to
+        # use the right one!
+        if sent_by is not None: 
+            context['first_name'] = sent_by.first_name
+            context['last_name'] = sent_by.last_name
+            context['sent_by'] = sent_by 
+            subject_path = "registration/email_invite_subject.txt"
+            message_path = "registration/email_invite_message.txt"
+        else:
+            context['first_name'] = user.first_name
+            context['last_name'] = user.last_name
+            subject_path = "registration/email_confirmation_subject.txt"
+            message_path = "registration/email_confirmation_message.txt"
+        subject = render_to_string(subject_path, context)
+        message = render_to_string(message_path, context)
+        
+        # Join the subject into one long line.
+        subject = "".join(subject.splitlines())
+        send_mail(subject, message, settings.FROM_EMAIL, [user.email])
+
+        # Determine whether to create an invite or a confirmations (again).
+        # However, this time we're creating the actual server object.
+        if sent_by is not None:
+            confirmation = EmailInvite(
+                user=user,
+                sent_by=sent_by,
+                sent=datetime.datetime.now(),
+                confirmation_key=confirmation_key
+            )
+        else:
+            confirmation = EmailConfirmation(
+                user=user,
+                sent=datetime.datetime.now(),
+                confirmation_key=confirmation_key
+            )
+        confirmation.save()
+        return confirmation
+
+    def delete_expired(self):
+        for confirmation in self.all():
+            if confirmation.is_key_expired():
+                confirmation.delete()
 
 class AbstractEmailConfirmation(models.Model):
     '''

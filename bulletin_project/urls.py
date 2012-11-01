@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^group/(?P<grpid>\d+)/$', 'groups.views.group'),
     url(r'^register/$', 'registration.views.register'),
     url(r'^logout/$', 'session.views.logout_view'),
+    url(r'^confirm_email/(\w+)/$', 'registration.views.confirm_email'),
     
     # Post to group
     #url(r'^group/(?<grpid>\d+)/post/$', 'groups.views.post'),
