@@ -5,4 +5,4 @@ monkey.patch_all()
 
 bind = "0.0.0.0:8000"
 workers = 1 # THIS IS FOR DEV ONLY.  We want to have more for production.
-worker_class = "gunicorn.workers.ggevent.GeventWorker"
+worker_class = "socketio.sgunicorn.GeventSocketIOWorker"
