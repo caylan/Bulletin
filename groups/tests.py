@@ -9,7 +9,6 @@ class GroupModelTest(TestCase):
     def test_group(self):
         group = Group()
         group.name = "Test Group"
-        group.date_created = timezone.now()
 
         group.save()
     
@@ -30,7 +29,6 @@ class GroupModelTest(TestCase):
                
         group = Group()
         group.name = "Test Group"
-        group.date_created = timezone.now()
         group.save()
         
         membership.user = User.objects.get(id = user.id)
