@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     #'prototype', 'session_proto',  # prototypes
+    'gunicorn', # The server!
     'groups',   # General user and account management.
     'posts',   # Inter-user communication (handles posts/invites/comments) 
     'session',
