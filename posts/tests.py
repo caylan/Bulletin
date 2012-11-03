@@ -62,8 +62,9 @@ class GroupModelTest(TestCase):
         
         self.assertEquals(test_comment, comment)
         self.assertEquals(test_comment.author, User.objects.get(id = user.id))
-        self.assertEquals(test_comment.message, "Testing321")
+        self.assertEquals(test_comment.message, "123Testing")
         self.assertEquals(test_comment.group,  Group.objects.get(id = group.id))
+        self.assertEquals(test_comment.post,  Post.objects.get(id = post.id))
    
         comment.delete()
         post.delete()
