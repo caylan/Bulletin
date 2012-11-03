@@ -9,6 +9,15 @@ from models import (
 from forms import RegistrationForm
 
 def register(request):
+    '''
+    This handles the request sent to registration.  If the user
+    has sent a confirmation to their email before, simply send another
+    one.  
+    
+    This is to, hopefully, counteract the fact that people might
+    have expired invitations in their inbox, or they deleted the confirmation
+    email on accident.
+    '''
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

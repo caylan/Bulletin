@@ -26,12 +26,23 @@ class RegistrationForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email', 'password1', 'password2',)
 
     def clean_email(self):
+        '''
+        Check for a clean email.  If the user exists and is active, throw an
+        exception (since this will mean there is a duplicate email in the database).
+
+        If the user exists with the same email but is not active, then
+        it's okay to send the confirmation email again because the account has never
+        been activated in the first place.
+        '''
         email = self.cleaned_data['email']
         try:
-            User.objects.get(email=email)
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             return email
-        raise forms.ValidationError(self.error_messages['duplicate_email'])
+        if user.is_active:
+            raise forms.ValidationError(self.error_messages['duplicate_email'])
+        else:
+            return email
 
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
