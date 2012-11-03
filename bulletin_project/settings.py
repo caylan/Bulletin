@@ -1,6 +1,8 @@
 # Django settings for bulletin project.
 DEBUG = True
 
+DEBUG = True
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -79,7 +81,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'static/'
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
