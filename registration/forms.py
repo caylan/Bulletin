@@ -39,9 +39,14 @@ class RegistrationForm(forms.ModelForm):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             return email
+
         if user.is_active:
             raise forms.ValidationError(self.error_messages['duplicate_email'])
         else:
+            # User is deleted as the email is the same.  A new user is constructed
+            # when calling self.save()
+            # TODO: Is this really a good idea?
+            user.delete()
             return email
 
     def clean_password2(self):
