@@ -1,5 +1,5 @@
 from django.shortcuts import (
-        render_to_response, 
+        render,
         get_list_or_404, 
         redirect
 )
@@ -13,23 +13,23 @@ from django.contrib.auth import (
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
-def _login_form(state=""):
-    return render_to_response('login.html', {'state': state,
+def _login_form(request, state=""):
+    return render(request, 'login.html', {'state': state,
                                              'form': LoginForm()})
 
 def login_view(request):
 
     if request.user.is_authenticated():
         if request.user.is_active:
-            return render_to_response('index.html', {'user': request.user})
+            return render(request, 'index.html', {'user': request.user})
         else:
-            return _login_form()
+            return _login_form(request)
 
     state = ''
     if request.method == 'POST':
         if not request.session.test_cookie_worked():
             state = 'Please enable cookies'
-            return _login_form(state)
+            return _login_form(request, state)
 
         email = request.POST['email']
         password = request.POST['password']
@@ -37,7 +37,7 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render_to_response('index.html', {'user': user,})
+                return render(request, 'index.html', {'user': user,})
             else:
                 state = 'User not active. ' \
                         'Please check your email for validation'
@@ -45,7 +45,7 @@ def login_view(request):
             state = 'Invalid email or password.'
 
     request.session.set_test_cookie()
-    return _login_form(state)
+    return _login_form(request, state)
 
 def logout_view(request):
     logout(request)
