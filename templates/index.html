@@ -9,6 +9,10 @@
 
 {% block nav %}
     <li class="active"><a href="/">Inbox</a></li>
-    <li><a href="/group/1/">Group 1</a></li>
-    <li><a href="/group/2/">Group 2</a></li>
+    {% for group in user.group_set.all %}
+        <li>
+            <a href="/group/{{ group.id }}">{{ group.name }}</a>
+        </li>
+    {% endfor %}
+    <li><a href="/create">+</a></li>
 {% endblock %}

@@ -21,15 +21,12 @@
             <div class="span12">
                 <div class="tabbable tabs-left row-fluid">
                     <ul id='tabs' class="nav nav-tabs span2">
+                        {% block nav %}
                         <!-- 
                         If this is where you want to list all of the current user's groups in the active
                         session, then do so here, likely with a for loop.  This will not function, however
                         until we have properly working user logins.
                         -->
-                        {% block nav %}
-                        <li><a href="/">Inbox</a></li>
-                        <li><a href="/group/1/">Group 1</a></li>
-                        <li><a href="/group/2/">Group 2</a></li>
                         {% endblock %}
                     </ul>
                     <div id='content-container' class="tab-content span10">
