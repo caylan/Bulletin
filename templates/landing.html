@@ -7,7 +7,7 @@
 	<body>
 		<h1>Bulletin</h1>
 
-		<form method="post">
+        <form method="post">{% csrf_token %}
 		    {{ form.as_p }}
 		    <input type="submit" value="Log In" />
 		</form>
