@@ -39,6 +39,7 @@ class RegistrationForm(forms.ModelForm):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             return email
+
         if user.is_active:
             raise forms.ValidationError(self.error_messages['duplicate_email'])
         else:
@@ -58,9 +59,16 @@ class RegistrationForm(forms.ModelForm):
         is indeed a little bit of a hack, so maybe this can be changed
         later by making a custom User class (like what was planned
         in the first place).
+
+        If the user still exists but is not active, then we simply
+        return the user again, since we're going to send another
+        validation in the view.py method (at least, that's what we're supporting).
         '''
-        user = super(RegistrationForm, self).save(commit=False)
-        user.username = self.cleaned_data['email']
+        try:
+            user = User.objects.get(email=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            user = super(RegistrationForm, self).save(commit=False)
+            user.username = self.cleaned_data['email']
 
         ''' Don't activate a user until the email is sent! '''
         user.is_active = False 
