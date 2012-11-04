@@ -1,13 +1,10 @@
-{% extends "base.html" %}
+{% extends "simple-base.html" %}
 
-{% block nav %}
-<!-- empty -->
-{% endblock %}
-
-{% block content %}
+{% block formtype %}
     {% if email %}
-        Email confirmation sent to <em>{{ email }}</em>
+        <p>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</p>
     {% else %}
         This page has expired
     {% endif %}
+    <a href='..'><button class="btn btn-large" type="button">Back to login</button></a>
 {% endblock %}
