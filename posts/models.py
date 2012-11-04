@@ -6,6 +6,7 @@ and commenting on posts in a group.
 from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from groups.models import Group
 
 # TODO
 # class SeenBy(models.Model):
@@ -37,9 +38,7 @@ class Post(AbstractPost):
     in order to ease up code mangling by trying to get both login
     and user->group posting working simultaneously.
     '''
-    # TODO(kyle) remove this when groups/membership is implemented
-    group = models.PositiveIntegerField()
-    pass
+    group = models.ForeignKey(Group)
 
 class PostForm(ModelForm):
     """

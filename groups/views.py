@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from posts.models import Post, PostForm, Comment
 from forms import GroupCreationForm
-from models import Membership
+from models import Membership, Group
 import md5
 
 @login_required
@@ -19,7 +19,7 @@ def group(request, grpid):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.group = grpid
+            post.group = Group.objects.get(id=grpid)
             post.save()
             return HttpResponseRedirect("")
         # else, form not valid, return with errors
@@ -46,12 +46,12 @@ def create(request):
             group = form.save()
             
             # Create the default user membership
-            m = Membership(user=request.user, group=group)
+            m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
             post_list = list(Post.objects.filter(group=group.id))
-            return render(request, 'group.html', {'post_list': [],
-                                                  'grpid': group.id,
-                                                  'user': request.user,})
+
+            ''' TODO: Redirect to the new group '''
+            return redirect('/')
     else:
         form = GroupCreationForm()
     return render(request, 'group_create.html', {'form': form,})
