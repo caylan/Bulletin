@@ -1,7 +1,7 @@
 {% extends "simple-base.html" %}
 
 {% block formtype %}
-	<form class="form-signin" method="post">
+    <form class="form-signin" method="post">{% csrf_token %}
         <h2 class="form-signin-heading">Register your account</h2>
         {{ form }}
         <button class="btn btn-large btn-primary" type="submit">Register</button>
