@@ -1,4 +1,9 @@
-from django.shortcuts import render_to_response, get_list_or_404, redirect
+from django.shortcuts import (
+    render_to_response,
+    get_list_or_404,
+    redirect,
+    render,
+)
 from django.template import RequestContext
 from models import (
     EmailConfirmationManager,
@@ -27,10 +32,10 @@ def register(request):
             '''
             user = form.save()
             EmailConfirmation.objects.send_confirmation(user=user)
-            return render_to_response('email_sent.html', {'email': form.cleaned_data['email'] })
+            return render(request, 'email_sent.html', {'email': form.cleaned_data['email'] })
     else:
         form = RegistrationForm()
-    return render_to_response('register.html', {'form': form,})
+    return render(request, 'register.html', {'form': form,})
 
 def confirm_email(request, key):
     '''
