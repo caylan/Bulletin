@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -14,6 +14,12 @@ def index(request):
 
 @login_required
 def group(request, grpid):
+    
+    # If the user viewing is not a member of this group,
+    # tell them it's a 404.
+    if not request.user.group_set.filter(id=grpid):
+        raise Http404
+
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
