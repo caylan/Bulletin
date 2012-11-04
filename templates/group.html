@@ -51,4 +51,13 @@
 {% else %}
     <p>No posts are available.</p>
 {% endif %}
+<script>
+$(document).ready(function() {
+    // Find ALL <form> tags
+    $('form').submit(function(){
+        // On submit disable its submit button
+        $('input[type=submit]', this).attr('disabled', 'disabled');
+    });
+});
+</script>
 {% endblock %}
