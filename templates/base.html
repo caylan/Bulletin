@@ -55,5 +55,14 @@
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            // Find ALL <form> tags
+            $('form').submit(function(){
+                // On submit disable its submit button
+                $('input[type=submit]', this).attr('disabled', 'disabled');
+            });
+        });
+        </script>
     </body>
 </html>
