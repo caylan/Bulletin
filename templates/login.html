@@ -1,69 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bulletin</title>
-        <!-- Bootstrap -->
-        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-		<style type="text/css">
-			body {
-				padding-top: 40px;
-				padding-bottom: 40px;
-				background-color: #f5f5f5;
-				background-image: url("/static/images/grey.png");
-			}
-			.form-signin .form-signin-heading,
-			.form-signin .checkbox {
-				margin-bottom: 10px;
-			}
-			.form-signin input[type="text"],
-			.form-signin input[type="password"] {
-				font-size: 16px;
-				height: auto;
-				margin-bottom: 15px;
-				padding: 7px 9px;
-      		}
-      		.hero-unit h1 {
-				font-size: 120px;
-				line-height: 1;
-				text-align: center;
-      		}
-      		.hero-unit {
-				padding: 19px 29px 29px;
-				margin: 0 auto 20px;
-				background-color: #fff;
-				border: 1px solid #e5e5e5;
-				-webkit-border-radius: 5px;
-				   -moz-border-radius: 5px;
-				        border-radius: 5px;
-				-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-				   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-				        box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      		}
+{% extends "simple-base.html" %}
 
-    </style>
-    </head>
-    <body>
-		<div class="container">
-			<div class="span8 offset2">
-			<div class="hero-unit">
-				<h1>Bulletin</h1>
-				<hr />
-
-				<h3>{{ state }}</h3>
-				<form class="form-signin" method="post">{% csrf_token %}
-				<h2 class="form-signin-heading">Please sign in</h2>
-				<input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
-				<input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
-<!-- 				<label class="checkbox">
-					<input type="checkbox" value="remember-me"> Remember me
-				</label> -->
-				<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-			</form>
-			</div>
-			</div>
-    	</div>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
-    </body>
-</html>
-
+{% block formtype %}
+	<form class="form-signin" method="post">
+		<h2 class="form-signin-heading">Please sign in</h2>
+		<input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
+		<input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
+	<!-- 			    <label class="checkbox">
+			<input type="checkbox" value="remember-me"> Remember me
+		</label> -->
+		<button class="btn btn-large btn-primary" type="submit">Sign in</button>
+		<a href='register'><button class="btn btn-large" type="button">Register</button></a>
+		<a href='about'><button class="btn btn-large pull-right" type="button">About</button></a>
+	</form>
+{% endblock %}

@@ -9,17 +9,31 @@ class RegistrationForm(forms.ModelForm):
         'password_mismatch' : _("The two passwords did not match"),
     }
 
-    email = forms.EmailField(label=_('Email'), 
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}),
+                             label='', 
                              max_length=40, 
                              required=True)
-    first_name = forms.CharField(label=_("First Name"), 
+    email.widget.attrs['class'] = 'input-block-level'
+    
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}), 
                                  max_length=40,
-                                 required=True)
-    last_name = forms.CharField(label=_("Last Name"),
+                                 required=True,
+                                 label='')
+    first_name.widget.attrs['class'] = 'input-block-level'
+    
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
                                 max_length=40,
-                                required=True)
-    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"))
-    password2 = forms.CharField(widget=forms.PasswordInput, label=_("Confirm Password"))
+                                required=True,
+                                label='')
+    last_name.widget.attrs['class'] = 'input-block-level'
+    
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), 
+                                label='')
+    password1.widget.attrs['class'] = 'input-block-level'
+    
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+                                label='')
+    password2.widget.attrs['class'] = 'input-block-level'
 
     class Meta:
         model = User

@@ -1,6 +1,4 @@
-.container-fluid > div {
-    
-}
+/* Will start to phase out custom.css, please put additional stylings in site.css */
 
 .nav-tabs {
     margin-right: 0;

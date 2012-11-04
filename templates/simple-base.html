@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Bulletin</title>
+        <!-- Bootstrap -->
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+		<link href="/static/css/site.css" rel="stylesheet">
+		<link href="/static/css/login.css" rel="stylesheet">
+    </head>
+    <body>
+		<div class="container">
+			<div class="span8 offset2">
+			<div class="hero-unit">
+				<h1>Bulletin</h1>
+				<hr />
+				<h3>{{ state }}</h3>
+                {% block formtype %}
+                    <!-- login or register form-->
+                {% endblock %}
+			</div>
+			</div>
+    	</div>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    </body>
+</html>
