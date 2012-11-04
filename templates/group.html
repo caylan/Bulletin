@@ -11,8 +11,8 @@
 
 {% block content %}
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Post" />
+    <p><textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea></p>
+    <input type="submit" value="Post" class='btn' />
 </form>
 {% if post_list %}
 
@@ -28,16 +28,16 @@
         <div class="span9 post">
             <div class="well well-small">
                 <p>
-                    <strong>{{ post.author }}</strong>
-                    <em>{{ post.time_posted }}</em>
+                    <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>
+                    <em>{{ post.date_posted }}</em>
                 </p>
                 <p>{{ post.message }}</p>
                 {% if post.comment_set.all %}
                     {% for comment in post.comment_set.all %}
                     <div class="well well-small comment">
                         <p>
-                            <strong>{{ comment.author }}</strong>
-                            <em>replied:</em>
+                            <strong>{{ comment.author.first_name }} {{ comment.author.last_name }}</strong>
+                            <em>replied on {{ comment.date_posted }}:</em>
                         </p>
                         <p>{{ comment.message }}</p>
                     </div>

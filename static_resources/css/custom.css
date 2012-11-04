@@ -14,26 +14,22 @@
 
 #tabs {
     margin-right: 0;
+    margin-bottom: 0;
 }
 
 #content-container {
     border: 1px solid #DDD;
     border-left: 0;
-    margin: 0 0 0 -1px;
+    margin: 0;
+    background-color: white;
 }
 
 #content {
-	border-left: 1px solid #DDD;
 	padding: 10px;
 }
 
 #announcement {
 	margin-bottom: 0;
-}
-
-.hero-unit-small {
-    margin: 10px;
-    padding: 5px;
 }
 
 .avatar {
@@ -48,15 +44,6 @@
 .post {
     margin-left: 0px;
 }
-
-textarea {
-    width: auto;
-    display: block;
-    height: 100px;
-    resize: none;
-    margin: 10px;
-}
-
 
 .span10 {
     margin-left: 0px;
