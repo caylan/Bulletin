@@ -12,7 +12,7 @@
 {% block content %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Post" />
+    <input type="submit" class="btn" value="Post" />
 </form>
 {% if post_list %}
 
@@ -28,7 +28,7 @@
         <div class="span9 post">
             <div class="well well-small">
                 <p>
-                    <strong>{{ post.author }}</strong>
+                    <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>
                     <em>{{ post.time_posted }}</em>
                 </p>
                 <p>{{ post.message }}</p>
@@ -36,7 +36,7 @@
                     {% for comment in post.comment_set.all %}
                     <div class="well well-small comment">
                         <p>
-                            <strong>{{ comment.author }}</strong>
+                            <strong>{{ comment.author.first_name }} {{ comment.author.last_name }}</strong>
                             <em>replied:</em>
                         </p>
                         <p>{{ comment.message }}</p>

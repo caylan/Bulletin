@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block username %}
-<a href="/logout"><div class="btn pull-right">Logout</div></a>
+<a href="/logout" class="btn pull-right">Logout</a>
 <div class="span2 pull-right">
     {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
 </div>
