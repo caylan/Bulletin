@@ -26,7 +26,7 @@ def group(request, grpid):
     # list containin posts in order specified by post model
     post_list = list(Post.objects.filter(group=grpid))
     return render(request, 'group.html', {'post_list': post_list,
-                                          'grpid': grpid,
+                                          'grpid': int(grpid),
                                           'user': request.user,
                                           'form': form})
 

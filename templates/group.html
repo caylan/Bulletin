@@ -3,16 +3,13 @@
 {# comment: load custom gravatar filter #}
 {% load gravatar %}
 
-{% block nav %}
-    <li><a href="/">Inbox</a></li>
-    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/group/1/">Group 1</a></li>
-    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/group/2/">Group 2</a></li>
-{% endblock %}
-
 {% block content %}
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Post" />
+    <div class="input-append">
+        <label for="id_message">Message:</label>
+        <input type="text" class="span6" id="id_message" name="message" />
+        <button class="btn btn-primary" type="submit">Post</button>
+    </div>
 </form>
 {% if post_list %}
 

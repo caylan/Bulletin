@@ -8,11 +8,13 @@
 {% endblock %}
 
 {% block nav %}
-    <li class="active"><a href="/">Inbox</a></li>
+    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
     {% for group in user.group_set.all %}
-        <li>
-            <a href="/group/{{ group.id }}">{{ group.name }}</a>
-        </li>
+    <li {% ifequal grpid group.id %} class="active" {% endifequal %}>
+        <a href="/group/{{ group.id }}">
+            {{ group.name }}
+        </a>
+    </li>
     {% endfor %}
-    <li><a href="/create">+</a></li>
+    <a class="btn btn-small btn-block" href="/create"><i class="icon-plus"></i> Create a group</a>
 {% endblock %}
