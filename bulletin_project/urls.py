@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,6 +12,9 @@ urlpatterns = patterns('',
     url("", include("groups.urls")),
     url("", include('registration.urls')),
     url("", include('session.urls')),
+    url(r'^about/$', direct_to_template, {
+        'template': 'about.html',
+    }),
     
     # Post to group
     #url(r'^group/(?<grpid>\d+)/post/$', 'groups.views.post'),
