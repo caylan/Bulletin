@@ -31,11 +31,6 @@
 	margin-bottom: 0;
 }
 
-.hero-unit-small {
-    margin: 10px;
-    padding: 5px;
-}
-
 .avatar {
     margin-right: 0;
 }
@@ -48,15 +43,6 @@
 .post {
     margin-left: 0px;
 }
-
-textarea {
-    width: auto;
-    display: block;
-    height: 100px;
-    resize: none;
-    margin: 10px;
-}
-
 
 .span10 {
     margin-left: 0px;

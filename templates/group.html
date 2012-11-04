@@ -11,8 +11,10 @@
 
 {% block content %}
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Post" />
+    <!--{{ form.as_p }}-->
+    <p><textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea></p>
+    
+    <input type="submit" value="Post" class='btn' />
 </form>
 {% if post_list %}
 

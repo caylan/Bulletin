@@ -4,12 +4,12 @@
         <title>Bulletin</title>
         <!-- Bootstrap -->
         <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-combined.min.css" rel="stylesheet">
-			<link href="/static/css/site.css" rel="stylesheet">
+		<link href="/static/css/site.css" rel="stylesheet">
         <link href="/static/css/custom.css" rel="stylesheet">
     </head>
     <body>
         <div class="container-fluid">
-            <h2>Bulletin<small> team communication</small></h2>
+            <div class="span5"><h2>Bulletin<small> catchy phrase here</small></h2></div>
             {% block username %}
             <!-- 
             Empty intentionally.  Should be filled w/ username by
@@ -17,7 +17,7 @@
             -->
             {% endblock %}
         </div>
-        <div class="container-fluid">
+        <div id='main' class="container-fluid">
             <div class="span12">
                 <div class="tabbable tabs-left row-fluid">
                     <ul id='tabs' class="nav nav-tabs span2">
