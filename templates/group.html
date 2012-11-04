@@ -29,7 +29,7 @@
             <div class="well well-small">
                 <p>
                     <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>
-                    <em>{{ post.time_posted }}</em>
+                    <em>{{ post.date_posted }}</em>
                 </p>
                 <p>{{ post.message }}</p>
                 {% if post.comment_set.all %}
@@ -37,7 +37,7 @@
                     <div class="well well-small comment">
                         <p>
                             <strong>{{ comment.author.first_name }} {{ comment.author.last_name }}</strong>
-                            <em>replied:</em>
+                            <em>replied on {{ comment.date_posted }}:</em>
                         </p>
                         <p>{{ comment.message }}</p>
                     </div>

@@ -2,8 +2,8 @@
 
 {% block username %}
 <div class="span5 pull-right">
-    <a href="/logout"><div class="btn pull-right">Logout</div></a>
-    <div>{{ user.first_name }} {{ user.last_name }} ({{ user.email }})</div>
+    <a href="/logout" class="btn pull-right">Logout</a>
+    <div id="self-identity" class="pull-right">{{ user.first_name }} {{ user.last_name }} ({{ user.email }})</div>
 </div>
 {% endblock %}
 

@@ -5,6 +5,10 @@ body {
     background-image: url("/static/images/grey.png");
 }
 
+#self-identity {
+	margin-right: 30px;
+}
+
 textarea {
     height: 100px;
     resize: none;
