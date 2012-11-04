@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from posts.models import Post, PostForm, Comment
+from forms import GroupCreationForm
+from models import Membership
 import md5
 
 @login_required
@@ -28,5 +30,28 @@ def group(request, grpid):
     return render(request, 'group.html', {'post_list': post_list,
                                           'grpid': int(grpid),
                                           'user': request.user,
-                                          'form': form})
+                                          'form': form,})
 
+@login_required
+def create(request):
+    '''
+    Sets up a group creation form wherein the user may choose the necessary
+    criteria for the group they wish to create.
+
+    The user may select the name of the group.
+    '''
+    if request.method == 'POST':
+        form = GroupCreationForm(request.POST)
+        if form.is_valid():
+            group = form.save()
+            
+            # Create the default user membership
+            m = Membership(user=request.user, group=group)
+            m.save()
+            post_list = list(Post.objects.filter(group=group.id))
+            return render(request, 'group.html', {'post_list': [],
+                                                  'grpid': group.id,
+                                                  'user': request.user,})
+    else:
+        form = GroupCreationForm()
+    return render(request, 'group_create.html', {'form': form,})
