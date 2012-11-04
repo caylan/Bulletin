@@ -8,11 +8,9 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'bulletin_project.views.home', name='home'),
     # url(r'^bulletin_project/', include('bulletin_project.foo.urls')),
-    url(r'^$', 'session.views.login_view'),
-    url(r'^group/(?P<grpid>\d+)/$', 'groups.views.group'),
-    url(r'^register/$', 'registration.views.register'),
-    url(r'^logout/$', 'session.views.logout_view'),
-    url(r'^confirm_email/(\w+)/$', 'registration.views.confirm_email'),
+    url("", include("groups.urls")),
+    url("", include('registration.urls')),
+    url("", include('session.urls')),
     
     # Post to group
     #url(r'^group/(?<grpid>\d+)/post/$', 'groups.views.post'),
