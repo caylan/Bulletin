@@ -50,7 +50,7 @@
 				<hr />
 
 				<h3>{{ state }}</h3>
-				<form class="form-signin" method="post">
+				<form class="form-signin" method="post">{% csrf_token %}
 				<h2 class="form-signin-heading">Please sign in</h2>
 				<input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
 				<input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
