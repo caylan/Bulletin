@@ -36,7 +36,7 @@ class Membership(models.Model):
     user = models.ForeignKey(User)
     group = models.ForeignKey('Group')
     date_joined = models.DateTimeField(auto_now_add=True)
-    is_admin = models.BooleanField()
+    is_admin = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.group.__unicode__() + " | " + self.user.__unicode__()
