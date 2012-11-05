@@ -5,8 +5,9 @@
 
 {% block nav %}
     <li><a href="/">Inbox</a></li>
-    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/group/1/">Group 1</a></li>
-    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/group/2/">Group 2</a></li>
+    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/group/1/">Company</a></li>
+    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/group/2/">Design Team</a></li>
+    <li{% if grpid == "3" %} class="active" {% endif %}><a href="/group/3/">Roomies</a></li>
 {% endblock %}
 
 {% block content %}
