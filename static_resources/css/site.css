@@ -5,6 +5,10 @@ body {
     background-image: url("/static/images/grey.png");
 }
 
+.dev-profile-pic {
+	margin-right: 15px;
+}
+
 #self-identity {
 	margin-right: 30px;
 }
