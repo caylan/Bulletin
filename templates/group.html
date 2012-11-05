@@ -11,9 +11,12 @@
 {% endblock %}
 
 {% block content %}
-<form method="post">{% csrf_token %}
-    <p><textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea></p>
-    <input type="submit" value="Post" class='btn' />
+<form method="post" class="clearfix">
+    <div class="span10">
+	    <textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea>
+	    <input type="submit" value="Post" class='btn' />
+    </div>
+    {% csrf_token %}
 </form>
 {% if post_list %}
 
