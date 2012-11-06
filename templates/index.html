@@ -9,10 +9,10 @@
 
 {% block nav %}
     <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
-    {% for group in user.group_set.all %}
-    <li {% ifequal grpid group.id %} class="active" {% endifequal %}>
-        <a href="/group/{{ group.id }}">
-            {{ group.name }}
+    {% for member in user.membership_set.all %}
+    <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
+        <a href="/group/{{ member.group.id }}/">
+            {{ member.group.name }}
         </a>
     </li>
     {% endfor %}
