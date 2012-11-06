@@ -15,16 +15,18 @@ class RegistrationForm(forms.ModelForm):
                              required=True)
     email.widget.attrs['class'] = 'input-block-level'
     
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}), 
+    first_name = forms.RegexField(regex=r'^[\w.@+-]+$',
+                                  widget=forms.TextInput(attrs={'placeholder': 'First Name'}), 
+                                  max_length=40,
+                                  required=True,
+                                  label='')
+    first_name.widget.attrs['class'] = 'input-block-level'
+    
+    last_name = forms.RegexField(regex=r'^[\w.@+-]+$',
+                                 widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
                                  max_length=40,
                                  required=True,
                                  label='')
-    first_name.widget.attrs['class'] = 'input-block-level'
-    
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
-                                max_length=40,
-                                required=True,
-                                label='')
     last_name.widget.attrs['class'] = 'input-block-level'
     
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), 

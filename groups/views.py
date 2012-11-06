@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
-from posts.models import Post, PostForm, Comment
+from posts.forms import PostForm
+from posts.models import Post, Comment
 import md5
 
 @login_required
