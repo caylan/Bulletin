@@ -6,7 +6,7 @@ and commenting on posts in a group.
 from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from groups.models import Group
+from groups.models import Group, Membership
 
 # TODO
 # class SeenBy(models.Model):
@@ -18,9 +18,8 @@ class AbstractPost(models.Model):
     the only big difference being that a comment is related to a particular
     post.
     '''
-    author = models.ForeignKey(User)
-    # TODO(kyle) temp, have author point to a user until Membership stuff is implemented
-    # author = models.ForeignKey('groups.Membership')
+    #author = models.ForeignKey(User)
+    author = models.ForeignKey('groups.Membership')
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
     class Meta:
@@ -38,7 +37,8 @@ class Post(AbstractPost):
     in order to ease up code mangling by trying to get both login
     and user->group posting working simultaneously.
     '''
-    group = models.ForeignKey(Group)
+    # group = models.ForeignKey(Group)
+    pass
 
 class PostForm(ModelForm):
     """

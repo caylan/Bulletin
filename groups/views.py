@@ -24,7 +24,8 @@ def group(request, grpid):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            #post.author = request.user
+            post.author = request.user.membership_set.get(id=grpid)
             post.group = Group.objects.get(id=grpid)
             post.save()
             return HttpResponseRedirect("")
@@ -32,7 +33,9 @@ def group(request, grpid):
     else:  # not POST, so give a form with some prepopulated stuff
         form = PostForm()
     # list containin posts in order specified by post model
-    post_list = list(Post.objects.filter(group=grpid))
+    #post_list = list(Post.objects.filter(group=grpid))
+    '''releations are represented by double underscores (i heart django)'''
+    post_list = list(Post.objects.filter(author__group__id=grpid))
     return render(request, 'group.html', {'post_list': post_list,
                                           'grpid': int(grpid),
                                           'user': request.user,
@@ -54,7 +57,8 @@ def create(request):
             # Create the default user membership
             m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
-            post_list = list(Post.objects.filter(group=group.id))
+            #post_list = list(Post.objects.filter(group=group.id))
+            post_list = list(Post.objects.filter(author__group__id=group.pk))
 
             ''' TODO: Redirect to the new group '''
             return redirect('/')
