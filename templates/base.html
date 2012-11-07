@@ -18,7 +18,8 @@
             -->
             {% endblock %}
         </div>
-        <div id='main' class="container-fluid">
+        {% block content %}
+        <div class="container-fluid">
             <div class="span12">
                 <div class="tabbable tabs-left row-fluid">
                     <ul id='tabs' class="nav nav-tabs span2">
@@ -32,7 +33,7 @@
                         <li><a href="/group/1/">Company</a></li>
                         <li><a href="/group/2/">Design Team</a></li>
                         <li><a href="/group/3/">Roomies</a></li>
-                        {% endblock %}
+                        {% endblock nav %}
                     </ul>
                     <div id="content-container" class="tab-content span10">
                         <div class="tab-pane active">
@@ -43,23 +44,23 @@
 		                        </p>
 		                    </div>-->
 		                    <div id="content">
-			                    {% block content %}
+			                    {% block tabcontent %}
 			                    <p>No Content</p>
-			                    {% endblock %}
+			                    {% endblock tabcontent %}
 		                    </div>
 		                </div>
 	                </div>
                 </div>
             </div>
         </div>
+        {% endblock content %}
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
         <script>
-	        $('.tabs-left').children().each(function() {
-	            $(this).css("height", $(this).parent().css("height"));
-	        });
-	        
 	        $(document).ready(function() {
+	        	$('.tabs-left').children().each(function() {
+	                $(this).css("height", $(this).parent().css("height"));
+	            });
 	            // Find ALL <form> tags
 	            $('form').submit(function(){
 	                // On submit disable its submit button
