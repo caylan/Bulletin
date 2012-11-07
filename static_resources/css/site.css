@@ -9,6 +9,10 @@ body {
 	margin-right: 30px;
 }
 
+.spacing-right {
+	margin-right: 10px;
+}
+
 textarea {
     height: 100px;
     resize: none;

@@ -17,7 +17,7 @@
     margin-bottom: 0;
 }
 
-#content-container {
+#content-container.tab-content {
     border: 1px solid #DDD;
     border-left: 0;
     margin: 0;

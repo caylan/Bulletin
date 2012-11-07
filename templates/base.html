@@ -34,7 +34,7 @@
                         <li><a href="/group/3/">Roomies</a></li>
                         {% endblock %}
                     </ul>
-                    <div id='content-container' class="tab-content span10">
+                    <div id="content-container" class="tab-content span10">
                         <div class="tab-pane active">
 		                    <!--<div id="announcement" class="hero-unit hero-unit-small">
 		                        <h3>Announcement</h3>
@@ -55,28 +55,28 @@
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
         <script>
-        $('.tabs-left').children().each(function() {
-            $(this).css("height", $(this).parent().css("height"));
-        });
-        
-        $(document).ready(function() {
-            // Find ALL <form> tags
-            $('form').submit(function(){
-                // On submit disable its submit button
-                $('input[type=submit]', this).attr('disabled', 'disabled');
-            });
-        });
-        
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-36110349-1']);
-        _gaq.push(['_setDomainName', 'bulletinapp.net']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+	        $('.tabs-left').children().each(function() {
+	            $(this).css("height", $(this).parent().css("height"));
+	        });
+	        
+	        $(document).ready(function() {
+	            // Find ALL <form> tags
+	            $('form').submit(function(){
+	                // On submit disable its submit button
+	                $('.submit-btn', this).attr('disabled', 'disabled');
+	            });
+	        });
+	        
+	        var _gaq = _gaq || [];
+	        _gaq.push(['_setAccount', 'UA-36110349-1']);
+	        _gaq.push(['_setDomainName', 'bulletinapp.net']);
+	        _gaq.push(['_trackPageview']);
+	
+	        (function() {
+		        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	        })();
         </script>
     </body>
 </html>
