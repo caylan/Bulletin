@@ -25,7 +25,7 @@ def group(request, grpid):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user.membership_set.get(id=grpid)
+            post.author = request.user.membership_set.get(group__pk=grpid)
             post.save()
             return HttpResponseRedirect("")
         # else, form not valid, return with errors
