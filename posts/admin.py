@@ -7,7 +7,7 @@ class CommentInline(admin.TabularInline):
     extra = 0
 
 class PostAdmin(admin.ModelAdmin):
-    fields = ('author', 'date_posted', 'message', 'group')
+    fields = ('author', 'date_posted', 'message',)
     readonly_fields = ('date_posted',)
     inlines = (CommentInline,)
 

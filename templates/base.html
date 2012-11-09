@@ -22,19 +22,13 @@
         <div class="container-fluid">
             <div class="span12">
                 <div class="tabbable tabs-left row-fluid">
-                    <ul id='tabs' class="nav nav-tabs span2">
-                        <!-- 
-                        If this is where you want to list all of the current user's groups in the active
-                        session, then do so here, likely with a for loop.  This will not function, however
-                        until we have properly working user logins.
-                        -->
-                        {% block nav %}
-                        <li class="active"><a href="/">Inbox</a></li>
-                        <li><a href="/group/1/">Company</a></li>
-                        <li><a href="/group/2/">Design Team</a></li>
-                        <li><a href="/group/3/">Roomies</a></li>
-                        {% endblock nav %}
-                    </ul>
+                    {% block nav %}
+                    <!-- 
+                    If this is where you want to list all of the current user's groups in the active
+                    session, then do so here, likely with a for loop.  This will not function, however
+                    until we have properly working user logins.
+                    -->
+                    {% endblock %}
                     <div id="content-container" class="tab-content span10">
                         <div class="tab-pane active">
 		                    <!--<div id="announcement" class="hero-unit hero-unit-small">

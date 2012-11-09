@@ -3,13 +3,6 @@
 {# comment: load custom gravatar filter #}
 {% load gravatar %}
 
-{% block nav %}
-    <li><a href="/">Inbox</a></li>
-    <li{% if grpid == "1" %} class="active" {% endif %}><a href="/group/1/">Company</a></li>
-    <li{% if grpid == "2" %} class="active" {% endif %}><a href="/group/2/">Design Team</a></li>
-    <li{% if grpid == "3" %} class="active" {% endif %}><a href="/group/3/">Roomies</a></li>
-{% endblock %}
-
 {% block tabcontent %}
 <form method="post" class="clearfix">
     <div class="span12">
@@ -18,6 +11,7 @@
     </div>
     {% csrf_token %}
 </form>
+
 {% if post_list %}
 
     {% for post in post_list %}
@@ -25,7 +19,7 @@
         <div class="span1 avatar">
             <div class="well well-small">
                 <!--<img src="http://www.acme-articles.com/default_photo/profile.jpg" alt="author's avatar" />-->
-                <img src="{{ post.author.email|gravatar:'50' }}" alt="author's gravatar" />
+                <img src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
                 <!-- gravatar filter takes user's eamil and img size as an argument -->
             </div>
         </div>

@@ -1,0 +1,10 @@
+{% extends "simple-base.html" %}
+
+{% block formtype %}
+    <form class="form-signin" method="post">{% csrf_token %}
+		<h2 class="form-signin-heading">Create a group</h2>
+        {{ form }}
+		<button class="btn btn-large btn-primary" type="submit">Create</button>
+		<a href='/'><button class="btn btn-large pull-right" type="button">Cancel</button></a>
+	</form>
+{% endblock %}
