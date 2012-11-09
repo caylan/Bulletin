@@ -9,6 +9,9 @@ class GroupCreationForm(forms.ModelForm):
     It is recommended that a user be able to invite other members
     to a group via the Membership model (in groups.models)
     '''
+
+    name = forms.RegexField(regex=r'[^\s]')
+
     class Meta:
         model = Group
         fields = ('name',)
