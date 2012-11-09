@@ -17,8 +17,8 @@
     margin-bottom: 0;
 }
 
-#content-container {
-    border: 1px solid #DDD;
+#content-container.tab-content {
+    border: 1px solid #ddd;
     border-left: 0;
     margin: 0;
     background-color: white;

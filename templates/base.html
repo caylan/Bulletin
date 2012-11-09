@@ -18,19 +18,18 @@
             -->
             {% endblock %}
         </div>
-        <div id='main' class="container-fluid">
+        {% block content %}
+        <div class="container-fluid">
             <div class="span12">
                 <div class="tabbable tabs-left row-fluid">
-                    <ul id='tabs' class="nav nav-tabs span2">
-                        {% block nav %}
-                        <!-- 
-                        If this is where you want to list all of the current user's groups in the active
-                        session, then do so here, likely with a for loop.  This will not function, however
-                        until we have properly working user logins.
-                        -->
-                        {% endblock %}
-                    </ul>
-                    <div id='content-container' class="tab-content span10">
+                    {% block nav %}
+                    <!-- 
+                    If this is where you want to list all of the current user's groups in the active
+                    session, then do so here, likely with a for loop.  This will not function, however
+                    until we have properly working user logins.
+                    -->
+                    {% endblock %}
+                    <div id="content-container" class="tab-content span10">
                         <div class="tab-pane active">
 		                    <!--<div id="announcement" class="hero-unit hero-unit-small">
 		                        <h3>Announcement</h3>
@@ -39,29 +38,40 @@
 		                        </p>
 		                    </div>-->
 		                    <div id="content">
-			                    {% block content %}
+			                    {% block tabcontent %}
 			                    <p>No Content</p>
-			                    {% endblock %}
+			                    {% endblock tabcontent %}
 		                    </div>
 		                </div>
 	                </div>
                 </div>
             </div>
         </div>
+        {% endblock content %}
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
         <script>
-        $('.tabs-left').children().each(function() {
-            $(this).css("height", $(this).parent().css("height"));
-        });
-        
-        $(document).ready(function() {
-            // Find ALL <form> tags
-            $('form').submit(function(){
-                // On submit disable its submit button
-                $('input[type=submit]', this).attr('disabled', 'disabled');
-            });
-        });
+	        $(document).ready(function() {
+	        	$('.tabs-left').children().each(function() {
+	                $(this).css("height", $(this).parent().css("height"));
+	            });
+	            // Find ALL <form> tags
+	            $('form').submit(function(){
+	                // On submit disable its submit button
+	                $('.submit-btn', this).attr('disabled', 'disabled');
+	            });
+	        });
+	        
+	        var _gaq = _gaq || [];
+	        _gaq.push(['_setAccount', 'UA-36110349-1']);
+	        _gaq.push(['_setDomainName', 'bulletinapp.net']);
+	        _gaq.push(['_trackPageview']);
+	
+	        (function() {
+		        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	        })();
         </script>
     </body>
 </html>

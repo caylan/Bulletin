@@ -3,9 +3,10 @@ from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
-from posts.models import Post, PostForm, Comment
 from forms import GroupCreationForm
-from models import Membership, Group
+from models import Group, Membership
+from posts.forms import PostForm
+from posts.models import Post, Comment
 import md5
 
 @login_required
@@ -24,17 +25,14 @@ def group(request, grpid):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            #post.author = request.user
-            post.author = request.user.membership_set.get(id=request.user.id)
-            post.group = Group.objects.get(id=grpid)
+            post.author = request.user.membership_set.get(id=grpid)
             post.save()
             return HttpResponseRedirect("")
         # else, form not valid, return with errors
     else:  # not POST, so give a form with some prepopulated stuff
         form = PostForm()
-    # list containin posts in order specified by post model
-    #post_list = list(Post.objects.filter(group=grpid))
-    '''releations are represented by double underscores (i heart django)'''
+
+    '''relations are represented by double underscores (i heart django)'''
     post_list = list(Post.objects.filter(author__group__id=grpid))
     return render(request, 'group.html', {'post_list': post_list,
                                           'grpid': int(grpid),
@@ -57,7 +55,6 @@ def create(request):
             # Create the default user membership
             m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
-            #post_list = list(Post.objects.filter(group=group.id))
             post_list = list(Post.objects.filter(author__group__id=group.pk))
 
             ''' TODO: Redirect to the new group '''

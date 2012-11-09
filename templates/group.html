@@ -3,14 +3,15 @@
 {# comment: load custom gravatar filter #}
 {% load gravatar %}
 
-{% block content %}
+{% block tabcontent %}
 <form method="post" class="clearfix">
-    <div class="span10">
+    <div class="span12">
 	    <textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea>
 	    <input type="submit" value="Post" class='btn' />
     </div>
     {% csrf_token %}
 </form>
+
 {% if post_list %}
 
     {% for post in post_list %}
@@ -22,7 +23,7 @@
                 <!-- gravatar filter takes user's eamil and img size as an argument -->
             </div>
         </div>
-        <div class="span9 post">
+        <div class="span11 post">
             <div class="well well-small">
                 <p>
                     <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>

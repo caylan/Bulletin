@@ -4,7 +4,6 @@ not limited to: posting to groups, inviting other users to a group,
 and commenting on posts in a group.
 '''
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 from groups.models import Group, Membership
 
@@ -39,15 +38,6 @@ class Post(AbstractPost):
     '''
     # group = models.ForeignKey(Group)
     pass
-
-class PostForm(ModelForm):
-    """
-    Form for the post model
-    """
-    class Meta:
-        model = Post
-        # the following should be set by the view depending on context
-        exclude = ['author', 'group',]
 
 class Comment(AbstractPost):
     post = models.ForeignKey('Post')

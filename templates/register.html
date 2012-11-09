@@ -4,7 +4,11 @@
     <form class="form-signin" method="post">{% csrf_token %}
         <h2 class="form-signin-heading">Register your account</h2>
         {{ form }}
-        <button class="btn btn-large btn-primary" type="submit">Register</button>
-        <a href='..'><input type="button" class="btn btn-large pull-right" value="Back"></a>
+        <input class="register-btn btn btn-large btn-primary" type="submit" value="Register" />
+        <a href=".." class="back-btn btn btn-large pull-right">Back</a>
     </form>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/js/register.js"></script>
 {% endblock %}
