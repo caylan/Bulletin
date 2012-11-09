@@ -25,6 +25,8 @@ def group(request, grpid):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            # author = from the current user's set of memberships, the one that
+            #          has a group with matching group id (pk)
             post.author = request.user.membership_set.get(group__pk=grpid)
             post.save()
             return HttpResponseRedirect("")
