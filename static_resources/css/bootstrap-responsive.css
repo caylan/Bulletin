@@ -108,49 +108,49 @@
   [class*="span"] {
     float: left;
     min-height: 1px;
-    margin-left: 30px;
+    margin-left: 0px;
   }
   .container,
   .navbar-static-top .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container {
-    width: 1170px;
+    width: 1200px;
   }
   .span12 {
-    width: 1170px;
+    width: 1200px;
   }
   .span11 {
-    width: 1070px;
+    width: 1100px;
   }
   .span10 {
-    width: 970px;
+    width: 1000px;
   }
   .span9 {
-    width: 870px;
+    width: 900px;
   }
   .span8 {
-    width: 770px;
+    width: 800px;
   }
   .span7 {
-    width: 670px;
+    width: 700px;
   }
   .span6 {
-    width: 570px;
+    width: 600px;
   }
   .span5 {
-    width: 470px;
+    width: 500px;
   }
   .span4 {
-    width: 370px;
+    width: 400px;
   }
   .span3 {
-    width: 270px;
+    width: 300px;
   }
   .span2 {
-    width: 170px;
+    width: 180px;
   }
   .span1 {
-    width: 70px;
+    width: 100px;
   }
   .offset12 {
     margin-left: 1230px;
@@ -454,20 +454,20 @@
   }
   .row:after {
     clear: both;
-  }
+  } 
   [class*="span"] {
     float: left;
     min-height: 1px;
-    margin-left: 20px;
+    margin-left: 0px;
   }
   .container,
   .navbar-static-top .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container {
-    width: 724px;
+    width: 744px;
   }
   .span12 {
-    width: 724px;
+    width: 744px;
   }
   .span11 {
     width: 662px;
@@ -479,7 +479,7 @@
     width: 538px;
   }
   .span8 {
-    width: 476px;
+    width: 496px;
   }
   .span7 {
     width: 414px;
@@ -497,7 +497,7 @@
     width: 166px;
   }
   .span2 {
-    width: 104px;
+    width: 114px;
   }
   .span1 {
     width: 42px;
@@ -787,6 +787,9 @@
     padding-right: 20px;
     padding-left: 20px;
   }
+  .container-fluid {
+    display: block;
+  }
   .navbar-fixed-top,
   .navbar-fixed-bottom,
   .navbar-static-top {
@@ -884,6 +887,9 @@
   .nav-collapse {
     -webkit-transform: translate3d(0, 0, 0);
   }
+  .container-fluid {
+    display: block;
+  }
   .page-header h1 small {
     display: block;
     line-height: 20px;
@@ -941,7 +947,7 @@
     position: static;
   }
   .navbar-fixed-top {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   .navbar-fixed-bottom {
     margin-top: 20px;
