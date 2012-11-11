@@ -12,10 +12,7 @@
     color: white;
 }
 
-#tabs {
-    margin-right: 0;
-    margin-bottom: 0;
-}
+
 
 #content-container.tab-content {
     border: 1px solid #ddd;
@@ -33,7 +30,7 @@
 }
 
 .avatar {
-    margin-right: 0;
+    margin-right: 5px;
 }
 
 .comment {

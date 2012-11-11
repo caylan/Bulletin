@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block username %}
-<div class="span5 pull-right">
-    <a href="/logout" class="btn pull-right">Logout</a>
-    <div id="self-identity" class="pull-right">{{ user.first_name }} {{ user.last_name }} ({{ user.email }})</div>
+<div class="pull-right">
+    <div id="self-identity" class="">Welcome, Peter{{ user.first_name }} <a href="#settings" class="">Settings</a> | <a href="/logout" class="">Logout</a></div>
 </div>
 {% endblock %}
 
 {% block nav %}
-<ul id='tabs' class="nav nav-tabs span2">
+<ul id='team-nav' class="nav nav-list">
     <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
+    <li class="nav-header">Teams</li>
     {% for member in user.membership_set.all %}
     <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
         <a href="/group/{{ member.group.id }}/">
@@ -17,7 +17,15 @@
         </a>
     </li>
     {% endfor %}
-    <a class="btn btn-block" href="/create"><i class="icon-plus"></i> Create a group</a>
+    <li class='divider'></li>
+    <a class="btn btn-block" href="/create"><i class="icon-plus"></i> New Team</a>
+</ul>
+{% endblock %}
+
+{% block agenda %}
+<ul id='agenda' class="nav nav-list">
+    <li class="nav-header">Agenda</li>
+    <li class='divider'></li>
 </ul>
 {% endblock %}
 

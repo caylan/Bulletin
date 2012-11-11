@@ -5,49 +5,45 @@
 
 {% block tabcontent %}
 <form method="post" class="clearfix">
-    <div class="span12">
-	    <textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea>
-	    <input type="submit" value="Post" class='btn' />
-    </div>
+    <textarea class='input-block-level' placeholder='Communicate with your team...' id="id_message" rows="10" cols="40" name="message"></textarea>
+	<input type="submit" value="Post" class='btn' />
     {% csrf_token %}
 </form>
 
 {% if post_list %}
-
     {% for post in post_list %}
     <div class="post clearfix">
-        <div class="span1 avatar">
-            <div class="well well-small">
-                <!--<img src="http://www.acme-articles.com/default_photo/profile.jpg" alt="author's avatar" />-->
-                <img src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
-                <!-- gravatar filter takes user's eamil and img size as an argument -->
-            </div>
-        </div>
-        <div class="span11 post">
-            <div class="well well-small">
+        <p>
+            <img class='avatar pull-left' src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
+            <span>
+                <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>
+                <em class='pull-right'>{{ post.date_posted }}</em>
+                <br />
+            </span>
+            {{ post.message }}
+        </p>
+        {% if post.comment_set.all %}
+            {% for comment in post.comment_set.all %}
+            <div class="comment">
                 <p>
-                    <strong>{{ post.author.first_name }} {{ post.author.last_name }}</strong>
-                    <em>{{ post.date_posted }}</em>
+                    <img class='avatar pull-left' src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
+                    <span>
+                        <strong>{{ comment.author.first_name }} {{ comment.author.last_name }}</strong>
+                        <em class='pull-right'>{{ comment.date_posted }}</em>
+                        <br />
+                    </span>
+                    {{ comment.message }}
                 </p>
-                <p>{{ post.message }}</p>
-                {% if post.comment_set.all %}
-                    {% for comment in post.comment_set.all %}
-                    <div class="well well-small comment">
-                        <p>
-                            <strong>{{ comment.author.first_name }} {{ comment.author.last_name }}</strong>
-                            <em>replied on {{ comment.date_posted }}:</em>
-                        </p>
-                        <p>{{ comment.message }}</p>
-                    </div>
-                    {% endfor %}
-                {% endif %}
             </div>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
     {% endfor %}
 
 {% else %}
-    <p>No posts are available.</p>
+    <div class='error'>
+        No posts are available.
+    </div>
 {% endif %}
 
 {% endblock %}
