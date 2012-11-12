@@ -1,4 +1,4 @@
-Bulletin
+Bulletin 
 ========
 
 Bulletin is a communication platform aimed at small companies and groups. Check out the [wiki](https://github.com/caylan/Bulletin/wiki) for more information, or see what we have running so far at http://www.bulletinapp.net!
