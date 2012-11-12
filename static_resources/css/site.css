@@ -42,11 +42,17 @@ body {
 .post {
 	background-color: white;
 	border-bottom: 1px solid #EEE;
+	word-wrap: break-word;
 }
 
 .comment {
 	margin-left: 25px;
 	border-top: 1px solid #EEE;
+}
+
+#footer {
+	font-size: 9pt;
+	padding: 0 3px;
 }
 
 textarea {
@@ -57,7 +63,8 @@ textarea {
 
 .hero-unit {
 	text-align: left;
-    padding: 19px 29px 29px;
+	margin-bottom: 0px;
+    padding: 9px 19px 9px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;

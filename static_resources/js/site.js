@@ -27,3 +27,16 @@ $(window).scroll(function(){
         $("#jump-top").hide();
     }
 });
+
+$("#flipbox").flip({
+	direction:'tb',
+	onBefore: function(){
+			console.log('before starting the animation');
+	},
+	onAnimation: function(){
+			console.log('in the middle of the animation');
+	},
+	onEnd: function(){
+			console.log('when the animation has already ended');
+	}
+})
