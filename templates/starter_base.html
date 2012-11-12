@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="/static/css/login.css" rel="stylesheet">
+{% endblock head %}
+
+{% block body %}
+<div class="container">
+	<div class="span8 offset2">
+		<div class="hero-unit clearfix">
+			<h1>Bulletin</h1>
+			<hr />
+			<h3>{{ state }}</h3>
+			<div id="content-container">
+				{% block formtype %}
+				<!-- login or register form-->
+				{% endblock formtype %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock body %}

@@ -1,4 +1,4 @@
-{% extends "simple-base.html" %}
+{% extends "starter_base.html" %}
 
 {% block formtype %}
     <form class="form-signin" method="post">{% csrf_token %}
@@ -7,4 +7,4 @@
 		<button class="btn btn-large btn-primary" type="submit">Create</button>
 		<a href='/'><button class="btn btn-large pull-right" type="button">Cancel</button></a>
 	</form>
-{% endblock %}
+{% endblock formtype %}

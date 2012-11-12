@@ -1,4 +1,4 @@
-{% extends "simple-base.html" %}
+{% extends "starter_base.html" %}
 
 {% block formtype %}
 {% if user %}
@@ -11,4 +11,4 @@
     <p>Invalid confirmation key.</p>
 {% endif %}
 <a href="../.." class="btn btn-large">Back to login</a>
-{% endblock %}
+{% endblock formtype %}

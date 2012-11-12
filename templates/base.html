@@ -1,81 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Bulletin</title>
+        <title>{% block title %}Bulletin{% endblock title %}</title>
         <!-- Bootstrap -->
         <link rel="shortcut icon" href="/static/images/favicon.ico">
-		<link href="/static/css/bootstrap.css" rel="stylesheet">
-		<link href="/static/css/site.css" rel="stylesheet">
-		<link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        
+        <!-- Custom CSS -->
+        <link href="/static/css/site.css" rel="stylesheet">
+        {% block head %}
+        {% endblock head %}
     </head>
     <body>
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container-fluid">
-					<a class="span2" href="#top"><i id='jump-top' class="icon-arrow-up hide"></i></a>
-					<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-					<a class="btn btn-navbar pull-left" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</a>
-					
-					<!-- Be sure to leave the brand out there if you want it shown -->
-					<a class="brand span8" href="/">Bulletin</a>
-					
-					<!-- Everything you want hidden at 940px or less, place within here -->
-					<div class="nav-collapse collapse span2">
-						{% block username %}
-					<!-- 
-					Empty intentionally.  Should be filled w/ username by
-					sub classes 
-					-->
-					{% endblock %}
-						<!-- .nav, .navbar-search, .navbar-form, etc -->
-					</div>
-				</div>
-			</div>
-		</div>
-        {% block content %}
-        <div name='top' class="container-fluid">
-            <div class="span2">
-                <div class="well">
-                    {% block nav %}
-                    <!-- 
-                    If this is where you want to list all of the current user's groups in the active
-                    session, then do so here, likely with a for loop.  This will not function, however
-                    until we have properly working user logins.
-                    -->
-                    {% endblock %}
-				</div>
-			</div>
-			<div id="content-container" class="span8 tab-content">
-				<div class="tab-pane active hero-unit">
-					<div id="content">
-						{% block tabcontent %}
-						<p>No Content</p>
-						{% endblock tabcontent %}
-					</div>
-				</div>
-				<div id='footer'>
-					This is a footer
-				</div>
-			</div>
-			<div class="span2">
-                <div class="well">
-                    {% block agenda %}
-                    <!-- 
-                    If this is where you want to list all of the current user's groups in the active
-                    session, then do so here, likely with a for loop.  This will not function, however
-                    until we have properly working user logins.
-                    -->
-                    {% endblock %}
-				</div>
-			</div>
-        </div>
-        {% endblock content %}
+        {% block body %}
+        {% endblock body %}
+        <!-- JQuery -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
-		<script src="/static/js/jquery.flip.min.js"></script>
+        <script src="/static/js/jquery.flip.min.js"></script>
+        
+        <!-- Google Analytics -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push([ '_setAccount', 'UA-36110349-1' ]);
+			_gaq.push([ '_setDomainName', 'bulletinapp.net' ]);
+			_gaq.push([ '_trackPageview' ]);
+	
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+						: 'http://www')
+						+ '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	
+		{% block extrajs %}
+	    {% endblock extrajs %}
     </body>
 </html>

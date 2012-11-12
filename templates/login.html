@@ -1,15 +1,16 @@
-{% extends "simple-base.html" %}
+{% extends "starter_base.html" %}
 
 {% block formtype %}
-<form class="form-signin" method="post">{% csrf_token %}
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
-		<input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
+<form class="form-signin" method="post">
+    {% csrf_token %}
+    <h2 class="form-signin-heading">Please sign in</h2>
+	<input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
+	<input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
 	<!-- 			    <label class="checkbox">
 			<input type="checkbox" value="remember-me"> Remember me
 		</label> -->
-		<input class="submit-btn btn btn-large btn-primary" type="submit" value="Sign in" />
-		<a href="/about" class="about-btn btn btn-large pull-right">About</a>
-		<a href="/register" class="register-btn btn btn-large pull-right spacing-right">Register</a>
+	<input class="submit-btn btn btn-large btn-primary" type="submit" value="Sign in" />
+	<a href="/about" class="about-btn btn btn-large pull-right">About</a>
+	<a href="/register" class="register-btn btn btn-large pull-right spacing-right">Register</a>
 </form>
-{% endblock %}
+{% endblock formtype %}

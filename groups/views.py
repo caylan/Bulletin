@@ -11,7 +11,7 @@ import md5
 
 @login_required
 def index(request):
-    return render(request, 'index.html', {'user': request.user})
+    return render(request, 'group_inbox.html', {'user': request.user})
 
 @login_required
 def group(request, grpid):
@@ -36,7 +36,7 @@ def group(request, grpid):
 
     '''relations are represented by double underscores (i heart django)'''
     post_list = list(Post.objects.filter(author__group__id=grpid))
-    return render(request, 'group.html', {'post_list': post_list,
+    return render(request, 'group_view.html', {'post_list': post_list,
                                           'grpid': int(grpid),
                                           'user': request.user,
                                           'form': form,})

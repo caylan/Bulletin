@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<a class="span2" href="#top"><i id='jump-top'
+			   class="icon-arrow-up hide"></i></a>
+			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+			<a class="btn btn-navbar pull-left" data-toggle="collapse"
+			   data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+			   class="icon-bar"></span> <span class="icon-bar"></span>
+			</a>
+
+			<!-- Be sure to leave the brand out there if you want it shown -->
+			<a class="brand span8" href="/">Bulletin</a>
+
+			<!-- Everything you want hidden at 940px or less, place within here -->
+			<div class="nav-collapse collapse span2">
+				{% block username %}
+				<!-- 
+				Empty intentionally.  Should be filled w/ username by
+				sub classes 
+				-->
+				{% endblock username %}
+				<!-- .nav, .navbar-search, .navbar-form, etc -->
+			</div>
+		</div>
+	</div>
+</div>
+
+{% block content %}
+<div id="top" class="container-fluid">
+	<div class="span2">
+		<div class="well">
+			{% block nav %}
+			<!-- 
+            If this is where you want to list all of the current user's groups in the active
+            session, then do so here, likely with a for loop.  This will not function, however
+            until we have properly working user logins.
+            -->
+			{% endblock nav %}
+		</div>
+	</div>
+	<div id="content-container" class="span8 tab-content">
+		<div class="tab-pane active hero-unit">
+			<div id="content">
+				{% block tabcontent %}
+				<p>No Content</p>
+				{% endblock tabcontent %}
+			</div>
+		</div>
+		<div id="footer">This is a footer</div>
+	</div>
+	<div class="span2">
+		<div class="well">
+			{% block agenda %}
+			<!-- 
+            If this is where you want to list all of the current user's groups in the active
+            session, then do so here, likely with a for loop.  This will not function, however
+            until we have properly working user logins.
+            -->
+			{% endblock agenda %}
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% endblock body %}

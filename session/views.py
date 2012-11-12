@@ -21,7 +21,7 @@ def login_view(request):
 
     if request.user.is_authenticated():
         if request.user.is_active:
-            return render(request, 'index.html', {'user': request.user})
+            return render(request, 'group_inbox.html', {'user': request.user})
         else:
             return _login_form(request)
 
@@ -37,7 +37,7 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'index.html', {'user': user,})
+                return render(request, 'group_inbox.html', {'user': user,})
             else:
                 state = 'User not active. ' \
                         'Please check your email for validation'

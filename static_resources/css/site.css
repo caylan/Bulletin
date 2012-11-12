@@ -7,6 +7,10 @@ body {
 	text-align: center;
 }
 
+.spacing-right {
+	margin-right: 10px;
+}
+
 .span2 .well {
 	padding: 5px;
 }
