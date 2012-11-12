@@ -30,7 +30,6 @@ def group(request, grpid):
             post.author = request.user.membership_set.get(group__pk=grpid)
             post.save()
             return HttpResponseRedirect("")
-        # else, form not valid, return with errors
     else:  # not POST, so give a form with some prepopulated stuff
         form = PostForm()
 

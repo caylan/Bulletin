@@ -6,6 +6,7 @@ billiard==2.7.3.17
 celery==3.0.11
 distribute==0.6.30
 dj-database-url==0.2.1
+django-nose==1.1
 django-sse==0.4.1
 gevent==0.13.8
 gevent-socketio==0.3.5-rc2
@@ -14,6 +15,7 @@ greenlet==0.4.0
 gunicorn==0.15.0
 ipython==0.13.1
 kombu==2.4.8
+nose=1.2.1
 psycopg2==2.4.5
 python-dateutil==2.1
 redis==2.7.1

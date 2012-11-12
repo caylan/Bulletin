@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     #'prototype', 'session_proto',  # prototypes
+    'django_nose',
     'gunicorn', # The server!
     'groups',   # General user and account management.
     'posts',   # Inter-user communication (handles posts/invites/comments) 
@@ -183,6 +184,8 @@ LOGGING = {
         },
     }
 }
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 #import dj_database_url
 #DATABASES['default'] = dj_database_url.config()
