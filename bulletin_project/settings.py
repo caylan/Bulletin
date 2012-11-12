@@ -22,6 +22,9 @@ EMAIL_HOST_PASSWORD = "bulletinemail"
 EMAIL_HOST_USER = FROM_EMAIL
 EMAIL_USE_TLS = True
 
+''' Authentication '''
+MIN_PASSWORD_LEN = 6
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.

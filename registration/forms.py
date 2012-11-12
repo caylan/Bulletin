@@ -2,11 +2,13 @@ from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.conf import settings
 
 class RegistrationForm(forms.ModelForm):
     error_messages = {
-        'duplicate_email'   : _("A user with that email already exists"),
-        'password_mismatch' : _("The two passwords did not match"),
+        'duplicate_email'    : _("A user with that email already exists"),
+        'password_mismatch'  : _("The two passwords did not match"),
+        'password_too_short' : _("Your password should be at least 6 characters."),
     }
 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}),
@@ -64,6 +66,8 @@ class RegistrationForm(forms.ModelForm):
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+        if len(password1) < settings.MIN_PASSWORD_LEN:
+            raise forms.ValidationError(self.error_messages['password_too_short'])
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(self.error_messages['password_mismatch'])
         return password2
