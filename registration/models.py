@@ -92,7 +92,6 @@ class EmailConfirmationManager(models.Manager):
         # However, this time we're creating the actual server object.
         confirmation = self.model(
             user=user,
-            sent_by=sent_by,
             sent=datetime.datetime.now(),
             confirmation_key=confirmation_key
         )
@@ -105,15 +104,15 @@ class EmailConfirmationManager(models.Manager):
                 confirmation.delete()
 
 class EmailInviteManager(EmailConfirmationManager):
-    subject_path = "registration/email_confirmation_subject.txt"
-    message_path = "registration/email_confirmation_message.txt"
+    subject_path = "registration/email_invite_subject.txt"
+    message_path = "registration/email_invite_message.txt"
     view_path = "registration.views.confirm_email_invite"
 
-    def send_confirmation(self, user, sender):
-        self.email_context['sender_first_name'] = sent_by.first_name
-        self.email_context['sender_last_name'] = sent_by
+    def send_confirmation(self, recipient, sender):
+        self.email_context['sender_first_name'] = sender.first_name
+        self.email_context['sender_last_name'] = sender.last_name
         self.email_context['user_is_active'] = user.is_active
-        super(EmailInviteManager, self).send_confirmation(user)
+        super(EmailInviteManager, self).send_confirmation(recipient)
 
 class AbstractConfirmation(models.Model):
     '''
@@ -147,3 +146,6 @@ class AbstractKeyConfirmation(AbstractConfirmation):
 
 class EmailConfirmation(AbstractKeyConfirmation):
     objects = EmailConfirmationManager()
+
+class EmailInvite(AbstractKeyConfirmation):
+    objects = EmailInviteManager()
