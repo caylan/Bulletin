@@ -85,7 +85,7 @@ class EmailConfirmationManager(models.Manager):
 
         # Determine whether to create an invite or a confirmations (again).
         # However, this time we're creating the actual server object.
-        confirmation = EmailInvite(
+        confirmation = self.model(
             user=user,
             sent_by=sent_by,
             sent=datetime.datetime.now(),
