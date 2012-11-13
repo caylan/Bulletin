@@ -56,6 +56,7 @@ class EmailConfirmationManager(models.Manager):
             user = confirmation.user
             user.is_active = True
             user.save()
+            confirmation.delete() # remove old invite.
             return user
 
     def send_confirmation(self, user, commit=True):
