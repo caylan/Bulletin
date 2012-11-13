@@ -4,7 +4,7 @@
 {% load gravatar %}
 
 {% block tabcontent %}
-<form method="post" class="clearfix">
+<form id="post_form" method="post" class="clearfix">
     <textarea class="input-block-level" placeholder="Communicate with your team..." id="id_message" rows="10" cols="40" name="message"></textarea>
 	<input type="submit" value="Post" class="btn" />
     {% csrf_token %}
@@ -45,5 +45,23 @@
         No posts are available.
     </div>
 {% endif %}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+$(document).ready(function() {
+    $('#post_form').submit(function(e) {
+        e.preventDefault();
 
+        var form = $(this);
+        var url = 'post/';
+        var msg = form.find('#id_message').val();
+        var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+
+        $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
+            form.find('#id_message').val('');
+            alert(data);
+        }, 'json');
+    });
+});
+</script>
 {% endblock tabcontent %}
