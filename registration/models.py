@@ -76,8 +76,6 @@ class EmailConfirmationManager(models.Manager):
             "last_name": user.last_name,
         })
 
-        print self.email_context
-
         # If the email is an invite, then it will have been sent by
         # another user.  The templates are different, so make sure to
         # use the right one!
@@ -113,7 +111,6 @@ class EmailInviteManager(EmailConfirmationManager):
     def send_confirmation(self, recipient, sender):
         self.email_context['sender_email'] = sender.email
         self.email_context['recipient_is_active'] = recipient.is_active
-        print self.email_context
         super(EmailInviteManager, self).send_confirmation(recipient)
 
 class AbstractConfirmation(models.Model):
