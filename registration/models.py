@@ -100,23 +100,28 @@ class EmailConfirmationManager(models.Manager):
                 confirmation.delete()
 
 
-class EmailConfirmation(models.Model):
+class AbstractConfirmation(models.Model):
+    user = models.ForeignKet(User)
+    sent = modesl.DateTimeField(auto_now_add=True)
+    confirmation_key = models.Charfield(max_length=4)
+
+    def key_expired(self):
+        expiration_date = self.sent + datetime.timedelta(
+                days=settings.EMAIL_CONFIRMATION_DAYS)
+        return expiration <= datetime.datetime.now()
+    key_expired.boolean = True
+
+    class Meta:
+        abstract = True
+
+class EmailConfirmation(AbstractConfirmation):
     '''
     This represents an abstract email confirmation.
     At least, the email confirmation contains a key, and is sent
     to a user for activation (the user will currently not be active
     at the time this is sent).
     '''
-    user = models.ForeignKey(User)
-    sent = models.DateTimeField(auto_now_add=True)
     objects = EmailConfirmationManager()
-    confirmation_key = models.CharField(max_length=40)
-
-    objects = EmailConfirmationManager()
-
-    def is_key_expired(self):
-            expiration_date = self.sent + datetime.timedelta(
-                    days=settings.EMAIL_CONFIRMATION_DAYS)
 
     def __unicode__(self):
         return u"{0} Confirmation".format(self.user.email)
