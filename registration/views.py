@@ -54,4 +54,11 @@ def confirm_email_invite(request, key):
     '''
     Confirms an email invite to a specific user.
     '''
-    pass
+    key = key.lower()
+    # user = EmailInvite.objects.confirm_email(key)
+    if user.is_active:
+        pass # If the user is active, show some banner or indication that
+             # they're part of the new group.
+    else:
+        pass # If the user is not active, create a registration form for the
+             # user and then have them fill out their name and password.
