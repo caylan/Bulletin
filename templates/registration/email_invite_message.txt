@@ -1,7 +1,5 @@
 {% load i18n%}
-Hello {% if recipient_is_active %} {{ first_name }} {{ last_name }} {% else %}
-{{ email }} {% endif %}, you have been invited by 
-  {{ sender_email }} to join Bulletin!
+Hello {% if recipient_is_active %} {{ first_name }} {{ last_name }} {% else %} {{ email }} {% endif %}, you have been invited by {{ sender_email }} to join Bulletin!
 
 {% if not recipient_is_active %}
 To activate your account and log in, please follow the link below:

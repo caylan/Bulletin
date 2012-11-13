@@ -108,7 +108,7 @@ class EmailInviteManager(EmailConfirmationManager):
     message_path = "registration/email_invite_message.txt"
     view_path = "registration.views.confirm_email_invite"
 
-    def send_confirmation(self, recipient, sender):
+    def send_confirmation(self, sender, recipient):
         self.email_context['sender_email'] = sender.email
         self.email_context['recipient_is_active'] = recipient.is_active
         super(EmailInviteManager, self).send_confirmation(recipient)
