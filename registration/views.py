@@ -7,9 +7,7 @@ from django.shortcuts import (
 from django.template import RequestContext
 from models import (
     EmailConfirmationManager,
-    EmailInvite,
     EmailConfirmation,
-    AbstractEmailConfirmation
 )
 from forms import RegistrationForm
 

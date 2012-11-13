@@ -65,22 +65,17 @@ class EmailConfirmationManager(models.Manager):
             "activation_url": activation_url,
             "current_site": current_site,
             "confirmation_key": confirmation_key,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
         }
 
         # If the email is an invite, then it will have been sent by
         # another user.  The templates are different, so make sure to
         # use the right one!
-        if sent_by is not None: 
-            context['first_name'] = sent_by.first_name
-            context['last_name'] = sent_by.last_name
-            context['sent_by'] = sent_by 
-            subject_path = "registration/email_invite_subject.txt"
-            message_path = "registration/email_invite_message.txt"
-        else:
-            context['first_name'] = user.first_name
-            context['last_name'] = user.last_name
-            subject_path = "registration/email_confirmation_subject.txt"
-            message_path = "registration/email_confirmation_message.txt"
+        context['first_name'] = user.first_name
+        context['last_name'] = user.last_name
+        subject_path = "registration/email_confirmation_subject.txt"
+        message_path = "registration/email_confirmation_message.txt"
         subject = render_to_string(subject_path, context)
         message = render_to_string(message_path, context)
         
@@ -90,19 +85,12 @@ class EmailConfirmationManager(models.Manager):
 
         # Determine whether to create an invite or a confirmations (again).
         # However, this time we're creating the actual server object.
-        if sent_by is not None:
-            confirmation = EmailInvite(
-                user=user,
-                sent_by=sent_by,
-                sent=datetime.datetime.now(),
-                confirmation_key=confirmation_key
-            )
-        else:
-            confirmation = EmailConfirmation(
-                user=user,
-                sent=datetime.datetime.now(),
-                confirmation_key=confirmation_key
-            )
+        confirmation = EmailInvite(
+            user=user,
+            sent_by=sent_by,
+            sent=datetime.datetime.now(),
+            confirmation_key=confirmation_key
+        )
         confirmation.save()
         return confirmation
 
@@ -111,7 +99,8 @@ class EmailConfirmationManager(models.Manager):
             if confirmation.is_key_expired():
                 confirmation.delete()
 
-class AbstractEmailConfirmation(models.Model):
+
+class EmailConfirmation(models.Model):
     '''
     This represents an abstract email confirmation.
     At least, the email confirmation contains a key, and is sent
@@ -124,8 +113,6 @@ class AbstractEmailConfirmation(models.Model):
     confirmation_key = models.CharField(max_length=40)
 
     objects = EmailConfirmationManager()
-    class Meta:
-        abstract = True
 
     def is_key_expired(self):
             expiration_date = self.sent + datetime.timedelta(
@@ -134,19 +121,3 @@ class AbstractEmailConfirmation(models.Model):
     def __unicode__(self):
         return u"{0} Confirmation".format(self.user.email)
 
-class EmailConfirmation(AbstractEmailConfirmation):
-    '''
-    This is the default type of email invite, that being the automated
-    one sent from the website to a user.
-    '''
-    pass
-
-class EmailInvite(AbstractEmailConfirmation):
-    '''
-    This is an email invite, which can be sent from one user to another.
-    '''
-    sent_by = models.ForeignKey(User, related_name='sent_invite_set')
-
-    def __unicode__(self):
-        return u"{0} Confirmation from {1}".format(self.user.email, \
-                                                   self.sent_by.email)
