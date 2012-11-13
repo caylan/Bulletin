@@ -16,8 +16,7 @@ def comment(request, postid):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            # author = from the current user's set of memberships, the one that
-            #          has a group with matching group id (pk)
+            # author = the membership whose group has a membership with the post we're looking at
             comment.author = request.user.membership_set.get(group__membership__post__pk=postid)
             # TODO try catch statement
             comment.post = Post.objects.get(pk=postid)
