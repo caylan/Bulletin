@@ -1,1 +1,1 @@
-{% load i18n %}DO NOT REPLY: Email invite from {{ sender_email }} to join {% if recipient_is_active %}{% endif %} Bulletin.
+{% load i18n %}DO NOT REPLY: Email invite to join {{ group }} on Bulletin.

@@ -7,6 +7,7 @@ from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.hashcompat import sha_constructor
 from django.core.urlresolvers import (
     reverse,
@@ -16,6 +17,10 @@ from django.core.urlresolvers import (
 ''' Contrib! '''
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+
+''' Bulletin Models! '''
+from groups.models import Group
+
 '''
 TODO: We need to delete expired confirmations.  We also need to go
 and make sure that we can actually send a confirmation email out there.
@@ -52,7 +57,7 @@ class EmailConfirmationManager(models.Manager):
             user.save()
             return user
 
-    def send_confirmation(self, user):
+    def send_confirmation(self, user, commit=True):
         salty_mail = sha_constructor(str(random())).hexdigest()[:5]
         salty_mail = salty_mail + user.email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
@@ -95,7 +100,8 @@ class EmailConfirmationManager(models.Manager):
             sent=datetime.datetime.now(),
             confirmation_key=confirmation_key
         )
-        confirmation.save()
+        if commit:
+            confirmation.save()
         return confirmation
 
     def delete_expired(self):
@@ -108,10 +114,14 @@ class EmailInviteManager(EmailConfirmationManager):
     message_path = "registration/email_invite_message.txt"
     view_path = "registration.views.confirm_email_invite"
 
-    def send_confirmation(self, sender, recipient):
+    def send_confirmation(self, sender, recipient, group):
         self.email_context['sender_email'] = sender.email
         self.email_context['recipient_is_active'] = recipient.is_active
-        super(EmailInviteManager, self).send_confirmation(recipient)
+        self.email_context['group'] = group.name 
+        confirmation = super(EmailInviteManager, self).send_confirmation(
+                recipient, commit=False)
+        confirmation.group = group
+        confirmation.save()
 
 class AbstractConfirmation(models.Model):
     '''
@@ -124,7 +134,7 @@ class AbstractConfirmation(models.Model):
     def expired(self):
         expiration_date = self.sent + datetime.timedelta(
                 days=settings.CONFIRMATION_DAYS)
-        return expiration <= datetime.datetime.now()
+        return expiration_date <= timezone.now()
     expired.boolean = True
 
     class Meta:
@@ -148,3 +158,4 @@ class EmailConfirmation(AbstractKeyConfirmation):
 
 class EmailInvite(AbstractKeyConfirmation):
     objects = EmailInviteManager()
+    group = models.ForeignKey(Group)
