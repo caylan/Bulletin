@@ -16,7 +16,7 @@ LOGIN_URL = "/"
 
 ''' EMAIL GOODIES '''
 FROM_EMAIL = "no-reply@bulletinapp.net"
-EMAIL_CONFIRMATION_DAYS = 7  # You get one week to respond!
+CONFIRMATION_DAYS = 7  # You get one week to respond!
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_PASSWORD = "bulletinemail"
 EMAIL_HOST_USER = FROM_EMAIL

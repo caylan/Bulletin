@@ -34,13 +34,13 @@ class EmailConfirmationManager(models.Manager):
         except self.model.DoesNotExist:
             return None
 
-        if not confirmation.is_key_expired():
+        if not confirmation.expired():
             user = confirmation.user
             user.is_active = True
             user.save()
             return user
 
-    def send_confirmation(self, user, sent_by=None):
+    def send_confirmation(self, user):
         salty_mail = sha_constructor(str(random())).hexdigest()[:5]
         salty_mail = salty_mail + user.email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
@@ -96,33 +96,39 @@ class EmailConfirmationManager(models.Manager):
 
     def delete_expired(self):
         for confirmation in self.all():
-            if confirmation.is_key_expired():
+            if confirmation.expired():
                 confirmation.delete()
 
 
 class AbstractConfirmation(models.Model):
-    user = models.ForeignKet(User)
-    sent = modesl.DateTimeField(auto_now_add=True)
-    confirmation_key = models.Charfield(max_length=4)
+    '''
+    This represents an abstract confirmation.  A confirmation has an expiration
+    date, and a user who must confirm said confirmation before it expires.
+    '''
+    user = models.ForeignKey(User)
+    sent = models.DateTimeField(auto_now_add=True)
 
-    def key_expired(self):
+    def expired(self):
         expiration_date = self.sent + datetime.timedelta(
-                days=settings.EMAIL_CONFIRMATION_DAYS)
+                days=settings.CONFIRMATION_DAYS)
         return expiration <= datetime.datetime.now()
-    key_expired.boolean = True
+    expired.boolean = True
 
     class Meta:
         abstract = True
 
-class EmailConfirmation(AbstractConfirmation):
-    '''
-    This represents an abstract email confirmation.
-    At least, the email confirmation contains a key, and is sent
-    to a user for activation (the user will currently not be active
-    at the time this is sent).
-    '''
-    objects = EmailConfirmationManager()
-
     def __unicode__(self):
-        return u"{0} Confirmation".format(self.user.email)
+        return u"{0} Confirmation".format(self.user)
 
+class AbstractKeyConfirmation(AbstractConfirmation):
+    '''
+    An extension of the abstract confirmation, this confirmation contains a key.
+    The key is intended to be used for verification.
+    '''
+    confirmation_key = models.CharField(max_length=4)
+
+    class Meta:
+        abstract = True
+
+class EmailConfirmation(AbstractKeyConfirmation):
+    objects = EmailConfirmationManager()
