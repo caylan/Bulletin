@@ -1,5 +1,5 @@
 from django import forms
-from models import Post
+from models import Post, Comment
 
 class PostForm(forms.ModelForm):
     """
@@ -12,4 +12,16 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         # the following should be set by the view depending on context
-        exclude = ['author', 'group',]
+        exclude = ['author',]
+
+class CommentForm(forms.ModelForm):
+	"""
+	Form for the comment model
+	"""
+
+	message = forms.RegexField(regex=r'[^\s]',)
+
+	class Meta:
+		model = Comment
+		# the following should be set by the view depending on context
+		exclude = ['author', 'post',]
