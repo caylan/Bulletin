@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Delete Me!!</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Posts!</h1>
+
+        <div id='posts'>
+            {% for post in post_list %}
+            <div class='post'>
+                <p><em>{{ post.author.user.email }}</em></p>
+                <p>{{ post.message }}</p>
+                <form class='commentForm'>{% csrf_token %}
+                    <input type='hidden' name='id_post' value='{{ post.pk }}' />
+                    <textarea id='id_message'></textarea>
+                    <input type='submit' value='Comment!' />
+                </form>
+                <hr />
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+        $(document).ready(function() {
+            $('.commentForm').submit(function(e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var url = 'http://localhost:8000/post/' + form.find('input[name="id_post"]').val() + '/comment/';
+                var msg = form.find('#id_message').val();
+                var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+
+                $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
+                    alert(data);
+                });
+            });
+        });
+        </script>
+    </body>
+</html>
