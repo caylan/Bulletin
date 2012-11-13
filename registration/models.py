@@ -67,14 +67,16 @@ class EmailConfirmationManager(models.Manager):
             path,
         )
 
-        self.email_context = {
+        self.email_context.update({
             "email": user.email,
             "activation_url": activation_url,
             "current_site": current_site,
             "confirmation_key": confirmation_key,
             "first_name": user.first_name,
             "last_name": user.last_name,
-        }
+        })
+
+        print self.email_context
 
         # If the email is an invite, then it will have been sent by
         # another user.  The templates are different, so make sure to
@@ -109,9 +111,9 @@ class EmailInviteManager(EmailConfirmationManager):
     view_path = "registration.views.confirm_email_invite"
 
     def send_confirmation(self, recipient, sender):
-        self.email_context['sender_first_name'] = sender.first_name
-        self.email_context['sender_last_name'] = sender.last_name
-        self.email_context['user_is_active'] = user.is_active
+        self.email_context['sender_email'] = sender.email
+        self.email_context['recipient_is_active'] = recipient.is_active
+        print self.email_context
         super(EmailInviteManager, self).send_confirmation(recipient)
 
 class AbstractConfirmation(models.Model):

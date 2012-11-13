@@ -1,9 +1,14 @@
 {% load i18n%}
-Hello {{ first_name }} {{ last_name }}, you have been invited by {{
-  sender_first_name }} {{ sender_last_name }} to join Bulletin!
+Hello {% if recipient_is_active %} {{ first_name }} {{ last_name }} {% else %}
+{{ email }} {% endif %}, you have been invited by 
+  {{ sender_email }} to join Bulletin!
 
-To activate an account and log in, please follow the link below:
-
+{% if not recipient_is_active %}
+To activate your account and log in, please follow the link below:
+{% else %}
+Since you already have an account with Bulletin, you can go to your inbox to
+accept the invite, or simply follow the link below:
+{% endif %}
 {{ activation_url }}
 
 -The Bulletin Team
