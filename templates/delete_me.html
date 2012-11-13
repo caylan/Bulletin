@@ -34,7 +34,7 @@
 
                 $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
                     alert(data);
-                });
+                }, 'json');
             });
         });
         </script>

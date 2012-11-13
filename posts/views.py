@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.core import serializers
 from django.shortcuts import render
 from forms import CommentForm
 from models import Comment, Post
@@ -21,7 +20,7 @@ def comment(request, postid):
             # TODO try catch statement
             comment.post = Post.objects.get(pk=postid)
             comment.save()
-            return HttpResponse(serializers.serialize('xml', [comment,]), mimetype='text/xml')
+            return HttpResponse(comment.json(), mimetype='application/json')
     else:
         return HttpResponseBadRequest()
 
