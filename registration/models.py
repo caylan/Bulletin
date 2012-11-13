@@ -28,6 +28,18 @@ model so that handling invites vs confirmations is a ton easier.
 '''
 
 class EmailConfirmationManager(models.Manager):
+    '''
+    Manages sending confirmation emails to users that are to be (eventually)
+    registered on the website.
+    '''
+
+    # If extra fields for when the message is to be sent, this is appended.  An
+    # alternative should be sought however, as this isn't best practice.
+    email_context = {}
+    subject_path = "registration/email_confirmation_subject.txt"
+    message_path = "registration/email_confirmation_message.txt"
+    view_path = "registration.views.confirm_email"
+
     def confirm_email(self, confirmation_key):
         try:
             confirmation = self.get(confirmation_key=confirmation_key)
@@ -45,12 +57,7 @@ class EmailConfirmationManager(models.Manager):
         salty_mail = salty_mail + user.email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
         current_site = Site.objects.get_current()
-        try:
-            path = reverse("registration.views.confirm_email", \
-                           args=[confirmation_key])
-        except NoReverseMatch:
-            path = reverse("registration_confirm_email", \
-                           args=[confirmation_key])
+        path = reverse(self.view_path, args=[confirmation_key])
         protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
 
         # This will be the url from which we activte the account!
@@ -60,7 +67,7 @@ class EmailConfirmationManager(models.Manager):
             path,
         )
 
-        context = {
+        self.email_context = {
             "email": user.email,
             "activation_url": activation_url,
             "current_site": current_site,
@@ -72,12 +79,10 @@ class EmailConfirmationManager(models.Manager):
         # If the email is an invite, then it will have been sent by
         # another user.  The templates are different, so make sure to
         # use the right one!
-        context['first_name'] = user.first_name
-        context['last_name'] = user.last_name
-        subject_path = "registration/email_confirmation_subject.txt"
-        message_path = "registration/email_confirmation_message.txt"
-        subject = render_to_string(subject_path, context)
-        message = render_to_string(message_path, context)
+        self.email_context['first_name'] = user.first_name
+        self.email_context['last_name'] = user.last_name
+        subject = render_to_string(self.subject_path, self.email_context)
+        message = render_to_string(self.message_path, self.email_context)
         
         # Join the subject into one long line.
         subject = "".join(subject.splitlines())
@@ -99,6 +104,16 @@ class EmailConfirmationManager(models.Manager):
             if confirmation.expired():
                 confirmation.delete()
 
+class EmailInviteManager(EmailConfirmationManager):
+    subject_path = "registration/email_confirmation_subject.txt"
+    message_path = "registration/email_confirmation_message.txt"
+    view_path = "registration.views.confirm_email_invite"
+
+    def send_confirmation(self, user, sender):
+        self.email_context['sender_first_name'] = sent_by.first_name
+        self.email_context['sender_last_name'] = sent_by
+        self.email_context['user_is_active'] = user.is_active
+        super(EmailInviteManager, self).send_confirmation(user)
 
 class AbstractConfirmation(models.Model):
     '''

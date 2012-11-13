@@ -1,5 +1,6 @@
 {% load i18n%}
-Hello, you have been invited by {{ first_name }} {{ last_name }} to join Bulletin!
+Hello {{ first_name }} {{ last_name }}, you have been invited by {{
+  sender_first_name }} {{ sender_last_name }} to join Bulletin!
 
 To activate an account and log in, please follow the link below:
 

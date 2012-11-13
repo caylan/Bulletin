@@ -49,3 +49,9 @@ def confirm_email(request, key):
     return render_to_response('confirm_email.html',
                               params,
                               context_instance=RequestContext(request))
+
+def confirm_email_invite(request, key):
+    '''
+    Confirms an email invite to a specific user.
+    '''
+    pass
