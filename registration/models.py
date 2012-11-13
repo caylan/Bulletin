@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.hashcompat import sha_constructor
+from djangot.core.exceptions import DoesNotExist
 from django.core.urlresolvers import (
     reverse,
     NoReverseMatch,
@@ -159,3 +160,15 @@ class EmailConfirmation(AbstractKeyConfirmation):
 class EmailInvite(AbstractKeyConfirmation):
     objects = EmailInviteManager()
     group = models.ForeignKey(Group)
+
+    def save(self, *args, **kwargs):
+        '''
+        Override of original save function.  This ensures that the user is not
+        already in the group the invite is for.  It would be silly to send an
+        invite to the user for a group they are already in.
+        '''
+        try:
+            self.group.members.all().get(id=self.user.id)
+            raise Exception, "invite cannot be to a user already in this group" 
+        except DoesNotExist:
+            super(EmailInvite, self).save()
