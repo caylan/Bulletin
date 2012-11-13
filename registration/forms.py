@@ -4,18 +4,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.conf import settings
 
-class RegistrationForm(forms.ModelForm):
+class __BaseRegistrationForm(forms.ModelForm):
+    '''
+    This is a basic form for implementing the user registration sans email,
+    since the user is going to be creating their account for the first time on
+    the website.
+    '''
     error_messages = {
         'duplicate_email'    : _("A user with that email already exists"),
         'password_mismatch'  : _("The two passwords did not match"),
         'password_too_short' : _("Your password should be at least 6 characters."),
     }
-
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}),
-                             label='', 
-                             max_length=40, 
-                             required=True)
-    email.widget.attrs['class'] = 'input-block-level'
     
     first_name = forms.RegexField(regex=r'^[\w.@+-]+$',
                                   widget=forms.TextInput(attrs={'placeholder': 'First Name'}), 
@@ -39,9 +38,33 @@ class RegistrationForm(forms.ModelForm):
                                 label='')
     password2.widget.attrs['class'] = 'input-block-level'
 
+    def clean_password2(self):
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        if len(password1) < settings.MIN_PASSWORD_LEN:
+            raise forms.ValidationError(self.error_messages['password_too_short'])
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(self.error_messages['password_mismatch'])
+        return password2
+
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password1', 'password2',)
+        fields = ('first_name', 'last_name', 'password1', 'password2',)
+
+class InviteRegistrationForm(__BaseRegistrationForm):
+    def __init__(self, *args, **kwargs):
+        try:
+            _instance = kwargs['instance']
+        except KeyError:
+            raise Exception("Must include User instance to form")
+
+class RegistrationForm(__BaseRegistrationForm):
+
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}),
+                             label='', 
+                             max_length=40, 
+                             required=True)
+    email.widget.attrs['class'] = 'input-block-level'
 
     def clean_email(self):
         '''
@@ -62,15 +85,6 @@ class RegistrationForm(forms.ModelForm):
             raise forms.ValidationError(self.error_messages['duplicate_email'])
         else:
             return email
-
-    def clean_password2(self):
-        password1 = self.cleaned_data['password1']
-        password2 = self.cleaned_data['password2']
-        if len(password1) < settings.MIN_PASSWORD_LEN:
-            raise forms.ValidationError(self.error_messages['password_too_short'])
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(self.error_messages['password_mismatch'])
-        return password2
 
     def save(self, commit=True):
         '''
@@ -96,3 +110,7 @@ class RegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'password1', 'password2',)
