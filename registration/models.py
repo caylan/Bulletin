@@ -23,14 +23,7 @@ from django.contrib.sites.models import Site
 from groups.models import Group
 
 '''
-TODO: We need to delete expired confirmations.  We also need to go
-and make sure that we can actually send a confirmation email out there.
-
-How will we handle multiple invites to the same user (likely just
-ignore them when the user enters the webpage).
-
-We also need to change the base email manager class to be an abstract
-model so that handling invites vs confirmations is a ton easier.
+TODO: We need to delete expired confirmations.
 '''
 
 class EmailConfirmationManager(models.Manager):
