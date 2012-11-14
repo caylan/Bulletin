@@ -3,7 +3,7 @@
 {% block body %}
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
-		<div class="container-fluid">
+		<div class="row-fluid">
 			<a class="span2" href="#top"><i id='jump-top'
 			   class="icon-arrow-up hide"></i></a>
 			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
@@ -30,7 +30,7 @@
 </div>
 
 {% block content %}
-<div id="top" class="container-fluid">
+<div id="top" class="row-fluid">
 	<div class="span2">
 		<div class="well">
 			{% block nav %}
@@ -42,7 +42,7 @@
 			{% endblock nav %}
 		</div>
 	</div>
-	<div id="content-container" class="span8 tab-content">
+	<div id="content-container" class="span8">
 		<div class="tab-pane active hero-unit">
 			<div id="content">
 				{% block tabcontent %}

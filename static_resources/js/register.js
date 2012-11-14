@@ -10,6 +10,9 @@ function register() {
 				containerInPage.html(nextPage.html());
 				containerInPage.find('ul.errorlist').addClass("alert alert-error")
 				ajaxRegister();
+				if($.browser.msie && parseInt($.browser.version, 10) < 10) {
+					$('input, textarea').placeholder();
+				}
 			});
 			containerInPage.fadeIn();
 		}

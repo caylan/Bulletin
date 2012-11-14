@@ -7,6 +7,10 @@ body {
 	text-align: center;
 }
 
+.brand {
+	text-align: left;
+}
+
 .loading-spinner {
     background: rgba(255,255,255,0.5) url('/static/images/ajax-loader.gif') no-repeat center center;
     height: 100%;

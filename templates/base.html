@@ -19,13 +19,28 @@
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
         <script src="/static/js/jquery.flip.min.js"></script>
         
+        <!--[if lt IE 10]>
+        <script src="/static/js/jquery.placeholder.min.js"></script>
+        
+        <script type="text/javascript">
+        $('input, textarea').placeholder();
+        </script>
+        
+        <style type="text/css">
+		.placeholder {
+		    color: #aaa;
+		}
+		</style>
+        
+        <![endif]-->
+        
         <!-- Google Analytics -->
 		<script type="text/javascript">
-			var _gaq = _gaq || [];
+		var _gaq = _gaq || [];
 			_gaq.push([ '_setAccount', 'UA-36110349-1' ]);
 			_gaq.push([ '_setDomainName', 'bulletinapp.net' ]);
 			_gaq.push([ '_trackPageview' ]);
-	
+			
 			(function() {
 				var ga = document.createElement('script');
 				ga.type = 'text/javascript';

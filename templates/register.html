@@ -1,11 +1,11 @@
 {% extends "starter_base.html" %}
 
 {% block formtype %}
-<form class="form-signin loading-spinner-container" method="post">
+<form class="form-signin loading-spinner-container clearfix" method="post">
 	{% csrf_token %}
 	<h2 class="form-signin-heading">Register your account</h2>
 	{{ form }}
-	<input class="register-btn btn btn-large btn-primary"
+	<input class="register-btn btn btn-large btn-primary pull-left"
 		type="submit" value="Register" /> <a href=".."
 		class="back-btn btn btn-large pull-right">Back</a>
     <div class="loading-spinner"></div>
