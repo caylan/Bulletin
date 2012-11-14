@@ -7,6 +7,19 @@ body {
 	text-align: center;
 }
 
+.loading-spinner {
+    background: rgba(255,255,255,0.5) url('/static/images/ajax-loader.gif') no-repeat center center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+}
+
+.loading-spinner-container {
+    position: relative;
+}
+
 .spacing-right {
 	margin-right: 10px;
 }
