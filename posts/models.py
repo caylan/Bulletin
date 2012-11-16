@@ -36,7 +36,7 @@ class AbstractPost(models.Model):
         generate JSON for the post/comment object, intended to be returned via AJAX
         '''
     
-        # Use the implicit template formatting rather than the to_string
+        # Use the implicit template formatting rather than the __str__
         # formatting, which is default if we were to return a formatted string.
         json_template = Template('''
             {
