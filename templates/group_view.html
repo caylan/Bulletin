@@ -15,8 +15,8 @@
     <div class="post clearfix">
         <div class="clearfix">
             <img class="avatar pull-left" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
-            <span>
-                <strong>{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+            <span class="clearfix">
+                <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
                 <em class="pull-right">{{ post.date_posted }}</em>
                 <br />
             </span>
@@ -63,7 +63,8 @@
 
 {% block extrajs %}
 <script>
-$('.comment-unhide-btn').click(function() {
+$('.comment-unhide-btn').click(function(event) {
+	event.preventDefault();
     $(this).parents('.post').find(".comment-form-container").show("blind");
 });
 </script>
