@@ -5,6 +5,7 @@ and commenting on posts in a group.
 '''
 from django.db import models
 from django.contrib.auth.models import User
+from django.template import Template, Context  # for rendering to JSON string.
 from groups.models import Group, Membership
 
 # TODO
@@ -34,24 +35,30 @@ class AbstractPost(models.Model):
         '''
         generate JSON for the post/comment object, intended to be returned via AJAX
         '''
-        json_string = '''
-            {{
+    
+        # Use the implicit template formatting rather than the to_string
+        # formatting, which is default if we were to return a formatted string.
+        json_template = Template('''
+            {
                 "author":
-                {{
-                    "email":"{0}",
-                    "first_name": "{1}",
-                    "last_name": "{2}"
-                }},
-                "date_posted": "{3}",
-                "time_stamp": "{4}",
-                "message": "{5}"
-            }}'''
-        return json_string.format(self.author.user.email,
-                                  self.author.user.first_name,
-                                  self.author.user.last_name,
-                                  self.date_posted,
-                                  self.time_stamp(),
-                                  self.message)
+                {
+                    "email": "{{ email }}",
+                    "first_name": "{{ first_name }}",
+                    "last_name": "{{ last_name }}"
+                },
+                "date_posted": "{{ date_posted }}",
+                "time_stamp": "{{ time_stamp }}",
+                "message": "{{ message }}"
+            }''')
+        ctx = Context({
+                'email': self.author.user.email,
+                'first_name': self.author.user.first_name,
+                'last_name': self.author.user.last_name,
+                'date_posted': self.date_posted,
+                'time_stamp': self.time_stamp(),
+                'message': self.message,
+        })
+        return json_template.render(ctx)
 
 class Post(AbstractPost):
     pass
