@@ -25,23 +25,23 @@
                 <br />
             </span>
             <div class="post-message">{{ post.message }}</div>
-	        {% if post.comment_set.all %}
-            <ul class="media-list comments">
-            {% for comment in post.comment_set.all %}
-            <li class="media comment">
-                <img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
-                <div class="media-body">
-	                <span class="media-heading clearfix">
-	                    <strong class="pull-left">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
-	                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
-	                    <br />
-	                </span>
-	                <div class="comment-message">{{ comment.message }}</div>
-                </div>
-            </li>
-            {% endfor %}
-            </ul>
-	        {% endif %}
+	        <ul class="media-list comments">
+		        {% if post.comment_set.all %}
+	            {% for comment in post.comment_set.all %}
+	            <li class="media comment">
+	                <img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
+	                <div class="media-body">
+		                <span class="media-heading clearfix">
+		                    <strong class="pull-left">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
+		                    <br />
+		                </span>
+		                <div class="comment-message">{{ comment.message }}</div>
+	                </div>
+	            </li>
+	            {% endfor %}
+		        {% endif %}
+	        </ul>
 	        <div class="comment-form-container well-small well clearfix hide">
 	            <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="user's gravatar" />
 		        <form method="post" class="clearfix comment-form">
@@ -89,7 +89,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
 	// live timestamp
-	$("abbr.timeago").timeago();
+	$('abbr.timeago').timeago();
 	
     // comment slider
     $('.comment-unhide-btn').click(function(event) {
@@ -118,19 +118,20 @@ $(document).ready(function() {
 
         $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
             // copy of message is returned via json, insert into page
-            comment_html = "<div class=\"comment\"> \
-                    <p> \
-                        <img class=\"avatar pull-left\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=50&d=mm" + "\" alt=\"commenters's gravatar\" /> \
-                        <span> \
-                            <strong>" + data.author.first_name + data.author.last_name + "</strong> \
-                            <em class=\"pull-right\">" + data.date_posted + "</em> \
-                            <br /> \
-                        </span> \
-                        " + data.message + " \
-                    </p> \
-                </div>";
-            form.parent().before(comment_html);
+            comment_html = "<li class=\"media comment\"> \
+                    <img class=\"avatar pull-left media-object\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=50&d=mm" + "\" alt=\"commenters's gravatar\" /> \
+	                <div class=\"media-body\"> \
+                   		<span class=\"media-heading clearfix\"> \
+	                        <strong class=\"pull-left\">" + data.author.first_name + " " + data.author.last_name + "</strong> \
+	                        <em class=\"pull-right\"><abbr class=\"timeago\" title=\"" + data.time_stamp + "\">" + data.date_posted + "</abbr></em> \
+	                        <br /> \
+	                    </span> \
+	                    <div class=\"comment-message\">" + data.message + "</div> \
+	                </div> \
+	            </li>";
+            form.parent().siblings('.comments').append($(comment_html));
             form.find("#id_message").val("");
+            $('abbr.timeago').timeago();
         }, 'json');
     });
 });

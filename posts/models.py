@@ -43,11 +43,13 @@ class AbstractPost(models.Model):
                     "last_name": "{2}"
                 }},
                 "date_posted": "{3}",
-                "message": "{4}"
+                "time_stamp": "{4}",
+                "message": "{5}"
             }}'''
         return json_string.format(self.author.user.email,
                                   self.author.user.first_name,
                                   self.author.user.last_name,
+                                  self.date_posted,
                                   self.time_stamp(),
                                   self.message)
 
