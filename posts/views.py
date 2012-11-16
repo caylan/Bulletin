@@ -34,8 +34,3 @@ def post(request, grpid):
             post.save()
             return HttpResponse(post.json(), mimetype='application/json')
     return HttpResponseBadRequest()
-
-@login_required
-def delete_me(request):
-    post_list = Post.objects.all()
-    return render(request, 'delete_me.html', {'post_list': post_list,})
