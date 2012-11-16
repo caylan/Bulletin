@@ -15,8 +15,8 @@
     <div class="post clearfix">
         <div class="clearfix">
             <img class="avatar pull-left" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
-            <span>
-                <strong>{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+            <span class="clearfix">
+                <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
                 <em class="pull-right">{{ post.time_stamp }}</em>
                 <br />
             </span>
