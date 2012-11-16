@@ -39,4 +39,4 @@ $("#flipbox").flip({
 	onEnd: function(){
 			console.log('when the animation has already ended');
 	}
-})
+});

@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'posts',   # Inter-user communication (handles posts/invites/comments) 
     'session',
     'registration',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

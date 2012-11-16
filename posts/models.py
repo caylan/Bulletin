@@ -17,7 +17,6 @@ class AbstractPost(models.Model):
     the only big difference being that a comment is related to a particular
     post.
     '''
-    #author = models.ForeignKey(User)
     author = models.ForeignKey('groups.Membership')
     date_posted = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
@@ -26,17 +25,33 @@ class AbstractPost(models.Model):
         ordering = ['-date_posted']  # newest first
 
     def __unicode__(self):
-        return "{0} ({1})".format(self.author, \
-                                  self.date_posted)
+        return "{0} ({1})".format(self.author, self.date_posted)
+
+    def time_stamp(self):
+        return self.date_posted.strftime('%c')
+
+    def json(self):
+        '''
+        generate JSON for the post/comment object, intended to be returned via AJAX
+        '''
+        json_string = '''
+            {{
+                "author":
+                {{
+                    "email":"{0}",
+                    "first_name": "{1}",
+                    "last_name": "{2}"
+                }},
+                "date_posted": "{3}",
+                "message": "{4}"
+            }}'''
+        return json_string.format(self.author.user.email,
+                                  self.author.user.first_name,
+                                  self.author.user.last_name,
+                                  self.time_stamp(),
+                                  self.message)
 
 class Post(AbstractPost):
-    ''' 
-    Remove this once user login works! For now all users will have access
-    to the (as of late) two static groups.  These groups will be here
-    in order to ease up code mangling by trying to get both login
-    and user->group posting working simultaneously.
-    '''
-    # group = models.ForeignKey(Group)
     pass
 
 class Comment(AbstractPost):

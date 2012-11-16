@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'bulletin_project.views.home', name='home'),
     # url(r'^bulletin_project/', include('bulletin_project.foo.urls')),
     url("", include("groups.urls")),
+    url("", include("posts.urls")),
     url("", include('registration.urls')),
     url("", include('session.urls')),
     url(r'^about/$', direct_to_template, {
