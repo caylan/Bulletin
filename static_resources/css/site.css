@@ -17,7 +17,6 @@ body {
     width: 100%;
     position: absolute;
     top: 0;
-    display: none;
 }
 
 .loading-spinner-container {
@@ -67,8 +66,19 @@ body {
 }
 
 .comment {
-	margin-left: 25px;
 	border-top: 1px solid #EEE;
+}
+
+.comments {
+	margin-left: 25px;
+}
+
+.comment-form {
+	margin: 0;
+}
+
+.comment-form input[type="text"] {
+	width: 50%;
 }
 
 #footer {

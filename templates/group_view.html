@@ -13,30 +13,43 @@
 {% if post_list %}
     {% for post in post_list %}
     <div class="post clearfix">
-        <p>
+        <div class="clearfix">
             <img class="avatar pull-left" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
             <span>
                 <strong>{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
                 <em class="pull-right">{{ post.date_posted }}</em>
                 <br />
             </span>
-            {{ post.message }}
-        </p>
-        {% if post.comment_set.all %}
-            {% for comment in post.comment_set.all %}
-            <div class="comment">
-                <p>
-                    <img class="avatar pull-left" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
-                    <span>
-                        <strong>{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
-                        <em class="pull-right">{{ comment.date_posted }}</em>
-                        <br />
-                    </span>
-                    {{ comment.message }}
-                </p>
-            </div>
-            {% endfor %}
-        {% endif %}
+            <span class="pull-right spacing-right">
+                <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
+            </span>
+            <div class="post-message">{{ post.message }}</div>
+        </div>
+        <div class="comments clearfix">
+	        {% if post.comment_set.all %}
+	            {% for comment in post.comment_set.all %}
+	            <div class="comment">
+	                <p>
+	                    <img class="avatar pull-left" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
+	                    <span>
+	                        <strong>{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+	                        <em class="pull-right">{{ comment.date_posted }}</em>
+	                        <br />
+	                    </span>
+	                    {{ comment.message }}
+	                </p>
+	            </div>
+	            {% endfor %}
+	        {% endif %}
+	        <div class="comment-form-container well-small well clearfix hide">
+	            <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="user's gravatar" />
+		        <form method="post" class="clearfix comment-form">
+				    <input type="text" placeholder="Comment on this post" id="id_comment" name="comment" class="pull-left spacing-right" autocomplete="off" />
+				    <input type="submit" value="Post" class="btn pull-left" />
+				    {% csrf_token %}
+				</form>
+			</div>
+		</div>
     </div>
     {% endfor %}
 
@@ -47,3 +60,11 @@
 {% endif %}
 
 {% endblock tabcontent %}
+
+{% block extrajs %}
+<script>
+$('.comment-unhide-btn').click(function() {
+    $(this).parents('.post').find(".comment-form-container").show("blind");
+});
+</script>
+{% endblock extrajs %}
