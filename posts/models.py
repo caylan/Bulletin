@@ -28,7 +28,7 @@ class AbstractPost(models.Model):
         return "{0} ({1})".format(self.author, self.date_posted)
 
     def time_stamp(self):
-        return self.date_posted.strftime('%c')
+        return self.date_posted.isoformat()
 
     def json(self):
         '''

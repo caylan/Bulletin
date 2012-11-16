@@ -18,7 +18,7 @@
         <div class="media-body">
             <span class="media-heading clearfix">
                 <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
-                <em class="pull-right">{{ post.time_stamp }}</em>
+                <em class="pull-right"><abbr class="timeago" title="{{ post.time_stamp }}">{{ post.date_posted }}</abbr></em>
                 <span class="pull-right spacing-right">
                     <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
                 </span>
@@ -33,7 +33,7 @@
                 <div class="media-body">
 	                <span class="media-heading clearfix">
 	                    <strong class="pull-left">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
-	                    <em class="pull-right">{{ comment.time_stamp }}</em>
+	                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
 	                    <br />
 	                </span>
 	                <div class="comment-message">{{ comment.message }}</div>
@@ -47,7 +47,7 @@
 		        <form method="post" class="clearfix comment-form">
 				    {% csrf_token %}
 				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left spacing-right" autocomplete="off" />
-                    <input type='hidden' name='id_post' value='{{ post.pk }}' />
+                    <input type="hidden" name="id_post" value="{{ post.pk }}" />
 				    <input type="submit" value="Comment" class="btn pull-left" />
 				</form>
 			</div>
@@ -84,9 +84,13 @@ $(document).ready(function() {
 {% endblock maincontent %}
 
 {% block extrajs %}
+<script src="/static/js/jquery.timeago.js" type="text/javascript"></script>
 <script src="/static/js/md5.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	// live timestamp
+	$("abbr.timeago").timeago();
+	
     // comment slider
     $('.comment-unhide-btn').click(function(event) {
     	var $commentForm;
@@ -111,7 +115,6 @@ $(document).ready(function() {
         var url = 'post/' + form.find('input[name="id_post"]').val() + '/comment/';
         var msg = form.find('#id_message').val();
         var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
-
 
         $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
             // copy of message is returned via json, insert into page
