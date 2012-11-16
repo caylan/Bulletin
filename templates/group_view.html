@@ -17,7 +17,7 @@
             <img class="avatar pull-left" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
             <span>
                 <strong>{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
-                <em class="pull-right">{{ post.date_posted }}</em>
+                <em class="pull-right">{{ post.time_stamp }}</em>
                 <br />
             </span>
             <span class="pull-right spacing-right">
@@ -33,7 +33,7 @@
 	                    <img class="avatar pull-left" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
 	                    <span>
 	                        <strong>{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
-	                        <em class="pull-right">{{ comment.date_posted }}</em>
+	                        <em class="pull-right">{{ comment.time_stamp }}</em>
 	                        <br />
 	                    </span>
 	                    {{ comment.message }}
@@ -44,7 +44,8 @@
 	        <div class="comment-form-container well-small well clearfix hide">
 	            <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="user's gravatar" />
 		        <form method="post" class="clearfix comment-form">
-				    <input type="text" placeholder="Comment on this post" id="id_comment" name="comment" class="pull-left spacing-right" autocomplete="off" />
+				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left spacing-right" autocomplete="off" />
+                    <input type='hidden' name='id_post' value='{{ post.pk }}' />
 				    <input type="submit" value="Post" class="btn pull-left" />
 				    {% csrf_token %}
 				</form>
@@ -58,7 +59,8 @@
         No posts are available.
     </div>
 {% endif %}
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+{# --- #}
+<!--<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 $(document).ready(function() {
     $('#post_form').submit(function(e) {
@@ -76,13 +78,46 @@ $(document).ready(function() {
         }, 'json');
     });
 });
-</script>
+</script>-->
+{# --- #}
 {% endblock tabcontent %}
 
 {% block extrajs %}
-<script>
-$('.comment-unhide-btn').click(function() {
-    $(this).parents('.post').find(".comment-form-container").show("blind");
+<script src="/static/js/md5.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // comment slider
+    $('.comment-unhide-btn').click(function() {
+        $(this).parents('.post').find(".comment-form-container").show("blind");
+    });
+
+    // comment ajax
+    $('.comment-form').submit(function(e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var url = 'post/' + form.find('input[name="id_post"]').val() + '/comment/';
+        var msg = form.find('#id_message').val();
+        var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+
+        $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
+            // copy of message is returned via json, insert into page
+            comment_html = "<div class=\"comment\"> \
+                    <p> \
+                        <img class=\"avatar pull-left\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=50&d=mm" + "\" alt=\"commenters's gravatar\" /> \
+                        <span> \
+                            <strong>" + data.author.first_name + data.author.last_name + "</strong> \
+                            <em class=\"pull-right\">" + data.date_posted + "</em> \
+                            <br /> \
+                        </span> \
+                        " + data.message + " \
+                    </p> \
+                </div>";
+            form.parent().before(comment_html);
+            form.find("#id_message").val("");
+        }, 'json');
+    });
 });
 </script>
 {% endblock extrajs %}

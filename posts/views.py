@@ -7,7 +7,7 @@ from models import Comment, Post
 from groups.models import Group
 
 @login_required
-def comment(request, postid):
+def comment(request, grpid, postid):
     # TODO check authorization
 
     if request.method == 'POST':

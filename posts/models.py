@@ -27,6 +27,9 @@ class AbstractPost(models.Model):
     def __unicode__(self):
         return "{0} ({1})".format(self.author, self.date_posted)
 
+    def time_stamp(self):
+        return self.date_posted.strftime('%c')
+
     def json(self):
         '''
         generate JSON for the post/comment object, intended to be returned via AJAX
@@ -45,7 +48,7 @@ class AbstractPost(models.Model):
         return json_string.format(self.author.user.email,
                                   self.author.user.first_name,
                                   self.author.user.last_name,
-                                  self.date_posted,
+                                  self.time_stamp(),
                                   self.message)
 
 class Post(AbstractPost):
