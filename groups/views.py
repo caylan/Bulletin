@@ -11,7 +11,7 @@ import md5
 
 @login_required
 def index(request):
-    return render(request, 'group_inbox.html', {'user': request.user})
+    return render(request, 'inbox.html', {'user': request.user})
 
 @login_required
 def group(request, grpid):

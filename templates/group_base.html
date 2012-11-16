@@ -18,10 +18,9 @@
 			<!-- Everything you want hidden at 940px or less, place within here -->
 			<div class="nav-collapse collapse span2">
 				{% block username %}
-				<!-- 
-				Empty intentionally.  Should be filled w/ username by
-				sub classes 
-				-->
+				<div class="pull-right">
+				    <div id="self-identity" class="">Welcome, {{ user.first_name }} <br> <a href="#settings" class="">Settings</a> | <a href="/logout" class="">Logout</a></div>
+				</div>
 				{% endblock username %}
 				<!-- .nav, .navbar-search, .navbar-form, etc -->
 			</div>
@@ -34,20 +33,28 @@
 	<div class="span2">
 		<div class="well">
 			{% block nav %}
-			<!-- 
-            If this is where you want to list all of the current user's groups in the active
-            session, then do so here, likely with a for loop.  This will not function, however
-            until we have properly working user logins.
-            -->
+			<ul id="team-nav" class="nav nav-list">
+			    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
+			    <li class="nav-header">Groups</li>
+			    {% for member in user.membership_set.all %}
+			    <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
+			        <a href="/group/{{ member.group.id }}/">
+			            {{ member.group.name }}
+			        </a>
+			    </li>
+			    {% endfor %}
+			    <li class="divider"></li>
+			    <a id="group-create-btn" class="btn btn-block" href="/create"><i class="icon-plus"></i> New Group</a>
+			</ul>
 			{% endblock nav %}
 		</div>
 	</div>
 	<div id="content-container" class="span8">
 		<div class="hero-unit">
 			<div id="content">
-				{% block tabcontent %}
+				{% block maincontent %}
 				<p>No Content</p>
-				{% endblock tabcontent %}
+				{% endblock maincontent %}
 			</div>
 		</div>
 		<div id="footer">This is a footer</div>
@@ -55,11 +62,10 @@
 	<div class="span2">
 		<div class="well">
 			{% block agenda %}
-			<!-- 
-            If this is where you want to list all of the current user's groups in the active
-            session, then do so here, likely with a for loop.  This will not function, however
-            until we have properly working user logins.
-            -->
+			<ul id='agenda' class="nav nav-list">
+			    <li class="nav-header">Agenda</li>
+			    <li class='divider'></li>
+			</ul>
 			{% endblock agenda %}
 		</div>
 	</div>

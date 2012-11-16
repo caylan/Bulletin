@@ -65,12 +65,12 @@ body {
 	word-wrap: break-word;
 }
 
-.comment {
-	border-top: 1px solid #EEE;
+.post-message {
+	word-wrap: break-word;
 }
 
-.comments {
-	margin-left: 25px;
+.comment {
+	border-top: 1px solid #EEE;
 }
 
 .comment-form {
