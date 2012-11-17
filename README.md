@@ -29,12 +29,24 @@ Bulletin is being developed by
 Project settings are currently setup for running on Heroku. In order to run locally on your machine, 
 you may need to comment out the two lines at the bottom of the settings file for dj_database_url.
 
-cd Bulletin
+        cd Bulletin
 
-virtualenv PYENV --distribute
+        virtualenv PYENV --distribute
 
-source PYENV/bin/activate
+        source PYENV/bin/activate
 
-pip install django psycopg2 dj-database-url
+At this point, the virtual environment has been activated.  As the project
+continues to change, so too will the requirements, which must be stored in the
+requirements.txt file in order for Heroku to know which apps to install.  To get
+up to speed if there is already a requirements.txt folder, run:
 
-pip freeze > requirements.txt
+        pip install -r requirements.txt
+
+If not, then install some base programs, and then create the requirements.txt
+file.
+
+        pip install django psycopg2 dj-database-url   # for example.
+
+After installing any new apps, always make sure to update the new requirements:
+
+        pip freeze > requirements.txt
