@@ -123,7 +123,6 @@ class AbstractConfirmation(models.Model):
     This represents an abstract confirmation.  A confirmation has an expiration
     date, and a user who must confirm said confirmation before it expires.
     '''
-    user = models.ForeignKey(User)
     sent = models.DateTimeField(auto_now_add=True)
 
     def expired(self):
@@ -149,11 +148,34 @@ class AbstractKeyConfirmation(AbstractConfirmation):
         abstract = True
 
 class EmailConfirmation(AbstractKeyConfirmation):
+    '''
+    This extends the abstract key confirmation, and is tied to a user and an
+    email.
+    '''
+    user = models.ForeignKey(User)
     objects = EmailConfirmationManager()
 
 class EmailInvite(AbstractKeyConfirmation):
+    '''
+    An email invite is sent to a recipient email, which will later be checked in
+    the database as to whether there is a user with this email already.
+
+    This is because if a user is given an email confirmation and they choose to
+    blow it off (and they're not already a member of the website), then they can
+    still register independent of the invite given to them, which would not be
+    possible by creating an inactive user.
+    '''
     objects = EmailInviteManager()
     group = models.ForeignKey(Group)
+    recipient_email = models.EmailField()
+
+    class MemberExists(Exception):
+        '''
+        An exception within EmailInvite that is raised when a member with the
+        given email already exists in the target group, thus preventing a save
+        from occurring.
+        '''
+        pass
 
     def save(self, *args, **kwargs):
         '''
@@ -162,7 +184,8 @@ class EmailInvite(AbstractKeyConfirmation):
         invite to the user for a group they are already in.
         '''
         try:
-            self.group.members.all().get(id=self.user.id)
-            raise Exception, "invite cannot be to a user already in this group" 
+            self.group.members.all().get(email=self.recipient_email)
+            raise EmailInvite.MemberExists("invite cannot be to a user" \
+                    " already in this group")
         except ObjectDoesNotExist:
             super(EmailInvite, self).save()
