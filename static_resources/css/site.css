@@ -7,6 +7,16 @@ body {
 	text-align: center;
 }
 
+#content-container {
+	margin-left: 0;
+}
+
+abbr.timeago {
+	border: none;
+	cursor: default;
+	color: #666;
+}
+
 .brand {
 	text-align: left;
 }

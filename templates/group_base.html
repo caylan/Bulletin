@@ -25,6 +25,7 @@
 
 {% block content %}
 <div id="top" class="row-fluid">
+	<div class="span10 offset1">
 	<div class="span2">
 		<div class="well">
 			{% block nav %}
@@ -44,7 +45,7 @@
 			{% endblock nav %}
 		</div>
 	</div>
-	<div id="content-container" class="span8">
+	<div id="content-container" class="span10">
 		<div class="hero-unit">
 			<div id="content">
 				{% block maincontent %}
@@ -54,7 +55,8 @@
 		</div>
 		<div id="footer">This is a footer</div>
 	</div>
-	<div class="span2">
+	</div>
+	<!--<div class="span2">
 		<div class="well">
 			{% block agenda %}
 			<ul id='agenda' class="nav nav-list">
@@ -63,7 +65,7 @@
 			</ul>
 			{% endblock agenda %}
 		</div>
-	</div>
+	</div> -->
 </div>
 {% endblock content %}
 
