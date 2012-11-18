@@ -61,5 +61,5 @@ def create(request):
             ''' TODO: Redirect to the new group '''
             return redirect('/')
     else:
-        form = GroupCreationForm()
+        return render(request, '404.html')
     return render(request, 'group_create.html', {'form': form,})

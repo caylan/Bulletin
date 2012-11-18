@@ -6,26 +6,83 @@ body {
     background-image: url("/static/images/whitey.png");
 }
 
+.placeholder {
+	color: #999;
+}
+
+#jump-top {
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	margin: 0;
+	cursor: pointer;
+}
+
 #content-container {
 	margin-left: 0;
+}
+
+#team-nav {
+	word-wrap: break-word;
 }
 
 abbr.timeago {
 	border: none;
 	cursor: default;
 	color: #666;
+	display: none;
 }
 
-.brand {
-	text-align: left;
+.avatar-container {
+	width: 75px;
+	height: 100%;
+	display: inline-block;
+	position: absolute;
+	overflow: hidden;
+}
+
+.post > .media-body {
+	margin-left: 80px;
+}
+
+.comment > .media-body {
+	margin-left: 75px;
+}
+
+.span2 > .well {
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+	border-right-width: 0px;
+	border-top-width: 0px;
+}
+
+#content-container > .hero-unit {
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
 }
 
 .loading-spinner {
     background: rgba(255,255,255,0.5) url('/static/images/ajax-loader.gif') no-repeat center center;
     height: 100%;
     width: 100%;
-    position: absolute;
     top: 0;
+}
+
+.avatar-container {
+	z-index: 1;
+	background-color: white;
+}
+
+.post .avatar {
+	margin-right: 5px;
+	min-height: 200px;
+	min-width: 200px;
 }
 
 .loading-spinner-container {
@@ -44,10 +101,6 @@ abbr.timeago {
 	margin-right: 30px;
 }
 
-.avatar {
-	margin-right: 5px;
-}
-
 .container-fluid {
 	display: inline-block;
 	text-align: left;
@@ -59,6 +112,7 @@ abbr.timeago {
 
 .navbar .avatar {
     margin-top: -5px;
+	display: hide;
 }
 
 .post {
@@ -66,14 +120,20 @@ abbr.timeago {
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
 	margin: 0px;
+	position: relative;
+	min-height: 75px;
 }
 
-.post-message {
+.comment-message {
 	word-wrap: break-word;
 }
 
 .comment {
 	border-top: 1px solid #EEE;
+	margin: 0px;
+	word-wrap: break-word;
+	position: relative;
+	min-height: 75px;
 }
 
 .comment-form {
@@ -120,4 +180,8 @@ textarea {
     margin: 0 auto;
     max-width: 940px;
     overflow: hidden;
+}
+
+.modal form {
+	margin: 0;
 }

@@ -40,8 +40,9 @@
 			    </li>
 			    {% endfor %}
 			    <li class="divider"></li>
-			    <a id="group-create-btn" class="btn btn-block" href="/create"><i class="icon-plus"></i> New Group</a>
 			</ul>
+		    <a id="create-group-btn" class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
+			
 			{% endblock nav %}
 		</div>
 	</div>
@@ -67,6 +68,16 @@
 		</div>
 	</div> -->
 </div>
+
+{% include "group_create_modal.html" %}
+
+<div id="jump-top" class="hide well"><i class="icon-arrow-up"></i></div>
 {% endblock content %}
 
 {% endblock body %}
+
+{% block extrajs %}
+<script type="text/javascript">
+
+</script>
+{% endblock extrajs %}
