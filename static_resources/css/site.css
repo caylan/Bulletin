@@ -60,6 +60,8 @@ abbr.timeago {
 .comment-form-container {
 	-moz-border-radius: 0;
     -webkit-border-radius: 0;
+	padding: 0;
+	margin: 0;
 }
 
 #content-container > .hero-unit, #left-column {
@@ -124,7 +126,7 @@ abbr.timeago {
 
 .post {
 	background-color: white;
-	border-bottom: 1px solid #EEE;
+	border-top: 1px solid #EEE;
 }
 
 .post-message, .comment-message {
@@ -146,6 +148,10 @@ abbr.timeago {
 	margin: 0;
 }
 
+.comment-box {
+	margin: 0 5px !important;
+}
+
 .comment-form input[type="text"] {
 	width: 50%;
 }
@@ -153,6 +159,7 @@ abbr.timeago {
 #footer {
 	font-size: 9pt;
 	padding: 0 3px;
+	color: #AAA;
 }
 
 textarea {
