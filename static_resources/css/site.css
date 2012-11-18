@@ -33,7 +33,7 @@ body {
 abbr.timeago {
 	border: none;
 	cursor: default;
-	color: #666;
+	color: #AAA;
 	display: none;
 }
 
@@ -55,6 +55,11 @@ abbr.timeago {
     -webkit-border-bottom-right-radius: 0;
 	border-right-width: 0px;
 	border-top-width: 0px;
+}
+
+.comment-form-container {
+	-moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 #content-container > .hero-unit, #left-column {

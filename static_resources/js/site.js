@@ -125,16 +125,22 @@ $(document).ready(function() {
     $('abbr.timeago').fadeIn();
 });
 
+
+$(window).load(function() {
+    $('.avatar').fadeIn();
+});
+
 function resizeAvatar (avatar, parentHeight) {
     var img = document.createElement('img'); // This might have fixed the IE problem
     img.src = avatar.src;
     var scale = img.width/img.height;
-    var computedHeight = Math.min(img.height, Math.max(parentHeight, 65));
-   
-    $(avatar).css('height',  computedHeight + 'px');
-    $(avatar).css('min-width',  computedHeight*scale + 'px');
-    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
-    $(avatar).fadeIn();
+    var computedHeight = Math.max(Math.min(img.height, parentHeight), 65);
+    $(img).load(function() {
+        $(avatar).css('height',  computedHeight + 'px');
+        $(avatar).css('min-width',  computedHeight*scale + 'px');
+        $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
+        $(avatar).fadeIn();
+    });
 }
 
 $('#flipbox').flip({
