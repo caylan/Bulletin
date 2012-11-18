@@ -92,52 +92,38 @@ $(document).ready(function() {
         }, 'json');
     });
     
-    //I'll make this prettier later
+    // Dynamic avatar sizes
     $('.post').each(function() { 
         var postHeight = $(this).height();
         
-        $(this).children('.avatar-container').each(function() {
-            $(this).children('.avatar').each(function() {
-                var newImage = new Image();
-                newImage.src = this.src;
-                var width = newImage.width;
-                var height = newImage.height;
-                
-                var scale = width/height;
-                var computedHeight = Math.min(height, Math.max(postHeight, 65));
-                var avatar = this;
-                $(newImage).load(function() {
-                    $(avatar).css('height',  computedHeight + 'px');
-                    $(avatar).css('min-width',  computedHeight*scale + 'px');
-                    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
-                });
+        $(this).children('.avatar-container').each(function() { // Avatars within posts
+            $(this).find('.avatar').each(function() {
+                resizeAvatar(this, postHeight);
             });
         });
         
-        $(this).find('.comment').each(function() {
+        $(this).find('.comment').each(function() { // Avatars within comments
             var commentHeight = $(this).height();
-            
             $(this).find('.avatar').each(function() {
-                var newImage = new Image();
-                newImage.src = this.src;
-                var width = newImage.width;
-                var height = newImage.height;
-                
-                var scale = width/height;
-                var computedHeight = Math.min(height, Math.max(commentHeight, 65));
-               
-                var avatar = this;
-                $(newImage).load(function() {
-                    $(avatar).css('height',  computedHeight + 'px');
-                    $(avatar).css('min-width',  computedHeight*scale + 'px');
-                    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
-                });
+                resizeAvatar(this, commentHeight);
             });
         });
     });
-    $('.avatar').show();
-    $('abbr.timeago').show();
+    $('abbr.timeago').fadeIn();
 });
+
+function resizeAvatar (avatarDOM, parentHeight) {
+    var img = document.createElement('img'); // This might have fixed the IE problem
+    img.src = avatarDOM.src;
+    var scale = img.width/img.height;
+    var computedHeight = Math.min(img.height, Math.max(parentHeight, 65));
+   
+    var avatar = avatarDOM;
+    $(avatar).css('height',  computedHeight + 'px');
+    $(avatar).css('min-width',  computedHeight*scale + 'px');
+    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
+    $(avatar).fadeIn();
+}
 
 $('#flipbox').flip({
 	direction:'tb',

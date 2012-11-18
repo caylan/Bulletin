@@ -22,6 +22,10 @@ body {
 	margin-left: 0;
 }
 
+#content-container .avatar {
+	display: none;
+}
+
 #team-nav {
 	word-wrap: break-word;
 }
@@ -31,6 +35,10 @@ abbr.timeago {
 	cursor: default;
 	color: #666;
 	display: none;
+}
+
+.comment .avatar-container {
+	border-left: 1px solid #EEE;	
 }
 
 .avatar-container {
