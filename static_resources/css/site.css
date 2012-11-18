@@ -35,9 +35,6 @@ abbr.timeago {
 
 .avatar-container {
 	width: 75px;
-	height: 100%;
-	display: inline-block;
-	position: absolute;
 	overflow: hidden;
 }
 
@@ -121,7 +118,6 @@ abbr.timeago {
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
 	margin: 0px;
-	position: relative;
 	min-height: 75px;
 }
 
@@ -133,7 +129,6 @@ abbr.timeago {
 	border-top: 1px solid #EEE;
 	margin: 0px;
 	word-wrap: break-word;
-	position: relative;
 	min-height: 75px;
 }
 
