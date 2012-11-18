@@ -32,6 +32,26 @@ abbr.timeago {
 	color: #666;
 }
 
+.avatar-container {
+	width: 75px;
+	height: 100%;
+	display: inline-block;
+	position: absolute;
+	overflow: hidden;
+}
+
+.post-message {
+	margin-left: 80px;
+}
+
+.comment .avatar-container {
+	margin-left: 75px;
+}
+
+.comment-message {
+	margin-left: 160px;
+}
+
 .brand {
 	text-align: left;
 }
@@ -40,8 +60,18 @@ abbr.timeago {
     background: rgba(255,255,255,0.5) url('/static/images/ajax-loader.gif') no-repeat center center;
     height: 100%;
     width: 100%;
-    position: absolute;
     top: 0;
+}
+
+.avatar-container {
+	z-index: 1;
+	background-color: white;
+}
+
+.post .avatar {
+	margin-right: 5px;
+	min-height: 200px;
+	min-width: 200px;
 }
 
 .loading-spinner-container {
@@ -58,10 +88,6 @@ abbr.timeago {
 
 #self-identity {
 	margin-right: 30px;
-}
-
-.avatar {
-	margin-right: 5px;
 }
 
 .container-fluid {
@@ -83,6 +109,8 @@ abbr.timeago {
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
 	margin: 0px;
+	position: relative;
+	min-height: 75px;
 }
 
 .post-message {
@@ -91,6 +119,10 @@ abbr.timeago {
 
 .comment {
 	border-top: 1px solid #EEE;
+	margin: 0px;
+	word-wrap: break-word;
+	position: relative;
+	min-height: 75px;
 }
 
 .comment-form {

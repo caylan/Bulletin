@@ -37,6 +37,17 @@ $('#jump-top').click(function() {
     }, 200);
 });
 
+$(document).ready(function() {
+    $('.tabs-left').children().each(function() {
+        $(this).css("height", $(this).parent().css("height"));
+    });
+    // Find ALL <form> tags
+    $('form').submit(function(){
+        // On submit disable its submit button
+        $('.submit-btn', this).attr('disabled', 'disabled');
+    });
+});
+
 $('#flipbox').flip({
 	direction:'tb',
 	onBefore: function(){
