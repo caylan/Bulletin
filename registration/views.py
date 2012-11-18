@@ -12,6 +12,14 @@ from models import (
     EmailInvite,
 )
 from forms import RegistrationForm
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+)
+from django.conf import settings
+from django.contrib.auth.models import (
+    User,
+)
 
 def register(request):
     '''
@@ -78,3 +86,66 @@ def confirm_email_invite(request, key):
             pass
         else:
             pass # Return a 404.
+
+def change_password(request):
+    '''
+    Handle password change logic
+    returns JSON value True on success
+    {
+        "success": true/false,
+        "error": "error message"
+    }
+
+    input: cur_password, new_password1, new_password2
+    output: error messages
+    '''
+
+    def json_response(success, error=""):
+        json_text = '{{"success": {0}, "error": "{1}"}}'.format(success, error)
+        return HttpResponse(json_text, mimetype='application/json')
+
+    if request.method == 'POST':
+        cur_password = request.POST['cur_password']
+        new_password1 = request.POST['new_password1']
+        new_password2 = request.POST['new_password2']
+
+        if not cur_password or not new_password1 or not new_password2:
+            # a field wasn't filled
+            return json_response("false", "Please fill all fields")
+
+        if not request.user.check_password(cur_password):
+            # incorrect password
+            return json_response("false", "Incorrect password")
+
+        if len(new_password1) < settings.MIN_PASSWORD_LEN or len(new_password2) < settings.MIN_PASSWORD_LEN:
+            # new password too short
+            return json_response("false", "New password must be at least {0} characters".format(settings.MIN_PASSWORD_LEN))
+
+        if new_password1 != new_password2:
+            # password fields don't match
+            return json_response("false", "New password fields must match")
+
+        request.user.set_password(new_password1)
+        request.user.save()
+
+        return json_response("true")
+    else:
+        return HttpResponseBadRequest()
+
+def reset_password(request):
+    '''
+    Reset password for given email and send an email
+    '''
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            forgetful_user = User.objects.get(email=email)
+            new_password = User.objects.make_random_password()
+            forgetful_user.set_password(new_password)
+            forgetful_user.save()
+            forgetful_user.email_user('Password Reset', 'New password: ' + new_password)
+            return render(request, 'password_reset.html', {'password_changed': True,})
+        except User.DoesNotExist:
+            return render(request, 'password_reset.html', {'password_not_found': True,})
+    else:
+        return render(request, 'password_reset.html')

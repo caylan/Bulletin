@@ -1,14 +1,22 @@
-<div class="modal hide fade">
-	<div class="modal-header">
-		<input type="button" class="close" data-dismiss="modal"
-			aria-hidden="true" value="&times;" />
-		<h3>Create a group</h3>
-	</div>
-	<div class="modal-body">
-		{{ form }}
-	</div>
-	<div class="modal-footer">
-		<a href="#" class="btn">Cancel</a>
-		<a href="#" class="btn btn-primary">Create</a>
-	</div>
+<div id="create-group" class="modal hide fade">
+	<form action="/create/" id="create-group-form" method="post">
+		<div class="modal-header clearfix">
+			<input type="button" class="close" data-dismiss="modal"
+				aria-hidden="true" value="&times;" />
+			<h3>Create a group</h3>
+		</div>
+		<div class="modal-body">
+		    {% csrf_token %}
+		    {% if form %}
+		    {{ form }}
+		    {% else %}
+	        <input type="text" name="name" id="id_name" placeholder="Group Name" />
+		    {% endif %}
+		    
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+			<input type="submit" id="create-group-btn" class="btn btn-primary" value="Create" />
+		</div>
+	</form>
 </div>

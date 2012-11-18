@@ -1,4 +1,5 @@
 from django.db import models
+from django.template import Template, Context
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.models import (
     User
@@ -23,7 +24,21 @@ class Group(models.Model):
 
     ''' So it's called 'members' instead of user_set (implicitly) '''
     members = models.ManyToManyField(User, through='Membership')
-
+    
+    def json(self):
+        '''
+        generate JSON for the post/comment object, intended to be returned via AJAX
+        '''
+    
+        json_template = Template('''
+            {
+                "location": "{{ location }}"
+            }''')
+        ctx = Context({
+                'location': '/group/' + str(self.pk)
+        })
+        return json_template.render(ctx)
+    
     def __unicode__(self):
         return self.name
 

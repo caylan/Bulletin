@@ -1,37 +1,34 @@
 {% extends "base.html" %}
 
+{# comment: load custom gravatar filter #}
+{% load gravatar %}
+
 {% block body %}
 <div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="row-fluid">
-			<a class="span2" href="#top"><i id='jump-top'
-			   class="icon-arrow-up hide"></i></a>
-			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-			<a class="btn btn-navbar pull-left" data-toggle="collapse"
-			   data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-			   class="icon-bar"></span> <span class="icon-bar"></span>
-			</a>
-
-			<!-- Be sure to leave the brand out there if you want it shown -->
-			<a class="brand span8" href="/">Bulletin</a>
-
-			<!-- Everything you want hidden at 940px or less, place within here -->
-			<div class="nav-collapse collapse span2">
-				{% block username %}
-				<div class="pull-right">
-				    <div id="self-identity" class="">Welcome, {{ user.first_name }} <br> <a href="#settings" class="">Settings</a> | <a href="/logout" class="">Logout</a></div>
-				</div>
-				{% endblock username %}
-				<!-- .nav, .navbar-search, .navbar-form, etc -->
-			</div>
-		</div>
-	</div>
+  <div class="navbar-inner">
+  	<div class="container">
+    <a class="brand" href="#">Bulletin</a>
+    <ul class="nav pull-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <img class="avatar pull-left media-object" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />
+          <span>{{ user.first_name }} {{ user.last_name }}</span>
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+        	<li><a href="/logout">Logout</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
 </div>
 
 {% block content %}
 <div id="top" class="row-fluid">
-	<div class="span2">
-		<div class="well">
+	<div class="container-narrow">
+	<div class="span3">
+		<div id='left-column' class="well">
 			{% block nav %}
 			<ul id="team-nav" class="nav nav-list">
 			    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
@@ -44,12 +41,13 @@
 			    </li>
 			    {% endfor %}
 			    <li class="divider"></li>
-			    <a id="group-create-btn" class="btn btn-block" href="/create"><i class="icon-plus"></i> New Group</a>
 			</ul>
+		    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
+			
 			{% endblock nav %}
 		</div>
 	</div>
-	<div id="content-container" class="span8">
+	<div id="content-container" class="span9">
 		<div class="hero-unit">
 			<div id="content">
 				{% block maincontent %}
@@ -59,17 +57,60 @@
 		</div>
 		<div id="footer">This is a footer</div>
 	</div>
+	</div>
 	<div class="span2">
 		<div class="well">
 			{% block agenda %}
-			<ul id='agenda' class="nav nav-list">
+			<!--<ul id='agenda' class="nav nav-list">
 			    <li class="nav-header">Agenda</li>
 			    <li class='divider'></li>
-			</ul>
+			</ul>-->
+			<!-- TODO get rid of this garbage -->
+			<form id="change-password">{% csrf_token %}
+				<p><input type="password" name="cur_password" placeholder="Current Password" /></p>
+				<p><input type="password" name="new_password1" placeholder="New Password" /></p>
+				<p><input type="password" name="new_password2" placeholder="Retype New Password" /></p>
+				<p><input type="submit" value="Change Password" /></p>
+			</form>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+			<script>
+			$(document).ready(function() {
+				$("#change-password").submit(function(event) {
+					event.preventDefault();
+
+					var form = $(this);
+					var url = '/change_password/';
+					var cur_password = form.find('input[name="cur_password"]').val();
+					var new_password1 = form.find('input[name="new_password1"]').val();
+					var new_password2 = form.find('input[name="new_password2"]').val();
+					var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+					form.find('input[type="password"]').val("");
+
+					$.post(url, {cur_password: cur_password, new_password1: new_password1, new_password2: new_password2, csrfmiddlewaretoken: csrf},
+						function(data) {
+							if (!data.success) {
+								alert(data.error);
+							} else {
+								alert("Success!");
+							}
+						}, 'json');
+				});
+			});
+			</script>
+			<!-- end TOOD -->
 			{% endblock agenda %}
 		</div>
 	</div>
 </div>
+
+{% include "group_create_modal.html" with csrf_token=csrf_token only %}
+
+<div id="jump-top" class="hide well"><i class="icon-arrow-up"></i></div>
 {% endblock content %}
 
 {% endblock body %}
+
+{% block extrajs %}
+<script src="{{ STATIC_URL }}js/create-group.js"></script>
+{% endblock extrajs %}

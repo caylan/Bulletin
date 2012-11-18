@@ -10,7 +10,10 @@ class GroupCreationForm(forms.ModelForm):
     to a group via the Membership model (in groups.models)
     '''
 
-    name = forms.RegexField(regex=r'[^\s]')
+    name = forms.RegexField(regex=r'[^\s]',
+                            widget=forms.TextInput(attrs={'placeholder': 'Group Name'}), 
+                            required=True,
+                            label='')
 
     class Meta:
         model = Group
