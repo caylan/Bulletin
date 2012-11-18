@@ -3,3 +3,15 @@
 		/*height: 40px;*/
     }
 }
+
+.container {
+	width: 1000px;
+}
+
+.media {
+	margin: 0px;
+}
+
+.media, .media .media {
+margin-top: 0;
+}

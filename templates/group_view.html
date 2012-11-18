@@ -14,9 +14,9 @@
 <ul id="posts" class="media-list">
     {% for post in post_list %}
     <li class="media post">
-		<!--<div class='avatar-container'>-->
-			<img class="avatar pull-left media-object" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
-		<!--</div>-->
+		<div class='avatar-container pull-left media-object'>
+			<img class="avatar" src="{{ post.author.user.email|gravatar:'500' }}" alt="author's gravatar" />
+		</div>
         <div class="media-body">
             <span class="media-heading clearfix">
                 <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
@@ -31,8 +31,10 @@
 		        {% if post.comment_set.all %}
 	            {% for comment in post.comment_set.all %}
 	            <li class="media comment">
-	                <img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'50' }}" alt="commenters's gravatar" />
-	                <div class="media-body">
+					<div class='avatar-container pull-left media-object'>
+						<img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'500' }}" alt="commenters's gravatar" />
+	                </div>
+					<div class="media-body">
 		                <span class="media-heading clearfix">
 		                    <strong class="pull-left">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
 		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
