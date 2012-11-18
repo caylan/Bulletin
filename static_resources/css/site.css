@@ -4,7 +4,6 @@ body {
 	padding-top: 40px;
     background-color: #f5f5f5;
     background-image: url("/static/images/whitey.png");
-	text-align: center;
 }
 
 #content-container {
@@ -54,13 +53,13 @@ abbr.timeago {
 	text-align: left;
 }
 
-.navbar-inner .container-fluid {
-	padding: 0;
+.navbar-inner .container {
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.navbar-inner > .container-fluid .span2:first-child {
-	padding: 10px 0;
-	text-align: center;
+.navbar .avatar {
+    margin-top: -5px;
 }
 
 .post {
@@ -116,4 +115,9 @@ textarea {
 	margin: 0;
 	padding: 0 0 0 15px;
 	list-style: none;
+}
+
+.container-narrow {
+    margin: 0 auto;
+    max-width: 1000px;
 }

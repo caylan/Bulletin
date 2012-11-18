@@ -8,8 +8,8 @@
   <div class="navbar-inner">
   	<div class="container">
     <a class="brand" href="#">Bulletin</a>
-    <ul class="nav">
-      <li class="dropdown pull-right">
+    <ul class="nav pull-right">
+      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <img class="avatar pull-left media-object" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />{{ user.first_name }} {{ user.last_name }}
           <b class="caret"></b>
@@ -25,7 +25,7 @@
 
 {% block content %}
 <div id="top" class="row-fluid">
-	<div class="span10 offset1">
+	<div class="container-narrow">
 	<div class="span2">
 		<div class="well">
 			{% block nav %}
