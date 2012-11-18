@@ -15,15 +15,15 @@
     {% for post in post_list %}
     <li class="media post">
 		<div class='avatar-container pull-left media-object'>
-			<img class="avatar" src="{{ post.author.user.email|gravatar:'500' }}" alt="author's gravatar" />
+			<img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
 		</div>
         <div class="media-body">
-            <span class="media-heading clearfix">
-                <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
-                <em class="pull-right"><abbr class="timeago" title="{{ post.time_stamp }}">{{ post.date_posted }}</abbr></em>
-                <span class="pull-right spacing-right">
+            <span class="media-heading">
+                <strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+				<span class="pull-right">
                     <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
                 </span>
+                <em class="pull-right"><abbr class="timeago" title="{{ post.time_stamp }}">{{ post.date_posted }}</abbr></em>
                 <br />
             </span>
             <div class="post-message">{{ post.message }}</div>
@@ -32,11 +32,11 @@
 	            {% for comment in post.comment_set.all %}
 	            <li class="media comment">
 					<div class='avatar-container pull-left media-object'>
-						<img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'500' }}" alt="commenters's gravatar" />
+						<img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'300' }}" alt="commenters's gravatar" />
 	                </div>
 					<div class="media-body">
-		                <span class="media-heading clearfix">
-		                    <strong class="pull-left">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+		                <span class="media-heading">
+		                    <strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
 		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
 		                    <br />
 		                </span>
