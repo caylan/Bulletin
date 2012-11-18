@@ -54,12 +54,6 @@ abbr.timeago {
 	text-align: left;
 }
 
-@media (min-width: 979px) {
-	.navbar-inner {
-		height: 40px;
-	}
-}
-
 .navbar-inner .container-fluid {
 	padding: 0;
 }
