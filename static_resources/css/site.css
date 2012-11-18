@@ -6,6 +6,10 @@ body {
     background-image: url("/static/images/whitey.png");
 }
 
+.placeholder {
+	color: #999;
+}
+
 #jump-top {
 	position: fixed;
 	right: 10px;
@@ -132,4 +136,8 @@ textarea {
 .container-narrow {
     margin: 0 auto;
     max-width: 1000px;
+}
+
+.modal form {
+	margin: 0;
 }

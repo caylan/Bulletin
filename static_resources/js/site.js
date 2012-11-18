@@ -31,7 +31,7 @@ _gaq.push(['_trackPageview']);
 //    }
 //});
 
-$('#jump-top').click(function () {
+$('#jump-top').click(function() {
 	$('html, body').animate({
         scrollTop: 0
     }, 200);
