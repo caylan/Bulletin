@@ -47,7 +47,7 @@
 		        {% endif %}
 	        </ul>
 	        <div class="comment-form-container well-small well clearfix hide">
-	            <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="user's gravatar" />
+	            <img class="pull-left" src="{{ user.email|gravatar:'30' }}" alt="user's gravatar" width="" />
 		        <form method="post" class="clearfix comment-form">
 				    {% csrf_token %}
 				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left spacing-right" autocomplete="off" />
@@ -91,5 +91,4 @@ $(document).ready(function() {
 {{ block.super }}
 <script src="{{ STATIC_URL }}js/jquery.timeago.min.js" type="text/javascript"></script>
 <script src="{{ STATIC_URL }}js/md5.js" type="text/javascript"></script>
-<script type="text/javascript">
 {% endblock extrajs %}

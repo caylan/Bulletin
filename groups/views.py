@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -59,7 +59,8 @@ def create(request):
             post_list = list(Post.objects.filter(author__group__id=group.pk))
 
             ''' TODO: Redirect to the new group '''
-            return redirect('/')
+            
+            return HttpResponse(group.json(), mimetype='application/json')
     else:
         raise Http404
     return render(request, 'group_create_modal.html', {'form': form,})
