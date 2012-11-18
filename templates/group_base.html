@@ -1,31 +1,26 @@
 {% extends "base.html" %}
 
+{# comment: load custom gravatar filter #}
+{% load gravatar %}
+
 {% block body %}
 <div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="row-fluid">
-			<a class="span2" href="#top"><i id='jump-top'
-			   class="icon-arrow-up hide"></i></a>
-			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-			<a class="btn btn-navbar pull-left" data-toggle="collapse"
-			   data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-			   class="icon-bar"></span> <span class="icon-bar"></span>
-			</a>
-
-			<!-- Be sure to leave the brand out there if you want it shown -->
-			<a class="brand span8" href="/">Bulletin</a>
-
-			<!-- Everything you want hidden at 940px or less, place within here -->
-			<div class="nav-collapse collapse span2">
-				{% block username %}
-				<div class="pull-right">
-				    <div id="self-identity" class="">Welcome, {{ user.first_name }} <br> <a href="#settings" class="">Settings</a> | <a href="/logout" class="">Logout</a></div>
-				</div>
-				{% endblock username %}
-				<!-- .nav, .navbar-search, .navbar-form, etc -->
-			</div>
-		</div>
-	</div>
+  <div class="navbar-inner">
+  	<div class="container">
+    <a class="brand" href="#">Bulletin</a>
+    <ul class="nav">
+      <li class="dropdown pull-right">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <img class="avatar pull-left media-object" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />{{ user.first_name }} {{ user.last_name }}
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+        	<li><a href="/logout">Logout</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
 </div>
 
 {% block content %}

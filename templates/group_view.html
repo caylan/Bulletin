@@ -90,12 +90,12 @@ $(document).ready(function() {
 $(document).ready(function() {
 	// live timestamp
 	$('abbr.timeago').timeago();
-	
+
     // comment slider
     $('.comment-unhide-btn').click(function(event) {
     	var $commentForm;
         var $post;
-        
+
         event.preventDefault();
         $post = $(this).parents('.post');
         $commentForm = $post.find(".comment-form-container");
