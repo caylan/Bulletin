@@ -20,7 +20,6 @@ body {
 
 #content-container {
 	margin-left: 0;
-	
 }
 
 #team-nav {
@@ -35,30 +34,22 @@ abbr.timeago {
 }
 
 .avatar-container {
-	width: 60px;
+	width: 65px;
 	overflow: hidden;
 }
 
-.post > .media-body {
-	margin-left: 60px;
-}
-
-.comment > .media-body {
-	margin-left: 60px;
+.post > .media-body, .comment > .media-body  {
+	margin-left: 65px;
 }
 
 #left-column {
-	-moz-border-radius-topleft: 0;
-    -webkit-border-top-left-radius: 0;
-	-moz-border-radius-topright: 0;
-    -webkit-border-top-right-radius: 0;
 	-moz-border-radius-bottomright: 0;
     -webkit-border-bottom-right-radius: 0;
 	border-right-width: 0px;
 	border-top-width: 0px;
 }
 
-#content-container > .hero-unit {
+#content-container > .hero-unit, #left-column {
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
 	-moz-border-radius-topright: 0;
@@ -75,11 +66,6 @@ abbr.timeago {
 .avatar-container {
 	z-index: 1;
 	background-color: white;
-}
-
-.post .avatar {
-	min-height: 60px;
-	min-width: 60px;
 }
 
 .loading-spinner-container {
@@ -113,12 +99,19 @@ abbr.timeago {
 	margin-left: 5px;
 }
 
+.post, .comment {
+	margin: 0;
+	word-wrap: break-word;
+	min-height: 65px;
+}
+
+.comments {
+	margin-top: 5px;
+}
+
 .post {
 	background-color: white;
 	border-bottom: 1px solid #EEE;
-	word-wrap: break-word;
-	margin: 0;
-	min-height: 60px;
 }
 
 .post-message, .comment-message {
@@ -134,9 +127,6 @@ abbr.timeago {
 
 .comment {
 	border-top: 1px solid #EEE;
-	margin: 0;
-	word-wrap: break-word;
-	min-height: 60px;
 }
 
 .comment-form {

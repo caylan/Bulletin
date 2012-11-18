@@ -104,12 +104,12 @@ $(document).ready(function() {
                 var height = newImage.height;
                 
                 var scale = width/height;
-                var computedHeight = Math.min(height, Math.max(postHeight, 60));
+                var computedHeight = Math.min(height, Math.max(postHeight, 65));
                 var avatar = this;
                 $(newImage).load(function() {
                     $(avatar).css('height',  computedHeight + 'px');
                     $(avatar).css('min-width',  computedHeight*scale + 'px');
-                    $(avatar).css('margin-left',  -(computedHeight*scale - 60 )/3 + 'px');
+                    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
                 });
             });
         });
@@ -124,13 +124,13 @@ $(document).ready(function() {
                 var height = newImage.height;
                 
                 var scale = width/height;
-                var computedHeight = Math.min(height, Math.max(commentHeight, 60));
+                var computedHeight = Math.min(height, Math.max(commentHeight, 65));
                
                 var avatar = this;
                 $(newImage).load(function() {
                     $(avatar).css('height',  computedHeight + 'px');
                     $(avatar).css('min-width',  computedHeight*scale + 'px');
-                    $(avatar).css('margin-left',  -(computedHeight*scale - 60 )/3 + 'px');
+                    $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
                 });
             });
         });
