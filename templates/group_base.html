@@ -90,13 +90,11 @@
 
 					$.post(url, {cur_password: cur_password, new_password1: new_password1, new_password2: new_password2, csrfmiddlewaretoken: csrf},
 						function(data) {
-							/*if (!data.success) {
+							if (!data.success) {
 								alert(data.error);
 							} else {
 								alert("Success!");
-							}*/
-							alert(data.success);
-							alert("hello");
+							}
 						}, 'json');
 				});
 			});
