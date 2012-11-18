@@ -46,7 +46,7 @@ abbr.timeago {
 }
 
 .comment > .media-body {
-	margin-left: 75px;
+	margin-left: 80px;
 }
 
 .span2 > .well {
@@ -81,8 +81,8 @@ abbr.timeago {
 
 .post .avatar {
 	margin-right: 5px;
-	min-height: 200px;
-	min-width: 200px;
+	min-height: 75px;
+	min-width: 75px;
 }
 
 .loading-spinner-container {

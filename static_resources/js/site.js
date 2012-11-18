@@ -92,19 +92,49 @@ $(document).ready(function() {
         }, 'json');
     });
     $('.post').each(function() { 
-        $(value).css('min-height',  + 'px');
+        var postHeight = $(this).height();
         
-        $(this).find('.avatar-container > avatar').each(function(){
-            alert();
+        $(this).children('.avatar-container').each(function() {
+            $(this).children('.avatar').each(function() {
+                var newImage = new Image();
+                newImage.src = this.src;
+                var width = newImage.width;
+                var height = newImage.height;
+                
+                var scale = width/height;
+                var computedHeight = Math.min(height, Math.max(postHeight, 75));
+                var avatar = this;
+                $(newImage).load(function() {
+                    $(avatar).css('height',  computedHeight + 'px');
+                    $(avatar).css('min-width',  computedHeight*scale + 'px');
+                    $(avatar).css('margin-left',  -(computedHeight*scale -75 )/3 + 'px');
+                    $(avatar).show();
+                });
+            });
         });
         
-        $.each($('.post'), function(index, value) { 
-            $(value).css('min-height',  + 'px');        
+        $(this).find('.comment').each(function() {
+            var commentHeight = $(this).height();
+            
+            $(this).find('.avatar').each(function() {
+                var newImage = new Image();
+                newImage.src = this.src;
+                var width = newImage.width;
+                var height = newImage.height;
+                
+                var scale = width/height;
+                var computedHeight = Math.min(height, Math.max(commentHeight, 75));
+               
+                var avatar = this;
+                $(newImage).load(function() {
+                    $(avatar).css('height',  computedHeight + 'px');
+                    $(avatar).css('min-width',  computedHeight*scale + 'px');
+                    $(avatar).css('margin-left',  -(computedHeight*scale -75 )/3 + 'px');
+                    $(avatar).show();
+                });
+            });
         });
-        
-        
     });
-    $('.avatar').show();
     $('abbr.timeago').show();
 });
 
