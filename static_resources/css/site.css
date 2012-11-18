@@ -20,6 +20,7 @@ body {
 
 #content-container {
 	margin-left: 0;
+	
 }
 
 #team-nav {
@@ -34,16 +35,16 @@ abbr.timeago {
 }
 
 .avatar-container {
-	width: 75px;
+	width: 60px;
 	overflow: hidden;
 }
 
 .post > .media-body {
-	margin-left: 75px;
+	margin-left: 60px;
 }
 
 .comment > .media-body {
-	margin-left: 75px;
+	margin-left: 60px;
 }
 
 #left-column {
@@ -77,8 +78,8 @@ abbr.timeago {
 }
 
 .post .avatar {
-	min-height: 75px;
-	min-width: 75px;
+	min-height: 60px;
+	min-width: 60px;
 }
 
 .loading-spinner-container {
@@ -117,17 +118,13 @@ abbr.timeago {
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
 	margin: 0;
-	min-height: 75px;
+	min-height: 60px;
 }
 
-.comment-message {
+.post-message, .comment-message {
 	word-wrap: break-word;
 	margin-left: 5px;
-}
-
-.post-message {
-	word-wrap: break-word;
-	margin-left: 5px;
+	line-height: 17px;
 }
 
 
@@ -139,7 +136,7 @@ abbr.timeago {
 	border-top: 1px solid #EEE;
 	margin: 0;
 	word-wrap: break-word;
-	min-height: 75px;
+	min-height: 60px;
 }
 
 .comment-form {
