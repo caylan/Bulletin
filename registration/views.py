@@ -8,6 +8,8 @@ from django.template import RequestContext
 from models import (
     EmailConfirmationManager,
     EmailConfirmation,
+    EmailInviteManager,
+    EmailInvite,
 )
 from forms import RegistrationForm
 
@@ -52,13 +54,27 @@ def confirm_email(request, key):
 
 def confirm_email_invite(request, key):
     '''
-    Confirms an email invite to a specific user.
+    Confirms an email invite to a specific user.  This may or may not redirect
+    to a form for creating the new user (with first name, last name, and
+    password).
     '''
     key = key.lower()
-    # user = EmailInvite.objects.confirm_email(key)
-    if user.is_active:
-        pass # If the user is active, show some banner or indication that
-             # they're part of the new group.
+    user = EmailInvite.objects.confirm_email(key)
+    if user is not None:
+        # Handle the user case.
+        if user.is_active:
+            #
+            pass
     else:
-        pass # If the user is not active, create a registration form for the
-             # user and then have them fill out their name and password.
+        # Handle the non-existing user case.
+        recipient_email = EmailInvite.objects.get_email(key)
+        if recipient_email is not None:
+            # The email is not none, so now we need to create a user.
+            # Redirect them to the form page for finishing their account.
+            #
+            # If they choose that they are an existing user, simply verify
+            # their credentials and then add them to the group, redirecting
+            # them to the inbox.
+            pass
+        else:
+            pass # Return a 404.

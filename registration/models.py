@@ -50,7 +50,6 @@ class EmailConfirmationManager(models.Manager):
             user = confirmation.user
             user.is_active = True
             user.save()
-            confirmation.delete() # remove old invite.
             return user
     
     def create_key(self, email):
@@ -162,9 +161,31 @@ class EmailInviteManager(EmailConfirmationManager):
 
     def confirm_email(self, confirmation_key):
         '''
-        TODO: Confirm the key appropriately.
+        This does not set the user to active or really 'confirm' the email.
+
+        TODO: Reimplement this as another function.
         '''
-        pass
+        try:
+            confirmation = self.get(confirmation_key=confirmation_key)
+        except self.model.DoesNotExist:
+            return None
+
+        if not confirmation.expired():
+            try:
+                user = User.objects.get(email=confirmation.recipient_email)
+            except User.DoesNotExist:
+                user = None
+            return user
+
+    def get_email(self, key):
+        try:
+            confirmation = self.get(confirmation_key=key)
+        except self.model.DoesNotExist:
+            return None
+
+        if not confirmation.expired():
+            return confirmation.recipient_email
+        return None
 
 class AbstractConfirmation(models.Model):
     '''
