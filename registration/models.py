@@ -24,6 +24,8 @@ from groups.models import Group
 
 '''
 TODO: We need to delete expired confirmations.
+TODO: Delete confirmations if we detect that, somehow, the email was not
+delivered successfully to the user.
 '''
 
 class EmailConfirmationManager(models.Manager):
@@ -34,7 +36,6 @@ class EmailConfirmationManager(models.Manager):
 
     # If extra fields for when the message is to be sent, this is appended.  An
     # alternative should be sought however, as this isn't best practice.
-    email_context = {}
     subject_path = "registration/email_confirmation_subject.txt"
     message_path = "registration/email_confirmation_message.txt"
     view_path = "registration.views.confirm_email"
@@ -51,13 +52,16 @@ class EmailConfirmationManager(models.Manager):
             user.save()
             confirmation.delete() # remove old invite.
             return user
-
-    def send_confirmation(self, user, commit=True):
+    
+    def create_key(self, email):
         salty_mail = sha_constructor(str(random())).hexdigest()[:5]
-        salty_mail = salty_mail + user.email
+        salty_mail = salty_mail + email
         confirmation_key = sha_constructor(salty_mail).hexdigest()
+        return confirmation_key
+
+    def create_activation_url(self, key):
         current_site = Site.objects.get_current()
-        path = reverse(self.view_path, args=[confirmation_key])
+        path = reverse(self.view_path, args=[key])
         protocol = getattr(settings, "DEFAULT_HTTP_PROTOCOL", "http")
 
         # This will be the url from which we activte the account!
@@ -66,37 +70,39 @@ class EmailConfirmationManager(models.Manager):
             unicode(current_site.domain),
             path,
         )
+        return (activation_url, current_site)
 
-        self.email_context.update({
-            "email": user.email,
-            "activation_url": activation_url,
-            "current_site": current_site,
-            "confirmation_key": confirmation_key,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-        })
-
-        # If the email is an invite, then it will have been sent by
-        # another user.  The templates are different, so make sure to
-        # use the right one!
-        self.email_context['first_name'] = user.first_name
-        self.email_context['last_name'] = user.last_name
-        subject = render_to_string(self.subject_path, self.email_context)
-        message = render_to_string(self.message_path, self.email_context)
+    def send_mail(self, context):
+        subject = render_to_string(self.subject_path, context)
+        message = render_to_string(self.message_path, context)
         
         # Join the subject into one long line.
         subject = "".join(subject.splitlines())
-        send_mail(subject, message, settings.FROM_EMAIL, [user.email])
+        send_mail(subject, message, settings.FROM_EMAIL, [context['email']])
+
+    def send_confirmation(self, user):
+        key = self.create_key(user.email)
+        (activation_url, current_site) = self.create_activation_url(key)
+        email_context = {
+            "email": user.email,
+            "activation_url": activation_url,
+            "current_site": current_site,
+            "confirmation_key": key,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
 
         # Determine whether to create an invite or a confirmations (again).
         # However, this time we're creating the actual server object.
         confirmation = self.model(
             user=user,
-            sent=datetime.datetime.now(),
-            confirmation_key=confirmation_key
+            confirmation_key=key,
         )
-        if commit:
-            confirmation.save()
+        confirmation.save()
+
+        # If we're here and an exception hasn't been thrown, then we'll send off
+        # the email.
+        self.send_mail(email_context)
         return confirmation
 
     def delete_expired(self):
@@ -109,14 +115,56 @@ class EmailInviteManager(EmailConfirmationManager):
     message_path = "registration/email_invite_message.txt"
     view_path = "registration.views.confirm_email_invite"
 
-    def send_confirmation(self, sender, recipient, group):
-        self.email_context['sender_email'] = sender.email
-        self.email_context['recipient_is_active'] = recipient.is_active
-        self.email_context['group'] = group.name 
-        confirmation = super(EmailInviteManager, self).send_confirmation(
-                recipient, commit=False)
+    def send_confirmation(self, sender, recipient_email, group):
+        '''
+        Sends an email invite to recipient email.  This assumes that the
+        recipient email is valid, and that the sender is a valid active user.
+        '''
+        # Check to see if the recipient email is active.
+        try:
+            recipient = User.objects.all().get(email=recipient_email)
+        except User.DoesNotExist:
+            recipient = False
+
+        #  Create email context for subject and messages.  Creates key, gets
+        #  active site, and the active URL.
+        key = self.create_key(recipient_email)
+        (activation_url, current_site) = self.create_activation_url(key)
+        email_context = {
+            'recipient_is_active': bool(recipient),
+            'group': group.name,
+            "email": recipient_email,
+            "activation_url": activation_url,
+            "current_site": current_site,
+            "confirmation_key": key,
+        }
+
+        # If the recipient is an active user, put their first/last name in the
+        # email context.
+        if recipient:
+            email_context['first_name'] = recipient.first_name
+            email_context['last_name'] = recipient.last_name
+
+        #  Create the confirmation from the data we've accrued.  Any exceptions
+        #  will be thrown here and put upstream (this has to happen before
+        #  attempting to send the email).
+        confirmation = self.model(
+            group=group,
+            recipient_email=recipient_email,
+            confirmation_key=key,
+        )
         confirmation.group = group
         confirmation.save()
+
+        # Send off the email and return the invite.
+        super(EmailInviteManager, self).send_mail(email_context)
+        return confirmation
+
+    def confirm_email(self, confirmation_key):
+        '''
+        TODO: Confirm the key appropriately.
+        '''
+        pass
 
 class AbstractConfirmation(models.Model):
     '''
@@ -133,9 +181,6 @@ class AbstractConfirmation(models.Model):
 
     class Meta:
         abstract = True
-
-    def __unicode__(self):
-        return u"{0} Confirmation".format(self.user)
 
 class AbstractKeyConfirmation(AbstractConfirmation):
     '''
@@ -189,3 +234,6 @@ class EmailInvite(AbstractKeyConfirmation):
                     " already in this group")
         except ObjectDoesNotExist:
             super(EmailInvite, self).save()
+
+    def __unicode__(self):
+        return u'{0}'.format(self.recipient_email)

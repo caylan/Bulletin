@@ -1,5 +1,5 @@
 {% load i18n %} {% blocktrans with current_site.name as site_name%}
-Hello {{ first_name }} {{ last_name }}, this message has been sent
+Hello {{ first_name }}, this message has been sent
 to confirm your email address: {{ email }}
 
 This was sent from {{ site_name }}.  To activate your account, simply follow
