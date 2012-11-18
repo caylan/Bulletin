@@ -30,6 +30,7 @@ abbr.timeago {
 	border: none;
 	cursor: default;
 	color: #666;
+	display: none;
 }
 
 .avatar-container {
@@ -40,20 +41,30 @@ abbr.timeago {
 	overflow: hidden;
 }
 
-.post-message {
+.post > .media-body {
 	margin-left: 80px;
 }
 
-.comment .avatar-container {
-	margin-left: 75px;
+.comment > .media-body {
+	margin-left: 80px;
 }
 
-.comment-message {
-	margin-left: 160px;
+.span2 > .well {
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+	border-right-width: 0px;
+	border-top-width: 0px;
 }
 
-.brand {
-	text-align: left;
+#content-container > .hero-unit {
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
 }
 
 .loading-spinner {
@@ -70,8 +81,8 @@ abbr.timeago {
 
 .post .avatar {
 	margin-right: 5px;
-	min-height: 200px;
-	min-width: 200px;
+	min-height: 75px;
+	min-width: 75px;
 }
 
 .loading-spinner-container {
@@ -96,12 +107,13 @@ abbr.timeago {
 }
 
 .navbar-inner .container {
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 900px;
 }
 
 .navbar .avatar {
     margin-top: -5px;
+	display: hide;
+    padding-right: 5px;
 }
 
 .post {
@@ -113,7 +125,7 @@ abbr.timeago {
 	min-height: 75px;
 }
 
-.post-message {
+.comment-message {
 	word-wrap: break-word;
 }
 
@@ -167,7 +179,8 @@ ul.errorlist {
 
 .container-narrow {
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 940px;
+    overflow: hidden;
 }
 
 .modal form {
