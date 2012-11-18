@@ -75,12 +75,13 @@ $(document).ready(function() {
 
         $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
             // copy of message is returned via json, insert into page
-            comment_html = "<li class=\"media comment\"> \
-                    <img class=\"avatar pull-left media-object\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=50&d=mm" + "\" alt=\"commenters's gravatar\" /> \
+            comment_html = "<li class=\"media new comment\"> \
+                           <div class=\"avatar-container pull-left media-object\"> \
+                    <img class=\"avatar new pull-left media-object\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=300&d=mm" + "\" alt=\"commenters's gravatar\" /> </div>\
 	                <div class=\"media-body\"> \
-                   		<span class=\"media-heading clearfix\"> \
-	                        <strong class=\"pull-left\">" + data.author.first_name + " " + data.author.last_name + "</strong> \
-	                        <em class=\"pull-right\"><abbr class=\"timeago\" title=\"" + data.time_stamp + "\">" + data.date_posted + "</abbr></em> \
+                   		<span class=\"media-heading\"> \
+	                        <strong class=\"pull-left name\">" + data.author.first_name + " " + data.author.last_name + "</strong> \
+	                        <em class=\"pull-right\"><abbr class=\"timeago new\" title=\"" + data.time_stamp + "\">" + data.date_posted + "</abbr></em> \
 	                        <br /> \
 	                    </span> \
 	                    <div class=\"comment-message\">" + data.message + "</div> \
@@ -89,6 +90,18 @@ $(document).ready(function() {
             form.parent().siblings('.comments').append($(comment_html));
             form.find("#id_message").val("");
             $('abbr.timeago').timeago();
+            
+            $('.comment.new').each(function() { 
+                var postHeight = $(this).height();
+                
+                $(this).children('.avatar-container').each(function() { // Avatars within posts
+                    $(this).find('.avatar').each(function() {
+                        resizeAvatar(this, postHeight);
+                    });
+                });
+            });
+            
+            $('.comments').find('.timeago.new').each(function() {$(this).fadeIn()});
         }, 'json');
     });
     
