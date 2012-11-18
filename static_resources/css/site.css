@@ -30,6 +30,7 @@ abbr.timeago {
 	border: none;
 	cursor: default;
 	color: #666;
+	display: none;
 }
 
 .avatar-container {
@@ -40,20 +41,30 @@ abbr.timeago {
 	overflow: hidden;
 }
 
-.post-message {
+.post > .media-body {
 	margin-left: 80px;
 }
 
-.comment .avatar-container {
+.comment > .media-body {
 	margin-left: 75px;
 }
 
-.comment-message {
-	margin-left: 160px;
+.span2 > .well {
+	-moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+	border-right-width: 0px;
+	border-top-width: 0px;
 }
 
-.brand {
-	text-align: left;
+#content-container > .hero-unit {
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
 }
 
 .loading-spinner {
@@ -102,6 +113,7 @@ abbr.timeago {
 
 .navbar .avatar {
     margin-top: -5px;
+	display: hide;
 }
 
 .post {
@@ -113,7 +125,7 @@ abbr.timeago {
 	min-height: 75px;
 }
 
-.post-message {
+.comment-message {
 	word-wrap: break-word;
 }
 
