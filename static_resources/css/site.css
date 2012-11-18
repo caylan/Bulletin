@@ -39,14 +39,14 @@ abbr.timeago {
 }
 
 .post > .media-body {
-	margin-left: 80px;
+	margin-left: 75px;
 }
 
 .comment > .media-body {
-	margin-left: 80px;
+	margin-left: 75px;
 }
 
-.span2 > .well {
+#left-column {
 	-moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
 	-moz-border-radius-topright: 0;
@@ -77,7 +77,6 @@ abbr.timeago {
 }
 
 .post .avatar {
-	margin-right: 5px;
 	min-height: 75px;
 	min-width: 75px;
 }
@@ -88,10 +87,6 @@ abbr.timeago {
 
 .spacing-right {
 	margin-right: 10px;
-}
-
-.span2 .well {
-	padding: 5px;
 }
 
 #self-identity {
@@ -113,21 +108,36 @@ abbr.timeago {
     padding-right: 5px;
 }
 
+.name {
+	margin-left: 5px;
+}
+
 .post {
 	background-color: white;
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
-	margin: 0px;
+	margin: 0;
 	min-height: 75px;
 }
 
 .comment-message {
 	word-wrap: break-word;
+	margin-left: 5px;
+}
+
+.post-message {
+	word-wrap: break-word;
+	margin-left: 5px;
+}
+
+
+.media .pull-left {
+	margin-right: 0;
 }
 
 .comment {
 	border-top: 1px solid #EEE;
-	margin: 0px;
+	margin: 0;
 	word-wrap: break-word;
 	min-height: 75px;
 }

@@ -91,6 +91,8 @@ $(document).ready(function() {
             $('abbr.timeago').timeago();
         }, 'json');
     });
+    
+    //I'll make this prettier later
     $('.post').each(function() { 
         var postHeight = $(this).height();
         
@@ -108,7 +110,6 @@ $(document).ready(function() {
                     $(avatar).css('height',  computedHeight + 'px');
                     $(avatar).css('min-width',  computedHeight*scale + 'px');
                     $(avatar).css('margin-left',  -(computedHeight*scale -75 )/3 + 'px');
-                    $(avatar).show();
                 });
             });
         });
@@ -130,11 +131,11 @@ $(document).ready(function() {
                     $(avatar).css('height',  computedHeight + 'px');
                     $(avatar).css('min-width',  computedHeight*scale + 'px');
                     $(avatar).css('margin-left',  -(computedHeight*scale -75 )/3 + 'px');
-                    $(avatar).show();
                 });
             });
         });
     });
+    $('.avatar').show();
     $('abbr.timeago').show();
 });
 
