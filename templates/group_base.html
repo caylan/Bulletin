@@ -58,19 +58,19 @@
 		<div id="footer">This is a footer</div>
 	</div>
 	</div>
-	<!--<div class="span2">
+	<div class="span2">
 		<div class="well">
 			{% block agenda %}
-			<ul id='agenda' class="nav nav-list">
+			<!--<ul id='agenda' class="nav nav-list">
 			    <li class="nav-header">Agenda</li>
 			    <li class='divider'></li>
-			</ul>
+			</ul>-->
 			<!-- TODO get rid of this garbage -->
 			<form id="change-password">{% csrf_token %}
-				<input type="password" name="cur_password" placeholder="Current Password" />
-				<input type="password" name="new_password1" placeholder="New Password" />
-				<input type="password" name="new_password2" placeholder="Retype New Password" />
-				<input type="submit" value="Change Password" />
+				<p><input type="password" name="cur_password" placeholder="Current Password" /></p>
+				<p><input type="password" name="new_password1" placeholder="New Password" /></p>
+				<p><input type="password" name="new_password2" placeholder="Retype New Password" /></p>
+				<p><input type="submit" value="Change Password" /></p>
 			</form>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 			<script>
@@ -101,7 +101,7 @@
 			<!-- end TOOD -->
 			{% endblock agenda %}
 		</div>
-	</div> -->
+	</div>
 </div>
 
 {% include "group_create_modal.html" with csrf_token=csrf_token only %}
