@@ -67,6 +67,7 @@ abbr.timeago {
 	background-color: white;
 	border-bottom: 1px solid #EEE;
 	word-wrap: break-word;
+	margin: 0px;
 }
 
 .post-message {

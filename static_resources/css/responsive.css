@@ -1,6 +1,5 @@
 @media (max-width: 979px) {
-    .navbar-fixed-top,
-    .navbar-fixed-bottom {
-      position: fixed;
+	.navbar-inner {
+		/*height: 40px;*/
     }
 }

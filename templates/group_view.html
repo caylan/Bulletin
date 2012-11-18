@@ -14,7 +14,9 @@
 <ul id="posts" class="media-list">
     {% for post in post_list %}
     <li class="media post">
-        <img class="avatar pull-left media-object" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
+		<!--<div class='avatar-container'>-->
+			<img class="avatar pull-left media-object" src="{{ post.author.user.email|gravatar:'50' }}" alt="author's gravatar" />
+		<!--</div>-->
         <div class="media-body">
             <span class="media-heading clearfix">
                 <strong class="pull-left">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
