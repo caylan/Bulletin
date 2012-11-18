@@ -41,7 +41,7 @@
 			    {% endfor %}
 			    <li class="divider"></li>
 			</ul>
-		    <a id="create-group-btn" class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
+		    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 			
 			{% endblock nav %}
 		</div>
@@ -69,7 +69,7 @@
 	</div> -->
 </div>
 
-{% include "group_create_modal.html" %}
+{% include "group_create_modal.html" with csrf_token=csrf_token only %}
 
 <div id="jump-top" class="hide well"><i class="icon-arrow-up"></i></div>
 {% endblock content %}
@@ -77,7 +77,5 @@
 {% endblock body %}
 
 {% block extrajs %}
-<script type="text/javascript">
-
-</script>
+<script src="{{ STATIC_URL }}js/create-group.js"></script>
 {% endblock extrajs %}

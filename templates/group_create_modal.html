@@ -1,5 +1,5 @@
 <div id="create-group" class="modal hide fade">
-	<form action="/create/" method="post">
+	<form action="/create/" id="create-group-form" method="post">
 		<div class="modal-header clearfix">
 			<input type="button" class="close" data-dismiss="modal"
 				aria-hidden="true" value="&times;" />
@@ -7,11 +7,16 @@
 		</div>
 		<div class="modal-body">
 		    {% csrf_token %}
-		    <input type="text" name="name" id="id_name" placeholder="Group name" />
+		    {% if form %}
+		    {{ form }}
+		    {% else %}
+	        <input type="text" name="name" id="id_name" placeholder="Group Name" />
+		    {% endif %}
+		    
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-			<input type="submit" class="btn btn-primary" value="Create" />
+			<input type="submit" id="create-group-btn" class="btn btn-primary" value="Create" />
 		</div>
 	</form>
 </div>

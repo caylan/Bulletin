@@ -159,7 +159,7 @@ textarea {
     font-size: 14px;
 }
 
-.form-signin ul.errorlist {
+ul.errorlist {
 	margin: 0;
 	padding: 0 0 0 15px;
 	list-style: none;

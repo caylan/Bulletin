@@ -61,5 +61,5 @@ def create(request):
             ''' TODO: Redirect to the new group '''
             return redirect('/')
     else:
-        return render(request, '404.html')
-    return render(request, 'group_create.html', {'form': form,})
+        raise Http404
+    return render(request, 'group_create_modal.html', {'form': form,})
