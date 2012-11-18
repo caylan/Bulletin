@@ -65,6 +65,40 @@
 			    <li class="nav-header">Agenda</li>
 			    <li class='divider'></li>
 			</ul>
+			<!-- TODO get rid of this garbage -->
+			<form id="change-password">{% csrf_token %}
+				<input type="password" name="cur_password" placeholder="Current Password" />
+				<input type="password" name="new_password1" placeholder="New Password" />
+				<input type="password" name="new_password2" placeholder="Retype New Password" />
+				<input type="submit" value="Change Password" />
+			</form>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+			<script>
+			$(document).ready(function() {
+				$("#change-password").submit(function(event) {
+					event.preventDefault();
+
+					var form = $(this);
+					var url = '/change_password/';
+					var cur_password = form.find('input[name="cur_password"]').val();
+					var new_password1 = form.find('input[name="new_password1"]').val();
+					var new_password2 = form.find('input[name="new_password2"]').val();
+					var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+					form.find('input[type="password"]').val("");
+
+					$.post(url, {cur_password: cur_password, new_password1: new_password1, new_password2: new_password2, csrfmiddlewaretoken: csrf},
+						function(data) {
+							if (!data.success) {
+								alert(data.error);
+							} else {
+								alert("Success!");
+							}
+						}, 'json');
+				});
+			});
+			</script>
+			<!-- end TOOD -->
 			{% endblock agenda %}
 		</div>
 	</div> -->
