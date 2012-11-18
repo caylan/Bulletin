@@ -23,15 +23,21 @@ _gaq.push(['_trackPageview']);
 	s.parentNode.insertBefore(ga, s);
 })();
 
-$(window).scroll(function(){
-    if ($(window).scrollTop() != 0){
-        $("#jump-top").css("display", "inline-block");
-    } else {
-        $("#jump-top").hide();
-    }
+//$(window).scroll(function(){
+//    if ($(window).scrollTop() != 0){
+//        $('#jump-top').css("display", "inline-block");
+//    } else {
+//        $('#jump-top').hide();
+//    }
+//});
+
+$('#jump-top').click(function () {
+	$('html, body').animate({
+        scrollTop: 0
+    }, 200);
 });
 
-$("#flipbox").flip({
+$('#flipbox').flip({
 	direction:'tb',
 	onBefore: function(){
 			console.log('before starting the animation');
