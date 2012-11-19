@@ -59,9 +59,9 @@ function createGroup() {
 }
 
 function addNewPersonField() {
-	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" style=\"display: none;\" />";
+	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" />";
 	var validityHtml = "<span class=\"validity\"><span class=\"valid-email hide\"><i class=\"icon-ok\"></i> Valid email address</span><span class=\"invalid-email hide\"><i class=\"icon-remove\"></i> Please enter a valid email address</span></span>";
-	var containerHtml = "<div class=\"person-email\"></div>";
+	var containerHtml = "<div class=\"person-email hide\"></div>";
 	
 	var $container = $(containerHtml);
 	var $input = $(fieldHtml);
@@ -86,7 +86,7 @@ function addNewPersonField() {
 	
 	var $peopleList = $('.add-invitee-btn').siblings('.people-list');
 	$peopleList.append($container);
-	$input.show("blind");
+	$container.show("blind");
 	count++;
 }
 
