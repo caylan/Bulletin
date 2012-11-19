@@ -53,7 +53,7 @@ function createGroup() {
 
 function addNewPersonField() {
 	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" style=\"display: none;\" />";
-	var validityHtml = "<span class=\"validity\"><span class=\"valid-email hide\">Valid email address</span><span class=\"invalid-email hide\">Please enter a valid email address</span></span>";
+	var validityHtml = "<span class=\"validity\"><span class=\"valid-email hide\"><i class=\"icon-ok\"></i> Valid email address</span><span class=\"invalid-email hide\"><i class=\"icon-remove\"></i> Please enter a valid email address</span></span>";
 	var containerHtml = "<div class=\"person-email\"></div>";
 	
 	var $container = $(containerHtml);
@@ -62,6 +62,10 @@ function addNewPersonField() {
 	
 	$container.append($input);
 	$container.append($validity);
+	
+	if($.browser.msie && parseInt($.browser.version, 10) < 10) {
+		$input.placeholder();
+	}
 	
 	$input.keyup(function() {
 		if (isEmail($input.val())) {
@@ -85,7 +89,7 @@ function ajaxCreateGroup() {
 		createGroup();
 	});
 	
-	$('#create-group-form a.btn.dismiss, #create-group-form .close').click(function() {
+	$('#create-group').on("hide", function() {
 		$('#create-group-form input[type="text"]').val("");
 		$('#create-group-form .errorlist').remove();
 		count = 0;
@@ -101,7 +105,6 @@ function ajaxCreateGroup() {
         } else {
         	addNewPersonField();
         }
-        
     });
 }
 
