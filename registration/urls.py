@@ -6,4 +6,5 @@ urlpatterns = patterns("registration.views",
     url(r'^confirm_email_invite/(\w+)/$', 'confirm_email_invite'),
     url(r'^change_password/$', 'change_password'),
     url(r'^reset_password/$', 'reset_password'),
+    url(r'^invite_registration/(\w+)/$', 'invite_registration'),
 )

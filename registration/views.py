@@ -11,10 +11,11 @@ from models import (
     EmailInviteManager,
     EmailInvite,
 )
-from forms import RegistrationForm
+from forms import RegistrationForm, InviteRegistrationForm
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
+    Http404,
 )
 from django.conf import settings
 from django.contrib.auth.models import (
@@ -103,15 +104,47 @@ def confirm_email_invite(request, key):
             # If they choose that they are an existing user, simply verify
             # their credentials and then add them to the group, redirecting
             # them to the inbox.
-            pass
+            return redirect('/invite_registration/{0}'.format(key))
         else:
-            pass # Return a 404.
+            raise Http404
 
-def registration_invite(request, key):
+def invite_registration(request, key):
     '''
     Registers the user based on an their invitation.
     '''
-    pass
+
+    # If the email for this key doesn't exist, or there is a user already with
+    # the email, then whoever is here is here for the wrong reason.  We'll (for
+    # now) just give them a 404.
+    email = EmailInvite.objects.get_email(key)
+    if email is None:
+        raise Http404
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        user = None
+    if user is not None:
+        raise Http404
+
+    # If we're here, we have a user's email, which will be used for creating the
+    # user.
+    if request.method == 'POST':
+        form = InviteRegistrationForm(request.POST)
+        if form.is_valid():
+            '''
+            If the form is all good and such, then send the user off to the page
+            that'll say something like 'yay, you're registered with Bulletin!'
+            '''
+            user = form.save(email)
+            group = EmailInvite.objects.get(confirmation_key=key).group
+            membership = Membership(user=user, group=group)
+            membership.save()
+            group.membership_set.add(membership)
+            group.save()
+            return redirect('/')
+    else:
+        form = InviteRegistrationForm()
+    return render(request, 'register.html', {'form': form,})
 
 def change_password(request):
     '''
