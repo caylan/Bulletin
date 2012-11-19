@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.contrib.auth.models import User
+from django.core.validators import email_re
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import GroupCreationForm
@@ -76,7 +77,8 @@ def create(request):
             m.save()
 
             # Send emails to invited members.
-            emails = list(set(form.emails()))
+            emails = list(set(emails))
+            emails = filter(email_re.match, emails)  # silently ignore invalids.
             EmailInvite.objects.send_confirmation(request.user.email, emails,
                     group)
 
