@@ -68,7 +68,7 @@ def create(request):
     '''
     if request.method == 'POST':
         emails = _get_extra_emails(request)
-        form = GroupCreationForm(request.POST, emails=emails)
+        form = GroupCreationForm(request.POST)
         if form.is_valid():
             group = form.save()
             
