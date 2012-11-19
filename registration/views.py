@@ -205,6 +205,6 @@ def reset_password(request):
             forgetful_user.email_user('Password Reset', 'New password: ' + new_password)
             return render(request, 'password_reset.html', {'password_changed': True,})
         except User.DoesNotExist:
-            return render(request, 'password_reset.html', {'password_not_found': True,})
+            return render(request, 'password_reset.html', {'state': 'We have no record of that email address',})
     else:
         return render(request, 'password_reset.html')
