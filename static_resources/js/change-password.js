@@ -9,7 +9,7 @@ function changePassword() {
 				alert(data.error);
 			} else {
 				alert("Password changed");
-				$('#change-password-form .close').click();
+				$('#change-password').modal("close");
 			}
 		}, "json");
 }
@@ -20,8 +20,8 @@ function ajaxChangePassword() {
 		event.preventDefault();
 		changePassword();
 	});
-	
-	$('#change-password-form a.btn, #change-password-form .close').click(function() {
+
+	$('#change-password').on("hide", function() {
 		$('#change-password-form input[type="password"]').val("");
 	});
 }
