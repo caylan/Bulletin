@@ -9,7 +9,6 @@
   	    <div class="container">
             <a class="brand" href="#">Bulletin</a>
             <ul class="nav pull-right">
-                {% if is_admin %}<li><a href="#invite-people" data-toggle="modal"><i class="icon-user"></i> Invite people to this group</a></li>{% endif %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />
@@ -45,6 +44,7 @@
 				    <li class="divider"></li>
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
+				{% if is_admin %}<a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>{% endif %}
 				
 				{% endblock nav %}
 			</div>
@@ -57,7 +57,7 @@
 					{% endblock maincontent %}
 				</div>
 			</div>
-			<div id="footer">This is a footer</div>
+			<div id="footer" class='pull-right'></div>
 		</div>
 	</div>
 	<!--<div class="span2">
