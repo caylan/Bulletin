@@ -180,9 +180,12 @@ textarea {
 .container-narrow {
     margin: 0 auto;
     max-width: 940px;
-    overflow: hidden;
 }
 
 .modal form {
 	margin: 0;
+}
+
+#front-main {
+    max-width
 }
