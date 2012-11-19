@@ -76,22 +76,21 @@ function initDynamicAvatarSize() {
     });
 }
 
-function resizeAvatar (avatar, parentHeight) {
-    var img = document.createElement('img'); // This might have fixed the IE problem
-    img.src = avatar.src;
-    $(img).load(function() {
-		var scale = this.width/this.height;
-		var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
-        $(avatar).css('height',  computedHeight + 'px');
-        $(avatar).css('min-width',  computedHeight*scale + 'px');
-        $(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
-        $(avatar).fadeIn();
+function resizeAvatar (avatar, parentHeight) {	
+	$("<img/>") // Make in memory copy of image to avoid css issues
+		.attr("src", $(avatar).attr("src"))
+		.load(function() {
+			var scale = this.width/this.height;
+			var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
+			$(avatar).css('height',  computedHeight + 'px');
+			$(avatar).css('min-width',  computedHeight*scale + 'px');
+			$(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
+			$(avatar).fadeIn();
     });
 }
 
 $(document).ready(function() {
 	$('abbr.timeago').timeago().fadeIn();
-    
     initCommentSlider();
     initCommentAjax();
 });
