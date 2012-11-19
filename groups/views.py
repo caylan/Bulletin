@@ -57,6 +57,12 @@ def _get_extra_emails(request):
             emails.append((name, val,));
     return emails
 
+def _remove_duplicates(lst):
+    d = {}
+    for el in lst:
+        d[el] = 1
+    return d.keys()
+
 @login_required
 def create(request):
     '''
@@ -76,7 +82,7 @@ def create(request):
             m.save()
 
             # Send emails to invited members.
-            emails = form.emails()
+            emails = _remove_duplicates(form.emails())
             EmailInvite.objects.send_confirmation(request.user.email, emails,
                     group)
 
