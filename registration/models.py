@@ -160,6 +160,7 @@ class EmailInviteManager(EmailConfirmationManager):
             (activation_url, current_site) = self.create_activation_url(key)
             email_context = {
                 'recipient_is_active': bool(recipient),
+                'sender_email': sender,
                 'group': group.name,
                 "email": email,
                 "activation_url": activation_url,
