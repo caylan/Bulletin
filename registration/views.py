@@ -5,6 +5,7 @@ from django.shortcuts import (
     render,
 )
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 from models import (
     EmailConfirmationManager,
     EmailConfirmation,
@@ -149,6 +150,9 @@ def invite_registration(request, key):
         form = InviteRegistrationForm()
     return render(request, 'register.html', {'form': form,})
 
+def send_invites(request):
+    pass
+
 def change_password(request):
     '''
     Handle password change logic
@@ -161,6 +165,8 @@ def change_password(request):
     input: cur_password, new_password1, new_password2
     output: error messages
     '''
+    if not request.user.is_authenticated():
+        raise Http404
 
     def json_response(success, error=""):
         json_text = '{{"success": {0}, "error": "{1}"}}'.format(success, error)
