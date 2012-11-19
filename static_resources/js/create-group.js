@@ -13,7 +13,6 @@ function createGroup() {
 		var $input;
 		var email;
 		
-		// TODO: make the array
 		for (var i = 0; i < count; i++) {
 			$input = $('input[name="email' + i + '"]');
 			email = $.trim($input.val());
@@ -24,7 +23,6 @@ function createGroup() {
 			
 			emailArray.push(email);
 		}
-		console.log(emailArray);
 		// clean up so nothing gets submitted by the form
 		count = 0;
 		$('.people-list-header').hide();
@@ -54,14 +52,30 @@ function createGroup() {
 }
 
 function addNewPersonField() {
-	// id=\"email" + count + "\"
 	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" style=\"display: none;\" />";
+	var validityHtml = "<span class=\"validity\"><span class=\"valid-email hide\">Valid email address</span><span class=\"invalid-email hide\">Please enter a valid email address</span></span>";
+	var containerHtml = "<div class=\"person-email\"></div>";
+	
+	var $container = $(containerHtml);
 	var $input = $(fieldHtml);
-	var $peopleList = $('.add-invitee-btn').siblings('.people-list');
-	$peopleList.append($input);
-	$input.show("blind", function() {
-		$peopleList.append($("<br />"))
+	var $validity = $(validityHtml);
+	
+	$container.append($input);
+	$container.append($validity);
+	
+	$input.keyup(function() {
+		if (isEmail($input.val())) {
+			$validity.children('.valid-email').show();
+			$validity.children('.invalid-email').hide();
+		} else {
+			$validity.children('.valid-email').hide();
+			$validity.children('.invalid-email').show();
+		}
 	});
+	
+	var $peopleList = $('.add-invitee-btn').siblings('.people-list');
+	$peopleList.append($container);
+	$input.show("blind");
 	count++;
 }
 
