@@ -1,7 +1,4 @@
-$(document).ready(function() {
-	$('abbr.timeago').timeago();
-
-    // comment slider
+function initCommentSlider() {
     $('.comment-unhide-btn').click(function(event) {
     	var $commentForm;
         var $post;
@@ -16,9 +13,10 @@ $(document).ready(function() {
             }, 500);
         });
     });
+}
 
-    // comment ajax
-    $('.comment-form').submit(function(event) {
+function initCommentAjax() {
+	$('.comment-form').submit(function(event) {
         event.preventDefault();
 
         var form = $(this);
@@ -57,9 +55,10 @@ $(document).ready(function() {
             $('.comments').find('.timeago.new').each(function() {$(this).fadeIn()});
         }, 'json');
     });
-    
-    // Dynamic avatar sizes
-    $('.post').each(function() { 
+}
+
+function initDynamicAvatarSize() {
+	$('.post').each(function() { 
         var postHeight = $(this).height();
         
         $(this).children('.avatar-container').each(function() { // Avatars within posts
@@ -75,12 +74,7 @@ $(document).ready(function() {
             });
         });
     });
-    $('abbr.timeago').fadeIn();
-});
-
-$(window).load(function() {
-    $('.avatar').fadeIn();
-});
+}
 
 function resizeAvatar (avatar, parentHeight) {
     var img = document.createElement('img'); // This might have fixed the IE problem
@@ -94,3 +88,15 @@ function resizeAvatar (avatar, parentHeight) {
         $(avatar).fadeIn();
     });
 }
+
+$(document).ready(function() {
+	$('abbr.timeago').timeago().fadeIn();
+    
+    initCommentSlider();
+    initCommentAjax();
+    initDynamicAvatarSize();
+});
+
+$(window).load(function() {
+    $('.avatar').fadeIn();
+});
