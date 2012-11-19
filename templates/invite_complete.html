@@ -1,8 +1,11 @@
 {% extends "starter_base.html" %}
 
 {% block formtype %}
-    {% if email %}
-        <p>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</p>
+    {% if group and user %}
+        <p>
+        Congratulations, {{ user.first_name }}, you have now joined the group
+        "{{ group.name }}"!
+        </p>
     {% else %}
         This page has expired.
     {% endif %}

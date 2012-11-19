@@ -88,12 +88,11 @@ def confirm_email_invite(request, key):
             membership.save()
             group.membership_set.add(membership)  # user is now a member!
 
-        '''
-        Right now, if the user isn't already logged in, then they'll be sent
-        over to the main inbox!  This should give some visual indication of
-        what's going on via a template, and then redirect the user.
-        '''
-        return redirect('/')
+        params = {
+            'group': group,
+            'user': user,
+        }
+        return render(request, 'invite_complete.html', params)
     else:
         # Handle the non-existing user case.
         recipient_email = EmailInvite.objects.get_email(key)
@@ -141,7 +140,11 @@ def invite_registration(request, key):
             membership.save()
             group.membership_set.add(membership)
             group.save()
-            return redirect('/')
+            params = {
+                'group': group,
+                'user': user,
+            }
+            return render(request, 'invite_complete.html', params)
     else:
         form = InviteRegistrationForm()
     return render(request, 'register.html', {'form': form,})
