@@ -9,7 +9,7 @@ function changePassword() {
 				alert(data.error);
 			} else {
 				alert("Password changed");
-				$('#change-password').modal("close");
+				$('#change-password').modal("hide");
 			}
 		}, "json");
 }
