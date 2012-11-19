@@ -22,11 +22,14 @@ function createGroup() {
 }
 
 function ajaxCreateGroup() {
-	var createGroupBtn = $('#create-group-btn');
-	createGroupBtn.click(function(event) {
+	$('#create-group-form').submit(function(event) {
 		event.preventDefault();
-		$(this).attr("disabled", "disabled");
 		createGroup();
+	});
+	
+	$('#create-group-form a.btn, #create-group-form .close').click(function() {
+		$('#create-group-form input[type="text"]').val("");
+		$('#create-group-form .errorlist').remove();
 	});
 }
 
