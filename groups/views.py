@@ -35,10 +35,14 @@ def group(request, grpid):
 
     '''relations are represented by double underscores (i heart django)'''
     post_list = list(Post.objects.filter(author__group__id=grpid))
+
+    # Is the user an admin for this group?
+    is_admin = request.user.membership_set.get(group__pk=grpid).is_admin
     return render(request, 'group_view.html', {'post_list': post_list,
                                           'grpid': int(grpid),
                                           'user': request.user,
-                                          'form': form,})
+                                          'form': form,
+                                          'is_admin': is_admin})
 
 @login_required
 def create(request):
