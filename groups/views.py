@@ -79,7 +79,7 @@ def create(request):
             # Send emails to invited members.
             emails = list(set(emails))
             emails = filter(email_re.match, emails)  # silently ignore invalids.
-            EmailInvite.objects.send_confirmation(request.user.email, emails,
+            EmailInvite.objects.send_confirmation(request.user, emails,
                     group)
 
             ''' Redirect to the new group '''
