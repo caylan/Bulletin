@@ -211,7 +211,8 @@ def reset_password(request):
             new_password = User.objects.make_random_password()
             forgetful_user.set_password(new_password)
             forgetful_user.save()
-            forgetful_user.email_user('Password Reset', 'New password: ' + new_password)
+            forgetful_user.email_user('[Bulletin] Password Reset', 
+                    'New password: ' + new_password)
             return render(request, 'password_reset.html', {'password_changed': True,})
         except User.DoesNotExist:
             return render(request, 'password_reset.html', {'state': 'We have no record of that email address',})
