@@ -20,6 +20,7 @@ from django.conf import settings
 from django.contrib.auth.models import (
     User,
 )
+from groups.models import Group, Membership
 
 def register(request):
     '''
@@ -70,9 +71,28 @@ def confirm_email_invite(request, key):
     user = EmailInvite.objects.confirm_email(key)
     if user is not None:
         # Handle the user case.
-        if user.is_active:
-            #
-            pass
+        if not user.is_active:
+            '''
+            This may not be the best idea, but if the user is not active, then
+            activate them anyway, since this is just another link they'll have
+            to follow if they haven't already.
+            '''
+            user.is_active = True
+
+        # Check to see if they're already in the group, as this might not be the
+        # first time they've visited this link.
+        group = EmailInvite.objects.get(confirmation_key=key).group
+        if not group.members.all().filter(email=user.email):
+            membership = Membership(user=user, group=group)
+            membership.save()
+            group.membership_set.add(membership)  # user is now a member!
+
+        '''
+        Right now, if the user isn't already logged in, then they'll be sent
+        over to the main inbox!  This should give some visual indication of
+        what's going on via a template, and then redirect the user.
+        '''
+        return redirect('/')
     else:
         # Handle the non-existing user case.
         recipient_email = EmailInvite.objects.get_email(key)
@@ -86,6 +106,12 @@ def confirm_email_invite(request, key):
             pass
         else:
             pass # Return a 404.
+
+def registration_invite(request, key):
+    '''
+    Registers the user based on an their invitation.
+    '''
+    pass
 
 def change_password(request):
     '''

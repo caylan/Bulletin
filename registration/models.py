@@ -251,7 +251,7 @@ class EmailInvite(AbstractKeyConfirmation):
         '''
         try:
             self.group.members.all().get(email=self.recipient_email)
-            raise EmailInvite.MemberExists("invite cannot be to a user" \
+            raise self.MemberExists("invite cannot be to a user" \
                     " already in this group")
         except ObjectDoesNotExist:
             super(EmailInvite, self).save()
