@@ -1,0 +1,13 @@
+{% extends "starter_base.html" %}
+
+{% block formtype %}
+    {% if group and user %}
+        <p>
+        Congratulations, {{ user.first_name }}, you have now joined the group
+        "{{ group.name }}"!
+        </p>
+    {% else %}
+        This page has expired.
+    {% endif %}
+    <a href="/" class="btn back-btn btn-large">Continue</a>
+{% endblock formtype %}
