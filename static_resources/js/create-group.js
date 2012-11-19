@@ -7,7 +7,6 @@ function isEmail(email) {
 
 function createGroup() {
 	var $modal = $('#create-group');
-	var emailArray = [];
 	var param = {};
 	
 	if (count > 0) {
@@ -22,7 +21,7 @@ function createGroup() {
 				continue;
 			}
 			
-			emailArray.push(email);
+			param['email' + i] = email;
 		}
 		// clean up so nothing gets submitted by the form
 		count = 0;
@@ -33,8 +32,6 @@ function createGroup() {
 	$.map($('#create-group-form').serializeArray(), function(n, i) {
 		param[n["name"]] = n["value"];
 	});
-	
-	param["emails"] = emailArray;
 	
 	$.post(
 		"/create/",

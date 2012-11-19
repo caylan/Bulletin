@@ -52,9 +52,8 @@ def _get_extra_emails(request):
     '''
     emails = []
     for name, val in request.POST.iteritems():
-        print "PARAM NAME:{0}".format(name)
-        if re.match('^email\d', name):
-            emails.append(val)
+        if re.match('email', name):
+            print val
     return emails
 
 @login_required
