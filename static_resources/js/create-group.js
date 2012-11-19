@@ -8,6 +8,7 @@ function isEmail(email) {
 function createGroup() {
 	var $modal = $('#create-group');
 	var emailArray = [];
+	var param = {};
 	
 	if (count > 0) {
 		var $input;
@@ -29,9 +30,15 @@ function createGroup() {
 		$('.add-invitee-btn').siblings('.people-list').html("");
 	}
 	
+	$.map($('#create-group-form').serializeArray(), function(n, i) {
+		param[n["name"]] = n["value"];
+	});
+	
+	param["emails"] = emailArray;
+	
 	$.post(
 		"/create/",
-		$('#create-group-form').serialize(),
+		param,
 		function(output) {
 			if (output.location) {
 				window.location.replace(output.location);
