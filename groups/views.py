@@ -55,7 +55,7 @@ def _get_extra_emails(request):
     emails = []
     for name, val in request.POST.iteritems():
         if re.match('^email\d+$', name):
-            emails.append((name, val,));
+            emails.append(val);
     return emails
 
 @login_required
