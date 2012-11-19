@@ -7,6 +7,7 @@ from forms import GroupCreationForm
 from models import Group, Membership
 from posts.forms import PostForm
 from posts.models import Post, Comment
+import re
 import md5
 
 @login_required
@@ -44,6 +45,18 @@ def group(request, grpid):
                                           'form': form,
                                           'is_admin': is_admin})
 
+def _get_extra_emails(request):
+    '''
+    Gets the extra emails from a request.  This is meant to be used with group
+    creation for extracting a list of emails.
+    '''
+    emails = []
+    for name, val in request.POST.iteritems():
+        print "PARAM NAME:{0}".format(name)
+        if re.match('^email\d', name):
+            emails.append(val)
+    return emails
+
 @login_required
 def create(request):
     '''
@@ -53,17 +66,16 @@ def create(request):
     The user may select the name of the group.
     '''
     if request.method == 'POST':
-        form = GroupCreationForm(request.POST)
+        emails = _get_extra_emails(request)
+        form = GroupCreationForm(request.POST, emails=emails)
         if form.is_valid():
             group = form.save()
             
             # Create the default user membership
             m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
-            post_list = list(Post.objects.filter(author__group__id=group.pk))
 
-            ''' TODO: Redirect to the new group '''
-            
+            ''' Redirect to the new group '''
             return HttpResponse(group.json(), mimetype='application/json')
     else:
         raise Http404
