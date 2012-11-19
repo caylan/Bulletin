@@ -198,3 +198,24 @@ ul.errorlist {
 .modal form {
 	margin: 0;
 }
+
+.validity {
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.validity .valid-email {
+    color: green;
+}
+
+.validity .invalid-email {
+	color: red;
+}
+
+.people-list input {
+	margin-bottom: 0;
+}
+
+.people-list .person-email {
+	margin-bottom: 10px;
+}
