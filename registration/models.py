@@ -182,12 +182,18 @@ class EmailInviteManager(EmailConfirmationManager):
                 confirmation_key=key,
             )
             confirmation.group = group
-            confirmation.save()
+
+            # The commit is off so we can throw any exceptions due to invalid
+            # emails (ones where the user is already a part of this group, for
+            # example).
+            confirmation.save(commit=False)
 
             confirmation_lst.append(confirmation)
             email_context_lst.append(email_context)
 
         # Send off the email and return the invite.
+        for conf in confirmation_lst:
+            conf.save()
         super(EmailInviteManager, self).send_mail(email_context_lst)
         return confirmation_lst
 
