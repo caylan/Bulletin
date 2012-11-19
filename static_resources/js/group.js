@@ -94,9 +94,8 @@ $(document).ready(function() {
     
     initCommentSlider();
     initCommentAjax();
-    initDynamicAvatarSize();
 });
 
 $(window).load(function() {
-    $('.avatar').fadeIn();
+    initDynamicAvatarSize();
 });
