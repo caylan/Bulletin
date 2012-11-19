@@ -52,11 +52,35 @@ class __BaseRegistrationForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'password1', 'password2',)
 
 class InviteRegistrationForm(__BaseRegistrationForm):
-    def __init__(self, *args, **kwargs):
+    '''
+    This passes for now, but in case we want to have any custom init function,
+    that's why there's this and the BaseRegistrationForm, so that it doesn't
+    affect the main registration form.
+
+    When the someone is using this form, it is assumed that they will have
+    access to the user's email upon registering them.
+    '''
+    def save(self, email, commit=True):
+        '''
+        Saves the user with the email passed.  The email must be valid, else an
+        exception will be raised.
+        '''
         try:
-            _instance = kwargs['instance']
-        except KeyError:
-            raise Exception("Must include User instance to form")
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            user = None
+        if user is not None:
+            raise Exception('user must not exist!')
+
+        user = super(InviteRegistrationForm, self).save(commit=False)
+
+        ''' Don't activate a user until the email is sent! '''
+        user.set_password(self.cleaned_data["password1"])
+        user.username = email
+        user.email = email
+        if commit:
+            user.save()
+        return user
 
 class RegistrationForm(__BaseRegistrationForm):
 

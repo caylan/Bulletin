@@ -5,57 +5,60 @@
 
 {% block body %}
 <div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-  	<div class="container">
-    <a class="brand" href="#">Bulletin</a>
-    <ul class="nav pull-right">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img class="avatar pull-left media-object" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />{{ user.first_name }} {{ user.last_name }}
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-        	<li><a href="/logout">Logout</a>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</div>
+    <div class="navbar-inner">
+  	    <div class="container">
+            <a class="brand" href="#">Bulletin</a>
+            <ul class="nav pull-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#change-password" data-toggle="modal">Change Password</a>
+        	            <li><a href="/logout">Logout</a>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 {% block content %}
 <div id="top" class="row-fluid">
 	<div class="container-narrow">
-	<div class="span3">
-		<div class="well">
-			{% block nav %}
-			<ul id="team-nav" class="nav nav-list">
-			    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
-			    <li class="nav-header">Groups</li>
-			    {% for member in user.membership_set.all %}
-			    <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
-			        <a href="/group/{{ member.group.id }}/">
-			            {{ member.group.name }}
-			        </a>
-			    </li>
-			    {% endfor %}
-			    <li class="divider"></li>
-			</ul>
-		    <a id="create-group-btn" class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
-			
-			{% endblock nav %}
-		</div>
-	</div>
-	<div id="content-container" class="span9">
-		<div class="hero-unit">
-			<div id="content">
-				{% block maincontent %}
-				<p>No Content</p>
-				{% endblock maincontent %}
+		<div class="span3">
+			<div id='left-column' class="well">
+				{% block nav %}
+				<ul id="team-nav" class="nav nav-list">
+				    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
+				    <li class="nav-header">Groups</li>
+				    {% for member in user.membership_set.all %}
+				    <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
+				        <a href="/group/{{ member.group.id }}/">
+				            {{ member.group.name }}
+				        </a>
+				    </li>
+				    {% endfor %}
+				    <li class="divider"></li>
+				</ul>
+			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
+				{% if is_admin %}<a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>{% endif %}
+				
+				{% endblock nav %}
 			</div>
 		</div>
-		<div id="footer">This is a footer</div>
-	</div>
+		<div id="content-container" class="span9">
+			<div class="hero-unit">
+				<div id="content">
+					{% block maincontent %}
+					<p>No Content</p>
+					{% endblock maincontent %}
+				</div>
+			</div>
+			<div id="footer" class='pull-right'></div>
+		</div>
 	</div>
 	<!--<div class="span2">
 		<div class="well">
@@ -64,12 +67,44 @@
 			    <li class="nav-header">Agenda</li>
 			    <li class='divider'></li>
 			</ul>
+			<!-- TODO get rid of this garbage
+			<form action="/change_password/" id="change-password">{% csrf_token %}
+				<p><input type="password" name="cur_password" placeholder="Current Password" /></p>
+				<p><input type="password" name="new_password1" placeholder="New Password" /></p>
+				<p><input type="password" name="new_password2" placeholder="Retype New Password" /></p>
+				<p><input type="submit" value="Change Password" /></p>
+			</form>
+			<script>
+			$(document).ready(function() {
+				$('#change-password').submit(function(event) {
+					event.preventDefault();
+
+					var form = $(this);
+					var url = "/change_password/";
+
+					$.post(
+						url,
+						form.serialize(),
+						function(data) {
+							form.find('input[type="password"]').val("");
+							if (!data.success) {
+								alert(data.error);
+							} else {
+								alert("Password changed");
+							}
+						}, "json");
+				});
+			});
+			</script>
+			<!-- end TODO
 			{% endblock agenda %}
 		</div>
 	</div> -->
 </div>
 
-{% include "group_create_modal.html" %}
+{% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
+{% include "group_create_modal.html" with csrf_token=csrf_token only %}
+{% include "password_change_modal.html" %}
 
 <div id="jump-top" class="hide well"><i class="icon-arrow-up"></i></div>
 {% endblock content %}
@@ -77,7 +112,9 @@
 {% endblock body %}
 
 {% block extrajs %}
-<script type="text/javascript">
-
-</script>
+<script src="{{ STATIC_URL }}js/jquery.timeago.min.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/group.js"></script>
+<script src="{{ STATIC_URL }}js/create-group.js"></script>
+<script src="{{ STATIC_URL }}js/change-password.js"></script>
+{% if is_admin %}<script src="{{ STATIC_URL }}js/group-invite.js"></script>{% endif %}
 {% endblock extrajs %}

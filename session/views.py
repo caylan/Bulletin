@@ -42,7 +42,8 @@ def login_view(request):
                 state = 'User not active. ' \
                         'Please check your email for validation'
         else:
-            state = 'Invalid email or password.'
+            state = 'Invalid email or password. ' \
+                    'Do you want to <a href=\"/reset_password/\">reset your password</a>?'
 
     request.session.set_test_cookie()
     return _login_form(request, state)

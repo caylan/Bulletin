@@ -1,31 +1,36 @@
-function register() {
+function resetPassword() {
 	var $containerInPage = $('#content-container');
-	$('.loading-spinner').show();
 	$.post(
 		".",
-		$('#register-form').serialize(),
+		$('#reset-password-form').serialize(),
 		function(output) {
 			var $nextPage = $('#content-container', output);
+			var $newState = $('h4', output);
+			var $state = $('h4');
+			$state.fadeOut(function() {
+				$state.html($newState.html());
+			});
+			
 			$containerInPage.fadeOut(function() {
 				$containerInPage.html($nextPage.html());
-				$containerInPage.find('ul.errorlist').addClass("alert alert-error")
-				ajaxRegister();
+				ajaxResetPassword();
 				if($.browser.msie && parseInt($.browser.version, 10) < 10) {
 					$('input, textarea').placeholder();
 				}
 			});
+			$state.fadeIn();
 			$containerInPage.fadeIn();
 		}
 	);
 }
 
-function ajaxRegister() {
-	$('#register-form').submit(function(event) {
+function ajaxResetPassword() {
+	$('#reset-password-form').submit(function(event) {
 		event.preventDefault();
-		register();
+		resetPassword();
 	});
 }
 
 $(document).ready(function() {
-	ajaxRegister();
+	ajaxResetPassword();
 });

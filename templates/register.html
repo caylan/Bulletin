@@ -1,13 +1,12 @@
 {% extends "starter_base.html" %}
 
 {% block formtype %}
-<form class="form-signin loading-spinner-container clearfix" method="post">
+<form id="register-form" class="form-signin loading-spinner-container clearfix" method="post">
 	{% csrf_token %}
 	<h2 class="form-signin-heading">Register your account</h2>
 	{{ form }}
-	<input class="register-btn btn btn-large btn-primary pull-left"
-		type="submit" value="Register" /> <a href=".."
-		class="back-btn btn btn-large pull-right">Back</a>
+	<input id="register-btn" class="btn btn-large btn-primary pull-left" type="submit" value="Register" />
+	<a href="/" class="back-btn btn btn-large pull-right">Back</a>
     <div class="loading-spinner hide"></div>
 </form>
 {% endblock formtype %}

@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.contrib.auth.models import User
+from django.core.validators import email_re
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import GroupCreationForm
 from models import Group, Membership
 from posts.forms import PostForm
 from posts.models import Post, Comment
+from registration.models import EmailInvite
+import re
 import md5
 
 @login_required
@@ -35,10 +38,25 @@ def group(request, grpid):
 
     '''relations are represented by double underscores (i heart django)'''
     post_list = list(Post.objects.filter(author__group__id=grpid))
+
+    # Is the user an admin for this group?
+    is_admin = request.user.membership_set.get(group__pk=grpid).is_admin
     return render(request, 'group_view.html', {'post_list': post_list,
                                           'grpid': int(grpid),
                                           'user': request.user,
-                                          'form': form,})
+                                          'form': form,
+                                          'is_admin': is_admin})
+
+def _get_extra_emails(request):
+    '''
+    Gets the extra emails from a request.  This is meant to be used with group
+    creation for extracting a list of emails.
+    '''
+    emails = []
+    for name, val in request.POST.iteritems():
+        if re.match('^email\d+$', name):
+            emails.append(val);
+    return emails
 
 @login_required
 def create(request):
@@ -49,6 +67,7 @@ def create(request):
     The user may select the name of the group.
     '''
     if request.method == 'POST':
+        emails = _get_extra_emails(request)
         form = GroupCreationForm(request.POST)
         if form.is_valid():
             group = form.save()
@@ -56,10 +75,15 @@ def create(request):
             # Create the default user membership
             m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
-            post_list = list(Post.objects.filter(author__group__id=group.pk))
 
-            ''' TODO: Redirect to the new group '''
-            return redirect('/')
+            # Send emails to invited members.
+            emails = list(set(emails))
+            emails = filter(email_re.match, emails)  # silently ignore invalids.
+            EmailInvite.objects.send_confirmation(request.user.email, emails,
+                    group)
+
+            ''' Redirect to the new group '''
+            return HttpResponse(group.json(), mimetype='application/json')
     else:
-        return render(request, '404.html')
-    return render(request, 'group_create.html', {'form': form,})
+        raise Http404
+    return render(request, 'group_create_modal.html', {'form': form,})

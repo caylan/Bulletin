@@ -1,5 +1,5 @@
 <div id="create-group" class="modal hide fade">
-	<form action="/create/" method="post">
+	<form action="/create/" id="create-group-form" class="loading-spinner-container" method="post">
 		<div class="modal-header clearfix">
 			<input type="button" class="close" data-dismiss="modal"
 				aria-hidden="true" value="&times;" />
@@ -7,11 +7,23 @@
 		</div>
 		<div class="modal-body">
 		    {% csrf_token %}
-		    <input type="text" name="name" id="id_name" placeholder="Group name" />
+		    {% if form %}
+		    {{ form }}
+		    {% else %}
+	        <input type="text" name="name" id="id_name" placeholder="Group Name" />
+		    {% endif %}
+		    
+		    <div class="invitation">
+		        <h4 class="people-list-header hide">People to be invited:</h4>
+		        <div class="people-list">
+		        </div>
+		        <a class="btn btn-block add-invitee-btn" href="javascript:void(0)"><i class="icon-plus"></i> Add a new person to the group</a>
+		    </div>
 		</div>
 		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
-			<input type="submit" class="btn btn-primary" value="Create" />
+			<a href="#" class="btn dismiss" data-dismiss="modal" aria-hidden="true">Cancel</a>
+			<input type="submit" id="create-group-btn" class="btn btn-primary" value="Create" />
 		</div>
+        <div class="loading-spinner hide"></div>
 	</form>
 </div>

@@ -1,5 +1,5 @@
 {% load i18n%}
-Hello {% if recipient_is_active %} {{ first_name }} {{ last_name }} {% else %} {{ email }} {% endif %}, you have been invited by {{ sender_email }} 
+Hello {% if recipient_is_active %} {{ first_name }} {% else %} {{ email }} {% endif %}, you have been invited by {{ sender_email }} 
 to join the group "{{ group }}" on Bulletin!
 
 {% if not recipient_is_active %}
