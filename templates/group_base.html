@@ -5,24 +5,25 @@
 
 {% block body %}
 <div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-  	<div class="container">
-    <a class="brand" href="#">Bulletin</a>
-    <ul class="nav pull-right">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img class="avatar pull-left media-object" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />
-          <span>{{ user.first_name }} {{ user.last_name }}</span>
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="#change-password" data-toggle="modal">Change Password</a>
-        	<li><a href="/logout">Logout</a>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</div>
+    <div class="navbar-inner">
+  	    <div class="container">
+            <a class="brand" href="#">Bulletin</a>
+            <ul class="nav pull-right">
+                {% if is_admin %}<li><a href="#invite-people" data-toggle="modal"><i class="icon-user"></i> Invite people to this group</a></li>{% endif %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img class="avatar pull-left" src="{{ user.email|gravatar:'30' }}" alt="author's gravatar" />
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#change-password" data-toggle="modal">Change Password</a>
+        	            <li><a href="/logout">Logout</a>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 {% block content %}
@@ -101,6 +102,7 @@
 	</div> -->
 </div>
 
+{% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
 {% include "group_create_modal.html" with csrf_token=csrf_token only %}
 {% include "password_change_modal.html" %}
 
@@ -114,4 +116,5 @@
 <script src="{{ STATIC_URL }}js/group.js"></script>
 <script src="{{ STATIC_URL }}js/create-group.js"></script>
 <script src="{{ STATIC_URL }}js/change-password.js"></script>
+{% if is_admin %}<script src="{{ STATIC_URL }}js/group-invite.js"></script>{% endif %}
 {% endblock extrajs %}

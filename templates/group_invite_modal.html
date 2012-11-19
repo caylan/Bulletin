@@ -1,0 +1,22 @@
+<div id="invite-people" class="modal hide fade">
+    <form action="" id="invite-people-form" class="loading-spinner-container" method="post">
+        <div class="modal-header clearfix">
+            <input type="button" class="close" data-dismiss="modal"
+                aria-hidden="true" value="&times;" />
+            <h3>Invite people to this group</h3>
+        </div>
+        <div class="modal-body">
+            {% csrf_token %}
+            <div class="invitation">
+                <div class="people-list">
+                </div>
+                <a class="btn btn-block add-invitee-btn" href="javascript:void(0)"><i class="icon-plus"></i> Add a new person to the group</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</a>
+            <input type="submit" id="invite-people-btn" class="btn btn-primary" value="Invite" />
+        </div>
+        <div class="loading-spinner hide"></div>
+    </form>
+</div>

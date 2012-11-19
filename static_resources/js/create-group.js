@@ -9,29 +9,32 @@ function createGroup() {
 	var $modal = $('#create-group');
 	var param = {};
 	
-	if (count > 0) {
-		var $input;
-		var email;
-		
-		for (var i = 0; i < count; i++) {
-			$input = $('input[name="email' + i + '"]');
-			email = $.trim($input.val());
-			
-			if (email == "" || !isEmail(email)) {
-				continue;
-			}
-			
-			param['email' + i] = email;
-		}
-		// clean up so nothing gets submitted by the form
-		count = 0;
-		$('.people-list-header').hide();
-		$('.add-invitee-btn').siblings('.people-list').html("");
-	}
+	$('#create-group .loading-spinner').show();
 	
-	$.map($('#create-group-form').serializeArray(), function(n, i) {
-		param[n["name"]] = n["value"];
+	$modal.find('.people-list').hide("blind", function() {
+		if (count > 0) {
+			var $input;
+			var email;
+			
+			for (var i = 1; i <= count; i++) {
+				$input = $('input[name="email' + i + '"]');
+				email = $.trim($input.val());
+				
+				if (email == "" || !isEmail(email)) {
+					continue;
+				}
+				
+				param['email' + i] = email;
+			}
+			// clean up so nothing gets submitted by the form
+			count = 0;
+			$('.people-list-header').hide();
+			$('.add-invitee-btn').siblings('.people-list').html("");
+		}
 	});
+	
+	param["name"] = $('#create-group input[name="name"]').val();
+	param["csrfmiddlewaretoken"] = $('#create-group input[type="hidden"]').val();
 	
 	$.post(
 		"/create/",
@@ -41,8 +44,8 @@ function createGroup() {
 				window.location.replace(output.location);
 			} else {
 				$modal.fadeOut(function() {
-					count = 0;
 					$modal.html($(output).html());
+					count = $modal.find('input[type="text"]').length - 1;
 					$modal.find('ul.errorlist').addClass("alert alert-error")
 					ajaxCreateGroup();
 					if($.browser.msie && parseInt($.browser.version, 10) < 10) {
@@ -50,12 +53,14 @@ function createGroup() {
 					}
 				});
 				$modal.fadeIn();
+				$('#create-group .loading-spinner').hide();
 			}
 		}
 	);
 }
 
 function addNewPersonField() {
+	count++;
 	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" />";
 	var validityHtml = "<span class=\"validity\"><span class=\"valid-email hide\"><i class=\"icon-ok\"></i> Valid email address</span><span class=\"invalid-email hide\"><i class=\"icon-remove\"></i> Please enter a valid email address</span></span>";
 	var containerHtml = "<div class=\"person-email hide\"></div>";
@@ -84,7 +89,6 @@ function addNewPersonField() {
 	var $peopleList = $('.add-invitee-btn').siblings('.people-list');
 	$peopleList.append($container);
 	$container.show("blind");
-	count++;
 }
 
 function ajaxCreateGroup() {
@@ -97,11 +101,11 @@ function ajaxCreateGroup() {
 		$('#create-group-form input[type="text"]').val("");
 		$('#create-group-form .errorlist').remove();
 		count = 0;
-		$('.people-list-header').hide();
+		$('#create-group-form .people-list-header').hide();
 		$('.add-invitee-btn').siblings('.people-list').html("");
 	});
 	
-	$('.add-invitee-btn').click(function() {
+	$('#create-group .add-invitee-btn').click(function() {
         if (count == 0) {
             $('.people-list-header').show("blind", function () {
             	addNewPersonField();
