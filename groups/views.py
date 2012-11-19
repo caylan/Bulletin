@@ -7,6 +7,7 @@ from forms import GroupCreationForm
 from models import Group, Membership
 from posts.forms import PostForm
 from posts.models import Post, Comment
+from registration.models import EmailInvite
 import re
 import md5
 
@@ -52,8 +53,8 @@ def _get_extra_emails(request):
     '''
     emails = []
     for name, val in request.POST.iteritems():
-        if re.match('email', name):
-            print val
+        if re.match('^email\d+$', name):
+            emails.append((name, val,));
     return emails
 
 @login_required
@@ -73,6 +74,11 @@ def create(request):
             # Create the default user membership
             m = Membership(user=request.user, group=group, is_admin=True)
             m.save()
+
+            # Send emails to invited members.
+            emails = form.emails()
+            EmailInvite.objects.send_confirmation(request.user.email, emails,
+                    group)
 
             ''' Redirect to the new group '''
             return HttpResponse(group.json(), mimetype='application/json')

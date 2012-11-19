@@ -146,6 +146,7 @@ class EmailInviteManager(EmailConfirmationManager):
         # Iterate through all emails and send one big scary mass email!
         # each email will have an individual email sent to each recipient.
         email_context_lst = []
+        confirmation_lst = []
         for email in recipient_emails:
             # Check to see if the recipient email is active.
             try:
@@ -183,11 +184,12 @@ class EmailInviteManager(EmailConfirmationManager):
             confirmation.group = group
             confirmation.save()
 
+            confirmation_lst.append(confirmation)
             email_context_lst.append(email_context)
 
         # Send off the email and return the invite.
         super(EmailInviteManager, self).send_mail(email_context_lst)
-        return confirmation
+        return confirmation_lst
 
     def confirm_email(self, confirmation_key):
         '''
