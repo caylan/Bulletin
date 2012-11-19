@@ -8,8 +8,12 @@ function initCommentSlider() {
         $commentForm = $post.find(".comment-form-container");
         $(this).parent().fadeOut();
         $commentForm.show("blind", function() {
+			var scroll = $post.offset().top - $('.navbar').height();
+			if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
+				scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
+			}
             $('html, body').animate({
-                scrollTop: $post.offset().top - $('.navbar').height()
+                scrollTop: scroll
             }, 500);
 			$($commentForm).find('input[type="text"]').focus();
         });
