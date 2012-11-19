@@ -11,6 +11,7 @@ function initCommentSlider() {
             $('html, body').animate({
                 scrollTop: $post.offset().top - $('.navbar').height()
             }, 500);
+			$($commentForm).find('input[type="text"]').focus();
         });
     });
 }
