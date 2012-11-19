@@ -77,7 +77,7 @@ function initDynamicAvatarSize() {
 }
 
 function resizeAvatar (avatar, parentHeight) {	
-	$("<img/>") // Make in memory copy of image to avoid css issues
+	$("<img/>")
 		.attr("src", $(avatar).attr("src"))
 		.load(function() {
 			var scale = this.width/this.height;
@@ -97,4 +97,5 @@ $(document).ready(function() {
 
 $(window).load(function() {
     initDynamicAvatarSize();
+	$('.avatar').fadeIn();
 });
