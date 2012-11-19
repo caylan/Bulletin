@@ -87,7 +87,6 @@ STATIC_ROOT = '/static/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-#STATIC_URL = 'http://cloudfront.bulletinapp.net/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -194,6 +193,14 @@ LOGGING = {
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
-#import dj_database_url
-#DATABASES['default'] = dj_database_url.config()
+# Uncomment the following for Heroku deployment
+'''
+STATIC_ROOT = ''
 
+STATIC_URL = 'http://cloudfront.bulletinapp.net/'
+
+STATICFILES_DIRS = ()
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
+'''
