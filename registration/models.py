@@ -5,7 +5,7 @@ from random import random
 ''' Django! '''
 from django.db import models
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, send_mass_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.hashcompat import sha_constructor
@@ -71,13 +71,37 @@ class EmailConfirmationManager(models.Manager):
         )
         return (activation_url, current_site)
 
-    def send_mail(self, context):
-        subject = render_to_string(self.subject_path, context)
-        message = render_to_string(self.message_path, context)
+    def send_mail(self, contexts, mass_mail=False):
+        '''
+        Sends a list of emails (using mass_mail if specified) to a list of
+        contexts.
         
-        # Join the subject into one long line.
-        subject = "".join(subject.splitlines())
-        send_mail(subject, message, settings.FROM_EMAIL, [context['email']])
+        Following this method:
+          https://docs.djangoproject.com/en/dev/topics/email/?from=olddocs
+
+        message1 = ('Subject here', 'Here is the message', 'from@example.com',
+        ['first@example.com', 'other@example.com'])
+
+        message2 = ('Another Subject', 'Here is another message',
+                'from@example.com', ['second@test.com'])
+
+        send_mass_mail((message1, message2), fail_silently=False)
+        '''
+        mail_list = []
+        for ctx in contexts:
+            subject = render_to_string(self.subject_path, ctx)
+            # Join the subject into one long line.
+            subject = "".join(subject.splitlines())
+            message = render_to_string(self.message_path, ctx)
+            mail_list.append(
+                (subject, message, settings.FROM_EMAIL, [ctx['email']])
+            )
+        
+        # Send out the mass mail!
+        send_mass_mail(
+            mail_list,
+            fail_silently=False,
+        )
 
     def send_confirmation(self, user):
         key = self.create_key(user.email)
@@ -101,7 +125,7 @@ class EmailConfirmationManager(models.Manager):
 
         # If we're here and an exception hasn't been thrown, then we'll send off
         # the email.
-        self.send_mail(email_context)
+        self.send_mail([email_context])
         return confirmation
 
     def delete_expired(self):
@@ -114,49 +138,55 @@ class EmailInviteManager(EmailConfirmationManager):
     message_path = "registration/email_invite_message.txt"
     view_path = "registration.views.confirm_email_invite"
 
-    def send_confirmation(self, sender, recipient_email, group):
+    def send_confirmation(self, sender, recipient_emails, group):
         '''
         Sends an email invite to recipient email.  This assumes that the
         recipient email is valid, and that the sender is a valid active user.
         '''
-        # Check to see if the recipient email is active.
-        try:
-            recipient = User.objects.all().get(email=recipient_email)
-        except User.DoesNotExist:
-            recipient = False
+        # Iterate through all emails and send one big scary mass email!
+        # each email will have an individual email sent to each recipient.
+        email_context_lst = []
+        for email in recipient_emails:
+            # Check to see if the recipient email is active.
+            try:
+                recipient = User.objects.all().get(email=email)
+            except User.DoesNotExist:
+                recipient = False
 
-        #  Create email context for subject and messages.  Creates key, gets
-        #  active site, and the active URL.
-        key = self.create_key(recipient_email)
-        (activation_url, current_site) = self.create_activation_url(key)
-        email_context = {
-            'recipient_is_active': bool(recipient),
-            'group': group.name,
-            "email": recipient_email,
-            "activation_url": activation_url,
-            "current_site": current_site,
-            "confirmation_key": key,
-        }
+            #  Create email context for subject and messages.  Creates key, gets
+            #  active site, and the active URL.
+            key = self.create_key(email)
+            (activation_url, current_site) = self.create_activation_url(key)
+            email_context = {
+                'recipient_is_active': bool(recipient),
+                'group': group.name,
+                "email": email,
+                "activation_url": activation_url,
+                "current_site": current_site,
+                "confirmation_key": key,
+            }
 
-        # If the recipient is an active user, put their first/last name in the
-        # email context.
-        if recipient:
-            email_context['first_name'] = recipient.first_name
-            email_context['last_name'] = recipient.last_name
+            # If the recipient is an active user, put their first/last name in the
+            # email context.
+            if recipient:
+                email_context['first_name'] = recipient.first_name
+                email_context['last_name'] = recipient.last_name
 
-        #  Create the confirmation from the data we've accrued.  Any exceptions
-        #  will be thrown here and put upstream (this has to happen before
-        #  attempting to send the email).
-        confirmation = self.model(
-            group=group,
-            recipient_email=recipient_email,
-            confirmation_key=key,
-        )
-        confirmation.group = group
-        confirmation.save()
+            #  Create the confirmation from the data we've accrued.  Any exceptions
+            #  will be thrown here and put upstream (this has to happen before
+            #  attempting to send the email).
+            confirmation = self.model(
+                group=group,
+                recipient_email=email,
+                confirmation_key=key,
+            )
+            confirmation.group = group
+            confirmation.save()
+
+            email_context_lst.append(email_context)
 
         # Send off the email and return the invite.
-        super(EmailInviteManager, self).send_mail(email_context)
+        super(EmailInviteManager, self).send_mail(email_context_lst)
         return confirmation
 
     def confirm_email(self, confirmation_key):
