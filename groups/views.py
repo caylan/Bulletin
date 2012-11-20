@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.core.validators import email_re
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils import simplejson
 from forms import GroupCreationForm
 from models import Group, Membership
 from posts.forms import PostForm
@@ -74,6 +75,7 @@ def _send_email_invites(request, group):
     emails = list(set(emails))
     emails = filter(email_re.match, emails)
     EmailInvite.objects.send_confirmation(request.user, emails, group)
+    return bool(emails)
 
 def send_invites(request, grpid):
     '''
@@ -89,14 +91,21 @@ def send_invites(request, grpid):
             raise Http404
 
         try:
-            is_admin = group.members.all().get(user=request.user).is_admin
+            is_admin = group.membership_set.get(user=request.user).is_admin
         except Membership.DoesNotExist:
             raise Http404
 
         if not is_admin:
             raise Http404
         
-        _send_email_invites(request, group)
+        json = {'success': False}
+        if _send_email_invites(request, group):
+            json['success'] = True
+        return HttpResponse(
+            simplejson.dumps(json),
+            content_type = 'application/javascript; charset=utf8',
+            mimetype = 'application/json'
+        )
     else:
         raise Http404
 

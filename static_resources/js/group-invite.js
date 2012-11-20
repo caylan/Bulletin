@@ -57,21 +57,16 @@ function invitePeople() {
 	}
 	
 	param["csrfmiddlewaretoken"] = $('#invite-people input[type="hidden"]').val();
-	
+
 	$.post(
-		".",
+		"./send_invites/",
 		param,
 		function(output) {
-//			$modal.fadeOut(function() {
-//				$modal.html($(output).html());
-//				countInvite = $modal.find('input[type="text"]').length - 1;
-//				$modal.find('ul.errorlist').addClass("alert alert-error")
-//				ajaxInvitePeople();
-//				if($.browser.msie && parseInt($.browser.version, 10) < 10) {
-//					$modal.find('input, textarea').placeholder();
-//				}
-//			});
-//			$modal.fadeIn();
+      if (output.success) {
+        $modal.modal('hide');
+      } else {
+        // TODO: show some sort of error message.
+      }
 			$('#invite-people .loading-spinner').hide();
 		}
 	);
