@@ -4,7 +4,7 @@
 {% load gravatar %}
 
 {% block maincontent %}
-<form id="post_form" method="post" class="well">	
+<form id="post_form" method="post" class="well">
 	<img class="pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 	<textarea class="input-block-level pull-left" placeholder="Communicate with your group..." id="id_message" rows="10" cols="40" name="message"></textarea>
 	<input type="submit" value="Post" class="btn pull-right btn-primary" />
@@ -20,11 +20,11 @@
 		</div>
         <div class="media-body">
             <span class="media-heading">
-				
+
 				<abbr title="{{ post.author.user.email }}">
 					<strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
 				</abbr>
-                
+
 				<span class="pull-right">
                     <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
                 </span>
@@ -44,7 +44,7 @@
 							<abbr title="{{ comment.author.user.email }}">
 								<strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
 							</abbr>
-		                    
+
 		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
 		                    <br />
 		                </span>
@@ -76,25 +76,7 @@
 </div>
 {% endif %}
 {# --- #}
-<!--<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-$(document).ready(function() {
-    $('#post_form').submit(function(e) {
-        e.preventDefault();
 
-        var form = $(this);
-        var url = 'post/';
-        var msg = form.find('#id_message').val();
-        var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
-
-
-        $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
-            form.find('#id_message').val('');
-            alert(data);
-        }, 'json');
-    });
-});
-</script>-->
 {# --- #}
 {% endblock maincontent %}
 
