@@ -7,7 +7,7 @@
 <form id="post_form" method="post" class="well">	
 	<img class="pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 	<textarea class="input-block-level pull-left" placeholder="Communicate with your group..." id="id_message" rows="10" cols="40" name="message"></textarea>
-	<input type="submit" value="Post" class="btn pull-right" />
+	<input type="submit" value="Post" class="btn pull-right btn-primary" />
     {% csrf_token %}
 </form>
 
@@ -59,11 +59,11 @@
 					<img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 				</div>
 				<strong class="pull-left name">{{ user.first_name }} {{ user.last_name }}</strong><br/>
-		        <form method="post" class="clearfix comment-form">
+		        <form method="post" class="comment-form">
 				    {% csrf_token %}
 				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
                     <input type="hidden" name="id_post" value="{{ post.pk }}" />
-				    <input type="submit" value="Comment" class="btn pull-left" />
+				    <input type="submit" value="Comment" class="btn pull-left btn-primary" />
 				</form>
 			</div>
 		</div>
