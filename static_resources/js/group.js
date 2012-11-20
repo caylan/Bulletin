@@ -16,6 +16,13 @@ function initCommentSlider() {
                 scrollTop: scroll
             }, 500);
 			$($commentForm).find('input[type="text"]').focus();
+			var postHeight = $($post).height();
+        
+			$($post).children('.avatar-container').each(function() { // Avatars within posts
+				$(this).find('.avatar').each(function() {
+					animateResize(this, postHeight);
+				});
+			});
         });
     });
 }
@@ -56,6 +63,13 @@ function initCommentAjax() {
                     });
                 });
             });
+			$post = $(form).parents('.post');
+			var postHeight = $($post).height();
+			$($post).children('.avatar-container').each(function() { // Avatars within posts
+				$(this).find('.avatar').each(function() {
+					animateResize(this, postHeight);
+				});
+			});
             
             $('.comments').find('.timeago.new').each(function() {$(this).fadeIn()});
         }, 'json');
@@ -91,6 +105,18 @@ function resizeAvatar (avatar, parentHeight) {
 			$(avatar).css('min-width',  computedHeight*scale + 'px');
 			$(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
 			$(avatar).fadeIn();
+    });
+}
+
+function animateResize (avatar, parentHeight) {	
+	$("<img/>")
+		.attr("src", $(avatar).attr("src"))
+		.load(function() {
+			var scale = this.width/this.height;
+			var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
+			$(avatar).animate({"margin-left": -(computedHeight*scale - 65 )/3 + 'px',
+							   "min-width": computedHeight*scale + 'px',
+							   "height": computedHeight + 'px'}, 500);
     });
 }
 
