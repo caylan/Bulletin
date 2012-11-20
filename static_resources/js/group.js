@@ -79,6 +79,8 @@ function initCommentAjax() {
 				}, 500, function() {
 					$($commentForm).find('input[type="text"]').focus();
 				});
+			} else {
+				$($commentForm).find('input[type="text"]').focus();
 			}
             
             $('.timeago.new').timeago().fadeIn();
