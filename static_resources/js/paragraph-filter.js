@@ -1,17 +1,20 @@
 // Compresses a block of text into a set of paragraph tags.
-function paragraph_filter($str) {
+function paragraph_filter(str) {
   // Change all breaks to newlines.
-  $str.replace(["\r\n", "\r"], "\n");
+  str = str.replace(/\r\n/g, "\n");
+  str = str.replace(/\r/g, "\n");
   // Convert multi-newlines to two newlines.
-  $str.replace("/\n\n+/", "/\n\n/");
-  // Create two newlines into paragraph tags.
-  $str.replace("\n\n", "</p>\n\n<p>");
+  str = str.replace(/\n\n+/g, "\n\n");
+  // Convert newline into <br /> tag
+  str = str.replace(/\n/g, "<br />");
+  alert(str);
+  return str;
 }
 
 $(document).ready(function() {
   // Paragraphify all of the comments and the posts.
-  var $comments = $('.comment-message, .post-message');
-  $comments.each(function() {
+  var $messages = $('.comment-message, .post-message');
+  $messages.each(function() {
     $(this).html(paragraph_filter($(this).html()));
   });
 });
