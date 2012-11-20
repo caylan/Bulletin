@@ -1,5 +1,7 @@
+// email invite count in the existing group
 var countInvite = 0;
 
+// adds a new input and the live email validation
 function addNewPerson() {
 	countInvite++;
 	
@@ -37,6 +39,7 @@ function addNewPerson() {
 	$container.show("blind");
 }
 
+// where the submit is happening for inviting people
 function invitePeople() {
 	var $modal = $('#invite-people');
 	var param = {};
@@ -49,10 +52,11 @@ function invitePeople() {
 		$input = $('#invite-people input[name="email' + i + '"]');
 		email = $.trim($input.val());
 		
+		// if the email is empty or invalid, ignore
 		if (email == "" || !isEmail(email)) {
 			continue;
 		}
-		
+		// sticks the email into the parameter object
 		param['email' + i] = email;
 	}
 	
@@ -62,27 +66,29 @@ function invitePeople() {
 		"./send_invites/",
 		param,
 		function(output) {
-      if (output.success) {
-        $modal.modal('hide');
-      } else {
-        // TODO: show some sort of error message.
-      }
+			if (output.success) {
+				// close the modal
+				$modal.modal('hide');
+			} else {
+				// TODO: show some sort of error message.
+			}
 			$('#invite-people .loading-spinner').hide();
 		}
 	);
 }
 
+// to be called to initialize ajax submission
 function ajaxInvitePeople() {
 	$('#invite-people-form').submit(function(event) {
 		event.preventDefault();
 		invitePeople();
 	});
-	
+	// what to do when the modal is hidden
 	$('#invite-people').on("hide", function() {
 		$(this).find('.extra').remove();
 		countInvite = 1;
 	});
-	
+	// what the "add a person" button does
 	$('#invite-people .add-invitee-btn').click(function() {
         addNewPerson();
     });

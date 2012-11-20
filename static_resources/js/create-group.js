@@ -1,17 +1,20 @@
+// email invite count in the create group modal
 var count = 0;
 
+// returns whether the string passed in is a valid email
 function isEmail(email) {
 	var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	return regex.test(email);
 }
 
+// where the submit is happening for creating a group
 function createGroup() {
 	var $modal = $('#create-group');
 	var param = {};
 	
 	$('#create-group .loading-spinner').show();
-	
 	$modal.find('.people-list').hide("blind", function() {
+		// if there is at least 1 email to be invited
 		if (count > 0) {
 			var $input;
 			var email;
@@ -19,13 +22,15 @@ function createGroup() {
 			for (var i = 1; i <= count; i++) {
 				$input = $('#create-group input[name="email' + i + '"]');
 				email = $.trim($input.val());
-				
+				// if the email is empty or invalid, ignore
 				if (email == "" || !isEmail(email)) {
 					continue;
 				}
-				
+
+				// sticks the email into the parameter object
 				param['email' + i] = email;
 			}
+
 			// clean up so nothing gets submitted by the form
 			count = 0;
 			$('.people-list-header').hide();
@@ -38,11 +43,13 @@ function createGroup() {
 	
 	$.post(
 		"/create/",
-		param,
+    $('#create-group-form').serialize(),
 		function(output) {
 			if (output.location) {
+				// redirection
 				window.location.replace(output.location);
 			} else {
+				// error in the submission
 				$modal.fadeOut(function() {
 					$modal.html($(output).html());
 					count = $modal.find('input[type="text"]').length - 1;
@@ -59,6 +66,7 @@ function createGroup() {
 	);
 }
 
+// adds a new input and the live email validation
 function addNewPersonField() {
 	count++;
 	var fieldHtml = "<input type=\"text\" name=\"email" + count + "\" placeholder=\"Email Address " + count + "\" />";
@@ -91,12 +99,13 @@ function addNewPersonField() {
 	$container.show("blind");
 }
 
+// to be called to initialize ajax submission
 function ajaxCreateGroup() {
 	$('#create-group-form').submit(function(event) {
 		event.preventDefault();
 		createGroup();
 	});
-	
+	// what to do when the modal is hidden
 	$('#create-group').on("hide", function() {
 		$('#create-group-form input[type="text"]').val("");
 		$('#create-group-form .errorlist').remove();
@@ -104,7 +113,7 @@ function ajaxCreateGroup() {
 		$('#create-group-form .people-list-header').hide();
 		$('.add-invitee-btn').siblings('.people-list').html("");
 	});
-	
+	// what the "add a person" button does
 	$('#create-group .add-invitee-btn').click(function() {
         if (count == 0) {
             $('.people-list-header').show("blind", function () {
