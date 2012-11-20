@@ -5,11 +5,17 @@
         <!-- Bootstrap -->
         <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
         <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.min.css" rel="stylesheet">
-        
+
         <!-- Custom CSS -->
         <link href="{{ STATIC_URL }}css/site.css" rel="stylesheet">
 		<link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
 		<link href="{{ STATIC_URL }}css/responsive.css" rel="stylesheet">
+
+        <style type="text/css">
+        body { background-image: url("{{ STATIC_URL }}images/bedge_grunge.png"); }
+        .loading-spinner { background: rgba(255,255,255,0.5) url('{{ STATIC_URL }}images/ajax-loader.gif') no-repeat center center; }
+        </style>
+
         {% block head %}
         {% endblock head %}
     </head>
@@ -22,22 +28,22 @@
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.flip.min.js"></script>
         <script src="{{ STATIC_URL }}js/site.js"></script>
-        
+
         <!--[if lt IE 10]>
         <script src="{{ STATIC_URL }}js/jquery.placeholder.min.js"></script>
-        
+
         <script type="text/javascript">
 			$('input, textarea').placeholder();
         </script>
-        
+
         <style type="text/css">
 		.placeholder {
 		    color: #aaa;
 		}
 		</style>
-        
+
         <![endif]-->
-	
+
 		{% block extrajs %}
 	    {% endblock extrajs %}
     </body>
