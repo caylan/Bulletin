@@ -10,8 +10,8 @@ function isEmail(email) {
 // where the submit is happening for creating a group
 function createGroup() {
 	var $modal = $('#create-group');
-	var param = {};
-	
+  var $form = $('#create-group-form');
+
 	$('#create-group .loading-spinner').show();
 	$modal.find('.people-list').hide("blind", function() {
 		// if there is at least 1 email to be invited
@@ -22,13 +22,6 @@ function createGroup() {
 			for (var i = 1; i <= count; i++) {
 				$input = $('#create-group input[name="email' + i + '"]');
 				email = $.trim($input.val());
-				// if the email is empty or invalid, ignore
-				if (email == "" || !isEmail(email)) {
-					continue;
-				}
-
-				// sticks the email into the parameter object
-				param['email' + i] = email;
 			}
 
 			// clean up so nothing gets submitted by the form
@@ -37,33 +30,31 @@ function createGroup() {
 			$('.add-invitee-btn').siblings('.people-list').html("");
 		}
 	});
+
+  // The ajax callback function.
+  var callback_ = function(output) {
+    if (output.location) {
+      // If there is a 'location' attribute in the returned object, redirect to
+      // said location.
+      window.location.replace(output.location);
+    } else {
+      // If there is an error upon submitting the form, 
+      $modal.fadeOut(function() {
+        $modal.html($(output).html());
+        count = $modal.find('input[type="text"]').length - 1;
+        $modal.find('ul.errorlist').addClass("alert alert-error")
+        ajaxCreateGroup();
+        if($.browser.msie && parseInt($.browser.version, 10) < 10) {
+          $modal.find('input, textarea').placeholder();
+        }
+      });
+      $modal.fadeIn();
+      $('#create-group .loading-spinner').hide();
+    }
+  }
 	
-	param["name"] = $('#create-group input[name="name"]').val();
-	param["csrfmiddlewaretoken"] = $('#create-group input[type="hidden"]').val();
-	
-	$.post(
-		"/create/",
-    $('#create-group-form').serialize(),
-		function(output) {
-			if (output.location) {
-				// redirection
-				window.location.replace(output.location);
-			} else {
-				// error in the submission
-				$modal.fadeOut(function() {
-					$modal.html($(output).html());
-					count = $modal.find('input[type="text"]').length - 1;
-					$modal.find('ul.errorlist').addClass("alert alert-error")
-					ajaxCreateGroup();
-					if($.browser.msie && parseInt($.browser.version, 10) < 10) {
-						$modal.find('input, textarea').placeholder();
-					}
-				});
-				$modal.fadeIn();
-				$('#create-group .loading-spinner').hide();
-			}
-		}
-	);
+  // Fire the AJAX post.
+	$.post("/create/", $form.serialize(), callback_);
 }
 
 // adds a new input and the live email validation

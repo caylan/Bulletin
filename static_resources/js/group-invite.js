@@ -42,39 +42,31 @@ function addNewPerson() {
 // where the submit is happening for inviting people
 function invitePeople() {
 	var $modal = $('#invite-people');
-	var param = {};
+  var $form = $('#invite-people-form');
 	var $input;
 	var email;
 	
 	$('#invite-people .loading-spinner').show();
 	
+  // Trim all of the emails.
 	for (var i = 1; i <= countInvite; i++) {
 		$input = $('#invite-people input[name="email' + i + '"]');
 		email = $.trim($input.val());
-		
-		// if the email is empty or invalid, ignore
-		if (email == "" || !isEmail(email)) {
-			continue;
-		}
-		// sticks the email into the parameter object
-		param['email' + i] = email;
 	}
-	
-	param["csrfmiddlewaretoken"] = $('#invite-people input[type="hidden"]').val();
 
-	$.post(
-		"./send_invites/",
-		param,
-		function(output) {
-			if (output.success) {
-				// close the modal
-				$modal.modal('hide');
-			} else {
-				// TODO: show some sort of error message.
-			}
-			$('#invite-people .loading-spinner').hide();
-		}
-	);
+  // The callback function.
+  var callback_ = function(output) {
+    if (output.success) {
+      // close the modal
+      $modal.modal('hide');
+    } else {
+      // TODO: show some sort of error message.
+    }
+    $('#invite-people .loading-spinner').hide();
+  }
+	
+  // Fire the AJAX post.
+	$.post("./send_invites/", $form.serialize(), callback_);
 }
 
 // to be called to initialize ajax submission
@@ -83,15 +75,17 @@ function ajaxInvitePeople() {
 		event.preventDefault();
 		invitePeople();
 	});
+
 	// what to do when the modal is hidden
 	$('#invite-people').on("hide", function() {
 		$(this).find('.extra').remove();
 		countInvite = 1;
 	});
+
 	// what the "add a person" button does
 	$('#invite-people .add-invitee-btn').click(function() {
-        addNewPerson();
-    });
+    addNewPerson();
+  });
 }
 
 $(document).ready(function() {
