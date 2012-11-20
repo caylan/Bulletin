@@ -17,7 +17,7 @@ function createGroup() {
 			var email;
 			
 			for (var i = 1; i <= count; i++) {
-				$input = $('input[name="email' + i + '"]');
+				$input = $('#create-group input[name="email' + i + '"]');
 				email = $.trim($input.val());
 				
 				if (email == "" || !isEmail(email)) {

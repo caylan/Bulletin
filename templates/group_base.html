@@ -64,7 +64,7 @@
 
 {% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
 {% include "group_create_modal.html" with csrf_token=csrf_token only %}
-{% include "password_change_modal.html" %}
+{% include "password_change_modal.html" with csrf_token=csrf_token only %}
 
 <div id="jump-top" class="hide well"><i class="icon-arrow-up"></i></div>
 {% endblock content %}

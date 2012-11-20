@@ -46,7 +46,7 @@ function invitePeople() {
 	$('#invite-people .loading-spinner').show();
 	
 	for (var i = 1; i <= countInvite; i++) {
-		$input = $('input[name="email' + i + '"]');
+		$input = $('#invite-people input[name="email' + i + '"]');
 		email = $.trim($input.val());
 		
 		if (email == "" || !isEmail(email)) {
