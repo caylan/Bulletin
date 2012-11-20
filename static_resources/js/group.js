@@ -128,7 +128,7 @@ function animateResize (avatar, parentHeight) {
 			var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
 			$(avatar).animate({"margin-left": -(computedHeight*scale - 65 )/3 + 'px',
 							   "min-width": computedHeight*scale + 'px',
-							   "height": computedHeight + 'px'}, 500);
+							   "height": computedHeight + 'px'}, 400);
     });
 }
 
