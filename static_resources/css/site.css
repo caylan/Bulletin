@@ -39,6 +39,8 @@ abbr.timeago {
 
 .comment .avatar-container {
 	border-left: 1px solid #EEE;
+	min-width: 65px;
+	min-height: 65px;
 }
 
 .avatar-container {
