@@ -52,7 +52,6 @@ function initCommentAjax() {
 	            </li>";
             form.parent().siblings('.comments').append($(comment_html));
             form.find("#id_message").val("");
-            $('abbr.timeago').timeago();
             
             $('.comment.new').each(function() { 
                 var postHeight = $(this).height();
@@ -70,8 +69,19 @@ function initCommentAjax() {
 					animateResize(this, postHeight);
 				});
 			});
+			
+			$commentForm = $(form).parents('.comment-form-container');
+			var scroll = window.pageYOffset - $('.navbar').height();
+			if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
+				scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
+				$('html, body').animate({
+					scrollTop: scroll
+				}, 500, function() {
+					$($commentForm).find('input[type="text"]').focus();
+				});
+			}
             
-            $('.comments').find('.timeago.new').each(function() {$(this).fadeIn()});
+            $('.timeago.new').timeago().fadeIn();
         }, 'json');
     });
 }
