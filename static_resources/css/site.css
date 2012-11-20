@@ -3,7 +3,6 @@
 body {
 	padding-top: 40px;
     background-color: #f5f5f5;
-    background-image: url("/static/images/bedge_grunge.png");
 }
 
 .placeholder {
@@ -75,7 +74,6 @@ abbr {
 }
 
 .loading-spinner {
-    background: rgba(255,255,255,0.5) url('/images/ajax-loader.gif') no-repeat center center;
     height: 100%;
     width: 100%;
     position: absolute;
