@@ -20,7 +20,11 @@
 		</div>
         <div class="media-body">
             <span class="media-heading">
-                <strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+				
+				<abbr title="{{ post.author.user.email }}">
+					<strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+				</abbr>
+                
 				<span class="pull-right">
                     <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
                 </span>
@@ -37,7 +41,10 @@
 	                </div>
 					<div class="media-body">
 		                <span class="media-heading">
-		                    <strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+							<abbr title="{{ comment.author.user.email }}">
+								<strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+							</abbr>
+		                    
 		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
 		                    <br />
 		                </span>
