@@ -6,31 +6,39 @@ from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
 
-@login_required
-def comment(request, grpid, postid):
-    # TODO check authorization
+class Posts(object):
+    def __init__(self):
+        pass
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            # author = the membership whose group has a membership with the post we're looking at
-            comment.author = request.user.membership_set.get(group__membership__post__pk=postid)
-            # TODO try catch statement
-            comment.post = Post.objects.get(pk=postid)
-            comment.save()
-            return HttpResponse(comment.json(), mimetype='application/json')
-    return HttpResponseBadRequest()
+    @login_required
+    def comment(self, request, grpid, postid):
+        # TODO check authorization
 
-@login_required
-def post(request, grpid):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            # author = from the current user's set of memberships, the one that
-            #          has a group with matching group id (pk)
-            post.author = request.user.membership_set.get(group__pk=grpid)
-            post.save()
-            return HttpResponse(post.json(), mimetype='application/json')
-    return HttpResponseBadRequest()
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                # author = the membership whose group has a membership with the post we're looking at
+                comment.author = request.user.membership_set.get(group__membership__post__pk=postid)
+                # TODO try catch statement
+                comment.post = Post.objects.get(pk=postid)
+                comment.save()
+                return HttpResponse(comment.json(), mimetype='application/json')
+        return HttpResponseBadRequest()
+
+    @login_required
+    def post(self, request, grpid):
+        if request.method == 'POST':
+            form = PostForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                # author = from the current user's set of memberships, the one that
+                #          has a group with matching group id (pk)
+                post.author = request.user.membership_set.get(group__pk=grpid)
+                post.save()
+                return HttpResponse(post.json(), mimetype='application/json')
+        return HttpResponseBadRequest()
+
+posts = Posts()
+comment = posts.comment
+post = posts.post
