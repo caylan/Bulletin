@@ -45,7 +45,7 @@
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 				{% if is_admin %}<a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>{% endif %}
-				
+
 				{% endblock nav %}
 			</div>
 		</div>
@@ -60,46 +60,6 @@
 			<div id="footer" class='pull-right'></div>
 		</div>
 	</div>
-	<!--<div class="span2">
-		<div class="well">
-			{% block agenda %}
-			<ul id='agenda' class="nav nav-list">
-			    <li class="nav-header">Agenda</li>
-			    <li class='divider'></li>
-			</ul>
-			<!-- TODO get rid of this garbage
-			<form action="/change_password/" id="change-password">{% csrf_token %}
-				<p><input type="password" name="cur_password" placeholder="Current Password" /></p>
-				<p><input type="password" name="new_password1" placeholder="New Password" /></p>
-				<p><input type="password" name="new_password2" placeholder="Retype New Password" /></p>
-				<p><input type="submit" value="Change Password" /></p>
-			</form>
-			<script>
-			$(document).ready(function() {
-				$('#change-password').submit(function(event) {
-					event.preventDefault();
-
-					var form = $(this);
-					var url = "/change_password/";
-
-					$.post(
-						url,
-						form.serialize(),
-						function(data) {
-							form.find('input[type="password"]').val("");
-							if (!data.success) {
-								alert(data.error);
-							} else {
-								alert("Password changed");
-							}
-						}, "json");
-				});
-			});
-			</script>
-			<!-- end TODO
-			{% endblock agenda %}
-		</div>
-	</div> -->
 </div>
 
 {% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
