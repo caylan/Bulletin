@@ -7,7 +7,6 @@ function paragraph_filter(str) {
   str = str.replace(/\n\n+/g, "\n\n");
   // Convert newline into <br /> tag
   str = str.replace(/\n/g, "<br />");
-  alert(str);
   return str;
 }
 
