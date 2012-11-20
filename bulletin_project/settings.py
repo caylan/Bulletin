@@ -194,7 +194,7 @@ LOGGING = {
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Uncomment the following for Heroku deployment
-'''
+
 STATIC_ROOT = ''
 
 STATIC_URL = 'http://cloudfront.bulletinapp.net/'
@@ -203,4 +203,4 @@ STATICFILES_DIRS = ()
 
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
-'''
+
