@@ -174,7 +174,7 @@ abbr {
 }
 
 .comment-box {
-	margin: 0 5px !important;
+	margin: -3px 5px 0 5px!important;
 }
 
 .comment-form input[type="text"] {
@@ -184,6 +184,10 @@ abbr {
 #post_form {
 	padding-left: 89px;
 	padding-right: 84px;
+}
+
+.comment-form-container input {
+	margin-top: -3px;
 }
 
 #footer {
