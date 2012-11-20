@@ -88,6 +88,12 @@ function initCommentAjax() {
     });
 }
 
+var timer = setInterval(recomputeTimeAgo, 60000);
+
+function recomputeTimeAgo () {
+	$('.timeago.new').timeago();
+}
+
 function initDynamicAvatarSize() {
 	$('.post').each(function() { 
         var postHeight = $(this).height();
