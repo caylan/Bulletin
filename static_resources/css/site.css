@@ -37,19 +37,17 @@ abbr.timeago {
 	display: none;
 }
 
-.comment .avatar-container {
-	border-left: 1px solid #EEE;
-	min-width: 65px;
-	min-height: 65px;
-}
-
 .avatar-container {
-	width: 65px;
+	width: 60px;
 	overflow: hidden;
 }
 
+#post_form input[type="submit"] {
+	height: 60px;
+}
+
 .post > .media-body, .comment > .media-body  {
-	margin-left: 65px;
+	margin-left: 60px;
 }
 
 #left-column {
@@ -114,17 +112,32 @@ abbr.timeago {
 }
 
 .name {
-	margin-left: 5px;
+	margin-left: 10px;
+	font-size: 14px;
+	color: #AAA;
 }
 
 .post, .comment {
 	margin: 0;
 	word-wrap: break-word;
-	min-height: 65px;
+	min-height: 60px;
 }
 
 .comments {
 	margin-top: 5px;
+	margin-left: 10px;
+}
+
+.comments .comment:last-child {
+	border-bottom: solid 1px #EEE;
+}
+
+.post:last-child {
+	margin-bottom: 0!important;
+}
+
+.media.post {
+	margin-bottom: 15px;
 }
 
 .post {
@@ -134,7 +147,8 @@ abbr.timeago {
 
 .post-message, .comment-message {
 	word-wrap: break-word;
-	margin-left: 5px;
+	margin-left: 10px;
+	margin-bottom: 10px;
 	line-height: 17px;
 }
 
@@ -151,6 +165,11 @@ abbr.timeago {
 	margin: 0;
 }
 
+.comment-form-container {
+	margin-left: 10px;
+	border-width: 0;
+}
+
 .comment-box {
 	margin: 0 5px !important;
 }
@@ -159,23 +178,43 @@ abbr.timeago {
 	width: 50%;
 }
 
+#post_form {
+	padding-left: 89px;
+	padding-right: 84px;
+}
+
 #footer {
 	font-size: 9pt;
 	padding: 0 3px;
 	color: #AAA;
 }
 
+#post_form img {
+	margin-left: -70px;
+}
+
+#post_form input[type='submit'] {
+	margin-right: -65px;
+}
+
+#post_form {
+	overflow: hidden;
+}
+
 textarea {
-    height: 100px;
-	margin: 0;
+	height: 60px;
     resize: none;
+	margin: 0;
+	margin-left: 10px;
+	-webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .hero-unit {
 	text-align: left;
 	margin-bottom: 0px;
     padding: 9px 19px 9px;
-    background-color: #fff;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
@@ -184,6 +223,7 @@ textarea {
        -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
     font-size: 14px;
+	background-color: rgba(255,255,255,0.5);
 }
 
 ul.errorlist {

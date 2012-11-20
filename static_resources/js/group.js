@@ -118,10 +118,10 @@ function resizeAvatar (avatar, parentHeight) {
 		.attr("src", $(avatar).attr("src"))
 		.load(function() {
 			var scale = this.width/this.height;
-			var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
+			var computedHeight = Math.max(Math.min(this.height, parentHeight), 60);
 			$(avatar).css('height',  computedHeight + 'px');
 			$(avatar).css('min-width',  computedHeight*scale + 'px');
-			$(avatar).css('margin-left',  -(computedHeight*scale - 65 )/3 + 'px');
+			$(avatar).css('margin-left',  -(computedHeight*scale - 60 )/3 + 'px');
 			$(avatar).fadeIn();
     });
 }
@@ -131,8 +131,8 @@ function animateResize (avatar, parentHeight) {
 		.attr("src", $(avatar).attr("src"))
 		.load(function() {
 			var scale = this.width/this.height;
-			var computedHeight = Math.max(Math.min(this.height, parentHeight), 65);
-			$(avatar).animate({"margin-left": -(computedHeight*scale - 65 )/3 + 'px',
+			var computedHeight = Math.max(Math.min(this.height, parentHeight), 60);
+			$(avatar).animate({"margin-left": -(computedHeight*scale - 60 )/3 + 'px',
 							   "min-width": computedHeight*scale + 'px',
 							   "height": computedHeight + 'px'}, 400);
     });

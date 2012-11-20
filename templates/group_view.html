@@ -4,16 +4,17 @@
 {% load gravatar %}
 
 {% block maincontent %}
-<form id="post_form" method="post" class="clearfix">
-    <textarea class="input-block-level" placeholder="Communicate with your team..." id="id_message" rows="10" cols="40" name="message"></textarea>
-	<input type="submit" value="Post" class="btn" />
+<form id="post_form" method="post" class="well">	
+	<img class="pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
+	<textarea class="input-block-level pull-left" placeholder="Communicate with your group..." id="id_message" rows="10" cols="40" name="message"></textarea>
+	<input type="submit" value="Post" class="btn pull-right" />
     {% csrf_token %}
 </form>
 
 {% if post_list %}
 <ul id="posts" class="media-list">
     {% for post in post_list %}
-    <li class="media post">
+    <li class="media post well">
 		<div class='avatar-container pull-left media-object'>
 			<img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
 		</div>
@@ -48,7 +49,7 @@
 	        </ul>
 	        <div class="comment-form-container well-small well clearfix hide">
 				<div class='avatar-container pull-left'>
-					<img class="avatar pull-left" src="{{ user.email|gravatar:'65' }}" alt="user's gravatar" />
+					<img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 				</div>
 				<strong class="pull-left name">{{ user.first_name }} {{ user.last_name }}</strong><br/>
 		        <form method="post" class="clearfix comment-form">
