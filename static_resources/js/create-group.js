@@ -13,7 +13,6 @@ function createGroup() {
 	var param = {};
 	
 	$('#create-group .loading-spinner').show();
-	
 	$modal.find('.people-list').hide("blind", function() {
 		// if there is at least 1 email to be invited
 		if (count > 0) {
@@ -27,9 +26,11 @@ function createGroup() {
 				if (email == "" || !isEmail(email)) {
 					continue;
 				}
+
 				// sticks the email into the parameter object
 				param['email' + i] = email;
 			}
+
 			// clean up so nothing gets submitted by the form
 			count = 0;
 			$('.people-list-header').hide();
@@ -42,7 +43,7 @@ function createGroup() {
 	
 	$.post(
 		"/create/",
-		param,
+    $('#create-group-form').serialize(),
 		function(output) {
 			if (output.location) {
 				// redirection

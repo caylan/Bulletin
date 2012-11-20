@@ -187,7 +187,11 @@ class EmailInviteManager(EmailConfirmationManager):
             # The commit is off so we can throw any exceptions due to invalid
             # emails (ones where the user is already a part of this group, for
             # example).
-            confirmation.save(commit=False)
+            try:
+                # For now,simply ignore this one silently.
+                confirmation.save(commit=False)
+            except EmailInvite.MemberExists:
+                continue
 
             confirmation_lst.append(confirmation)
             email_context_lst.append(email_context)
