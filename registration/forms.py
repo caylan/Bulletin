@@ -38,14 +38,15 @@ class __BaseRegistrationForm(forms.ModelForm):
                                 label='')
     password2.widget.attrs['class'] = 'input-block-level'
 
-    def clean_password2(self):
-        password1 = self.cleaned_data['password1']
-        password2 = self.cleaned_data['password2']
+    def clean_password1(self):
+        cleaned_data = super(self.__class__, self).clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
         if len(password1) < settings.MIN_PASSWORD_LEN:
             raise forms.ValidationError(self.error_messages['password_too_short'])
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(self.error_messages['password_mismatch'])
-        return password2
+        return password1
 
     class Meta:
         model = User

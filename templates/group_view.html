@@ -20,7 +20,11 @@
 		</div>
         <div class="media-body">
             <span class="media-heading">
-                <strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+				
+				<abbr title="{{ post.author.user.email }}">
+					<strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
+				</abbr>
+                
 				<span class="pull-right">
                     <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
                 </span>
@@ -37,7 +41,10 @@
 	                </div>
 					<div class="media-body">
 		                <span class="media-heading">
-		                    <strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+							<abbr title="{{ comment.author.user.email }}">
+								<strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
+							</abbr>
+		                    
 		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
 		                    <br />
 		                </span>
@@ -52,7 +59,7 @@
 					<img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 				</div>
 				<strong class="pull-left name">{{ user.first_name }} {{ user.last_name }}</strong><br/>
-		        <form method="post" class="clearfix comment-form">
+		        <form method="post" class="comment-form">
 				    {% csrf_token %}
 				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
                     <input type="hidden" name="id_post" value="{{ post.pk }}" />
