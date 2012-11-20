@@ -1,4 +1,5 @@
 # Django settings for bulletin project.
+import os
 DEBUG = True
 
 ADMINS = (
@@ -15,10 +16,10 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 LOGIN_URL = "/"
 
 ''' EMAIL GOODIES '''
-FROM_EMAIL = "no-reply@bulletinapp.net"
+FROM_EMAIL = os.environ['GMAIL_USER']
 CONFIRMATION_DAYS = 7  # You get one week to respond!
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_PASSWORD = "bulletinemail"
+EMAIL_HOST_PASSWORD = os.environ['GMAIL_PASS']
 EMAIL_HOST_USER = FROM_EMAIL
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
