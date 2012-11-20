@@ -5,20 +5,27 @@ from django.shortcuts import (
     render,
 )
 from django.template import RequestContext
+from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
+from django.forms.util import ErrorList
 from models import (
     EmailConfirmationManager,
     EmailConfirmation,
     EmailInviteManager,
     EmailInvite,
 )
-from forms import RegistrationForm, InviteRegistrationForm
+from forms import (
+    RegistrationForm, 
+    InviteRegistrationForm,
+    PasswordChangeForm,
+)
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     Http404,
 )
 from django.conf import settings
+from django.utils import simplejson
 from django.contrib.auth.models import (
     User,
 )
@@ -150,56 +157,27 @@ def invite_registration(request, key):
         form = InviteRegistrationForm()
     return render(request, 'register.html', {'form': form,})
 
+@login_required
 def change_password(request):
-    '''
-    Handle password change logic
-    returns JSON value True on success
-    {
-        "success": true/false,
-        "error": "error message"
-    }
-
-    input: cur_password, new_password1, new_password2
-    output: error messages
-    '''
-    if not request.user.is_authenticated():
-        raise Http404
-
-    '''
-    TODO: This should most likely be a form and return HTTP instead of JSON for
-    the form response.
-    '''
-    def json_response(success, error=""):
-        json_text = '{{"success": {0}, "error": "{1}"}}'.format(success, error)
-        return HttpResponse(json_text, mimetype='application/json')
-
     if request.method == 'POST':
-        cur_password = request.POST['cur_password']
-        new_password1 = request.POST['new_password1']
-        new_password2 = request.POST['new_password2']
+        form = PasswordChangeForm(request.POST)
+        if form.is_valid():
+            current_password = form.cleaned_data['current_password']
+            new_pass = form.cleaned_data['new_password1']
 
-        if not cur_password or not new_password1 or not new_password2:
-            # a field wasn't filled
-            return json_response("false", "Please fill all fields")
-
-        if not request.user.check_password(cur_password):
-            # incorrect password
-            return json_response("false", "Incorrect password")
-
-        if len(new_password1) < settings.MIN_PASSWORD_LEN or len(new_password2) < settings.MIN_PASSWORD_LEN:
-            # new password too short
-            return json_response("false", "New password must be at least {0} characters".format(settings.MIN_PASSWORD_LEN))
-
-        if new_password1 != new_password2:
-            # password fields don't match
-            return json_response("false", "New password fields must match")
-
-        request.user.set_password(new_password1)
-        request.user.save()
-
-        return json_response("true")
+            if request.user.check_password(current_password):
+                request.user.set_password(new_pass)
+                request.user.save()
+                json = {'location': '.'}
+                return HttpResponse(simplejson.dumps(json),
+                    mimetype="application/json")
+            else:
+                form._errors['current_password'] = ErrorList()
+                form._errors['current_password'].append(_("Your password is incorrect"))
     else:
-        return HttpResponseBadRequest()
+        raise Http404
+    print form._errors
+    return render(request, 'password_change_modal.html', {'form': form})
 
 def reset_password(request):
     '''

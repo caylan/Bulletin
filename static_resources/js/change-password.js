@@ -1,19 +1,27 @@
 function changePassword() {
 	var $form = $('#change-password-form');
+  var $modal = $('#change-password');
 
 	$.post(
 		"/change_password/",
 		$form.serialize(),
-		function(data) {
-			if (!data.success) {
-        // TODO: Change the form so that it shows whether something was wrong
-        // with the form.  A good idea might be to render a form such that we
-        // have proper error messages when the field isn't set properly.
+		function(output) {
+			if (output.location) {
+        window.location.replace(output.location);
 			} else {
-        // We've successfully changed the password and can now hide the modal.
-				$('#change-password').modal("hide");
+        // We've run into some sort of error.
+        $modal.fadeOut(function() {
+          $modal.html($(output).html());
+          $modal.find('ul.errorlist').addClass("alert alert-error")
+          ajaxChangePassword();
+          if($.browser.msie && parseInt($.browser.version, 10) < 10) {
+            $modal.find('input, textarea').placeholder();
+          }
+        });
+        $modal.fadeIn();
 			}
-		}, "json");
+		} 
+  );
 }
 
 

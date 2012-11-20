@@ -4,6 +4,48 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.conf import settings
 
+'''
+TODO: Refactor this code,as there is redundancy.
+'''
+
+class PasswordChangeForm(forms.Form):
+    error_messages = {
+        'password_too_short' : _("Your password should be at least 6 characters."),
+        'password_mismatch'  : _("The two passwords did not match"),
+        'incorrect_password' : _("Your password is incorrect"),
+    }
+
+    current_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Current Password'}),
+        label='',
+        required=True,
+    )
+
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'New Password'}), 
+        label='',
+        max_length=40,
+        required=True,
+    )
+    
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm New Password'}),
+        label='',
+        max_length=40,
+        required=True,
+    )
+
+    def clean_new_password1(self):
+        cleaned_data = super(self.__class__, self).clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+        if len(new_password1) < settings.MIN_PASSWORD_LEN:
+            raise forms.ValidationError(self.error_messages['password_too_short'])
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError(self.error_messages['password_mismatch'])
+        return new_password1
+
+
 class __BaseRegistrationForm(forms.ModelForm):
     '''
     This is a basic form for implementing the user registration sans email,
