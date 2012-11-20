@@ -161,22 +161,24 @@ def invite_registration(request, key):
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.POST)
+        password_correct = False
         if form.is_valid():
             current_password = form.cleaned_data['current_password']
             new_pass = form.cleaned_data['new_password1']
 
-            if request.user.check_password(current_password):
+            password_correct = request.user.check_password(current_password)
+            if password_correct:
                 request.user.set_password(new_pass)
                 request.user.save()
                 json = {'location': '.'}
                 return HttpResponse(simplejson.dumps(json),
                     mimetype="application/json")
-            else:
-                form._errors['current_password'] = ErrorList()
-                form._errors['current_password'].append(_("Your password is incorrect"))
+
+        if not password_correct:
+            form._errors['current_password'] = ErrorList()
+            form._errors['current_password'].append(_("Your password is incorrect"))
     else:
         raise Http404
-    print form._errors
     return render(request, 'password_change_modal.html', {'form': form})
 
 def reset_password(request):

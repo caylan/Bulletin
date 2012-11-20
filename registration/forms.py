@@ -35,7 +35,7 @@ class PasswordChangeForm(forms.Form):
         required=True,
     )
 
-    def clean_new_password1(self):
+    def clean_new_password2(self):
         cleaned_data = super(self.__class__, self).clean()
         new_password1 = cleaned_data.get('new_password1')
         new_password2 = cleaned_data.get('new_password2')
@@ -80,7 +80,7 @@ class __BaseRegistrationForm(forms.ModelForm):
                                 label='')
     password2.widget.attrs['class'] = 'input-block-level'
 
-    def clean_password1(self):
+    def clean_password2(self):
         cleaned_data = super(self.__class__, self).clean()
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
