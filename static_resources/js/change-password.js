@@ -6,9 +6,11 @@ function changePassword() {
 		$form.serialize(),
 		function(data) {
 			if (!data.success) {
-				alert(data.error);
+        // TODO: Change the form so that it shows whether something was wrong
+        // with the form.  A good idea might be to render a form such that we
+        // have proper error messages when the field isn't set properly.
 			} else {
-				alert("Password changed");
+        // We've successfully changed the password and can now hide the modal.
 				$('#change-password').modal("hide");
 			}
 		}, "json");

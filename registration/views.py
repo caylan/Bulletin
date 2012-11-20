@@ -165,6 +165,10 @@ def change_password(request):
     if not request.user.is_authenticated():
         raise Http404
 
+    '''
+    TODO: This should most likely be a form and return HTTP instead of JSON for
+    the form response.
+    '''
     def json_response(success, error=""):
         json_text = '{{"success": {0}, "error": "{1}"}}'.format(success, error)
         return HttpResponse(json_text, mimetype='application/json')
