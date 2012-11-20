@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import (
+    HttpResponseRedirect,
+    HttpResponseBadRequest,
+    Http404,
+    HttpResponse,
+)
 from django.contrib.auth.models import User
 from django.core.validators import email_re
 from django.contrib.auth.decorators import login_required
@@ -58,6 +63,43 @@ def _get_extra_emails(request):
             emails.append(val);
     return emails
 
+def _send_email_invites(request, group):
+    '''
+    1.) Grab emails
+    2.) Remove duplicate emails
+    3.) filter invalid emails
+    4.) send emails for group invite.
+    '''
+    emails = _get_extra_emails(request)
+    emails = list(set(emails))
+    emails = filter(email_re.match, emails)
+    EmailInvite.objects.send_confirmation(request.user, emails, group)
+
+def send_invites(request, grpid):
+    '''
+    Sends an invite to a group of members.
+    '''
+    if not request.user.is_authenticated():
+        raise Http404
+
+    if request.method == 'POST':
+        try:
+            group = Group.objects.get(pk=grpid)
+        except Group.DoesNotExist:
+            raise Http404
+
+        try:
+            is_admin = group.members.all().get(user=request.user).is_admin
+        except Membership.DoesNotExist:
+            raise Http404
+
+        if not is_admin:
+            raise Http404
+        
+        _send_email_invites(request, group)
+    else:
+        raise Http404
+
 @login_required
 def create(request):
     '''
@@ -67,7 +109,6 @@ def create(request):
     The user may select the name of the group.
     '''
     if request.method == 'POST':
-        emails = _get_extra_emails(request)
         form = GroupCreationForm(request.POST)
         if form.is_valid():
             group = form.save()
@@ -77,10 +118,7 @@ def create(request):
             m.save()
 
             # Send emails to invited members.
-            emails = list(set(emails))
-            emails = filter(email_re.match, emails)  # silently ignore invalids.
-            EmailInvite.objects.send_confirmation(request.user.email, emails,
-                    group)
+            _send_email_invites(request, group)
 
             ''' Redirect to the new group '''
             return HttpResponse(group.json(), mimetype='application/json')

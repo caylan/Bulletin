@@ -150,9 +150,6 @@ def invite_registration(request, key):
         form = InviteRegistrationForm()
     return render(request, 'register.html', {'form': form,})
 
-def send_invites(request):
-    return HttpResponseBadRequest()
-
 def change_password(request):
     '''
     Handle password change logic

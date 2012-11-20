@@ -8,5 +8,4 @@ urlpatterns = patterns("registration.views",
     url(r'^change_password/$', 'change_password'),
     url(r'^reset_password/$', 'reset_password'),
     url(r'^invite_registration/(\w+)/$', 'invite_registration'),
-    url(r'^send_invites/$', 'send_invites'),
 )
