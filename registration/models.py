@@ -251,7 +251,7 @@ class AbstractKeyConfirmation(AbstractConfirmation):
     An extension of the abstract confirmation, this confirmation contains a key.
     The key is intended to be used for verification.
     '''
-    confirmation_key = models.CharField(max_length=4)
+    confirmation_key = models.CharField(max_length=40)
 
     class Meta:
         abstract = True
