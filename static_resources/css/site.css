@@ -31,10 +31,13 @@ body {
 }
 
 abbr.timeago {
-	border: none;
-	cursor: default;
 	color: #AAA;
 	display: none;
+}
+
+abbr {
+	border: none!important;
+	cursor: default!important;
 }
 
 .avatar-container {
