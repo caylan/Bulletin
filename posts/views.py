@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+)
 from django.shortcuts import render
 from forms import CommentForm, PostForm
 from models import Comment, Post
@@ -10,16 +14,18 @@ class Posts(object):
     def __init__(self):
         pass
 
-    @login_required
     def comment(self, request, grpid, postid):
-        # TODO check authorization
+        try:
+            # author = the membership whose group has a membership with the post we're looking at
+            comment_author = request.user.membership_set.get(group__membership__post__pk=postid)
+        except:
+            return HttpResponseForbidden()
 
         if request.method == 'POST':
             form = CommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                # author = the membership whose group has a membership with the post we're looking at
-                comment.author = request.user.membership_set.get(group__membership__post__pk=postid)
+                comment.author = comment_author
                 # TODO try catch statement
                 comment.post = Post.objects.get(pk=postid)
                 comment.save()
