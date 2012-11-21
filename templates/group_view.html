@@ -14,7 +14,7 @@
 {% if post_list %}
 <ul id="posts" class="media-list">
     {% for post in post_list %}
-    <li class="media post well">
+    <li id="post-{{ post.pk }}" class="media post well">
 		<div class='avatar-container pull-left media-object'>
 			<img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
 		</div>
