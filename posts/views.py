@@ -1,21 +1,22 @@
 from django.contrib.auth.models import User
 from django.http import (
-    HttpResponse,
+    HttpResponseNotFound,
     HttpResponseBadRequest,
     HttpResponseForbidden,
+    HttpResponseServerError,
 )
 from django.shortcuts import render
 from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
-from gevent.event import Event
+from gevent.event import AsyncResult
 
 class Posts(object):
     def __init__(self):
-        # map group.pk -> gEvent
+        # map group.pk -> AsyncResult
         self.group_event = dict([])
 
-    def comment(self, request, grpid, postid):
+    def comment(self, request, postid):
         '''
         make a comment for given post and render
         '''
@@ -31,16 +32,20 @@ class Posts(object):
             if form.is_valid():
                 comment = form.save(commit=False)
                 comment.author = comment_author
-                # TODO try catch statement
-                comment_post = Post.objects.get(pk=postid)
+                try:
+                    comment_post = Post.objects.get(pk=postid)
+                except DoesNotExist:
+                    return HttpResponseNotFound()
                 comment.post = comment_post
                 comment.save()
                 
                 # is anybody listening in this group?
-                # if so, alert them
-                if postid in self.group_event and not self.group_event[postid].is_set():
-                    self.group_event[postid].set()
-                    self.group_event[postid].clear()
+                # if so, set AsyncResult to comment and alert those listening
+                # then delete the AsyncResult
+                grpid = comment_author.group.pk
+                if grpid in self.group_event:
+                    self.group_event[grpid].set(comment)
+                    del self.group_event[grpid]
                 
                 #return HttpResponse(comment.json(), mimetype='application/json')
                 return render(request, 'group_comment.html', {'comment': comment})
@@ -63,16 +68,38 @@ class Posts(object):
                 #          has a group with matching group id (pk)
                 post.author = post_author
                 post.save()
-                return HttpResponse(post.json(), mimetype='application/json')
+
+                # is anybody listening in this group?
+                # if so, alert them
+                if grpid in self.group_event:
+                    self.group_event[grpid].set(post)
+                    del self.group_event[grpid]
+
+                #return HttpResponse(post.json(), mimetype='application/json')
+                return render(request, 'group_post.html', {'post': post})
         return HttpResponseBadRequest()
 
     def update(self, request, grpid):
         '''
         wait until a post or comment has been made
         '''
-        pass
+        # are there already people waiting in this group?
+        # if not, start an AsyncResult!
+        if grpid not in self.group_event:
+            self.group_event[grpid] = AsyncResult()
+        # wait for something to get posted
+        result = self.group_event[grpid].get()
+
+        # got something, check type
+        if type(result) is Post:
+            return render(request, 'group_post.html', {'post': post})
+        elif type(result) is Comment:
+            return render(request, 'group_comment.html', {'comment': comment})
+        else:
+            # wasn't a post or comment, wonder how that happened...
+            return HttpResponseServerError()
 
 posts = Posts()
 comment = posts.comment
-update = posts.update
 post = posts.post
+update = posts.update

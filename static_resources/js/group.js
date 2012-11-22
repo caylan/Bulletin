@@ -32,7 +32,7 @@ function initCommentAjax() {
         event.preventDefault();
 
         var form = $(this);
-        var url = 'post/' + form.find('input[name="id_post"]').val() + '/comment/';
+        var url = '/post/' + form.find('input[name="id_post"]').val() + '/comment/';
         var msg = form.find('#id_message').val();
         var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
 
