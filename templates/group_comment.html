@@ -1,7 +1,11 @@
 {% load gravatar %}
 <li class="media comment">
     <div class='avatar-container pull-left media-object'>
-        <img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'300' }}" alt="commenters's gravatar" />
+        <img style="display: inline;"{# TODO remove #}
+             class="avatar pull-left media-object"
+             src="{{ comment.author.user.email|gravatar:'300' }}"
+             alt="commenters's gravatar"
+        />
     </div>
     <div class="media-body">
         <span class="media-heading">

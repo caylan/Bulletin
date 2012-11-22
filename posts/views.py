@@ -17,7 +17,7 @@ class Posts(object):
 
     def comment(self, request, grpid, postid):
         '''
-        make a comment for given post
+        make a comment for given post and render
         '''
         # comfirm current user is a member of the group the post belongs to
         try:
@@ -42,12 +42,13 @@ class Posts(object):
                     self.group_event[postid].set()
                     self.group_event[postid].clear()
                 
-                return HttpResponse(comment.json(), mimetype='application/json')
+                #return HttpResponse(comment.json(), mimetype='application/json')
+                return render(request, 'group_comment.html', {'comment': comment})
         return HttpResponseBadRequest()
 
     def post(self, request, grpid):
         '''
-        make a post for given group
+        make a post for given group and render
         '''
         try:
             post_author = request.user.membership_set.get(group__pk=grpid)

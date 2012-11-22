@@ -37,19 +37,8 @@ function initCommentAjax() {
         var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
 
         $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
-            // copy of message is returned via json, insert into page
-            comment_html = "<li class=\"media new comment\"> \
-                           <div class=\"avatar-container pull-left media-object\"> \
-                    <img class=\"avatar new pull-left media-object\" src=\"http://www.gravatar.com/avatar/" + md5(data.author.email) + "?s=300&d=mm" + "\" alt=\"commenters's gravatar\" /> </div>\
-	                <div class=\"media-body\"> \
-                   		<span class=\"media-heading\"> \
-	                        <strong class=\"pull-left name\">" + data.author.first_name + " " + data.author.last_name + "</strong> \
-	                        <em class=\"pull-right\"><abbr class=\"timeago new\" title=\"" + data.time_stamp + "\">" + data.date_posted + "</abbr></em> \
-	                        <br /> \
-	                    </span> \
-	                    <div class=\"comment-message\">" + data.message + "</div> \
-	                </div> \
-	            </li>";
+            // copy of message is returned via html, insert into page
+            comment_html = data;
             form.parent().siblings('.comments').append($(comment_html));
             form.find("#id_message").val("");
             
@@ -84,7 +73,7 @@ function initCommentAjax() {
 			}
             
             $('.timeago.new').timeago().fadeIn();
-        }, 'json');
+        }, 'html');
     });
 }
 
