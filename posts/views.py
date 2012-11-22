@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import (
     HttpResponse,
@@ -18,9 +17,8 @@ class Posts(object):
 
     def comment(self, request, grpid, postid):
         '''
-        make a comment for given post, return comment json
+        make a comment for given post
         '''
-
         # comfirm current user is a member of the group the post belongs to
         try:
             # author = the membership whose group has a membership with the post we're looking at
@@ -47,24 +45,31 @@ class Posts(object):
                 return HttpResponse(comment.json(), mimetype='application/json')
         return HttpResponseBadRequest()
 
-    def update(self, request, grpid):
-        '''
-        wait until a post or comment has been made
-        '''
-        pass
-
-    @login_required
     def post(self, request, grpid):
+        '''
+        make a post for given group
+        '''
+        try:
+            post_author = request.user.membership_set.get(group__pk=grpid)
+        except:
+            return HttpResponseForbidden
+
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
                 post = form.save(commit=False)
                 # author = from the current user's set of memberships, the one that
                 #          has a group with matching group id (pk)
-                post.author = request.user.membership_set.get(group__pk=grpid)
+                post.author = post_author
                 post.save()
                 return HttpResponse(post.json(), mimetype='application/json')
         return HttpResponseBadRequest()
+
+    def update(self, request, grpid):
+        '''
+        wait until a post or comment has been made
+        '''
+        pass
 
 posts = Posts()
 comment = posts.comment

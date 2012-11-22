@@ -14,60 +14,7 @@
 {% if post_list %}
 <ul id="posts" class="media-list">
     {% for post in post_list %}
-    <li id="post-{{ post.pk }}" class="media post well">
-		<div class='avatar-container pull-left media-object'>
-			<img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
-		</div>
-        <div class="media-body">
-            <span class="media-heading">
-
-				<abbr title="{{ post.author.user.email }}">
-					<strong class="pull-left name">{{ post.author.user.first_name }} {{ post.author.user.last_name }}</strong>
-				</abbr>
-
-				<span class="pull-right">
-                    <a href="javascript:void(0)" class="comment-unhide-btn">Comment</a>
-                </span>
-                <em class="pull-right"><abbr class="timeago" title="{{ post.time_stamp }}">{{ post.date_posted }}</abbr></em>
-                <br />
-            </span>
-            <div class="post-message">{{ post.message }}</div>
-	        <ul class="media-list comments">
-		        {% if post.comment_set.all %}
-	            {% for comment in post.comment_set.all %}
-	            <li class="media comment">
-					<div class='avatar-container pull-left media-object'>
-						<img class="avatar pull-left media-object" src="{{ comment.author.user.email|gravatar:'300' }}" alt="commenters's gravatar" />
-	                </div>
-					<div class="media-body">
-		                <span class="media-heading">
-							<abbr title="{{ comment.author.user.email }}">
-								<strong class="pull-left name">{{ comment.author.user.first_name }} {{ comment.author.user.last_name }}</strong>
-							</abbr>
-
-		                    <em class="pull-right"><abbr class="timeago" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>
-		                    <br />
-		                </span>
-		                <div class="comment-message">{{ comment.message }}</div>
-	                </div>
-	            </li>
-	            {% endfor %}
-		        {% endif %}
-	        </ul>
-	        <div class="comment-form-container well-small well clearfix hide">
-				<div class='avatar-container pull-left'>
-					<img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
-				</div>
-				<strong class="pull-left name">{{ user.first_name }} {{ user.last_name }}</strong><br/>
-		        <form method="post" class="comment-form">
-				    {% csrf_token %}
-				    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
-                    <input type="hidden" name="id_post" value="{{ post.pk }}" />
-				    <input type="submit" value="Comment" class="btn pull-left btn-primary" />
-				</form>
-			</div>
-		</div>
-    </li>
+    	{% include "group_post.html" %}
     {% endfor %}
 </ul>
 {% else %}
@@ -75,9 +22,7 @@
     No posts are available.
 </div>
 {% endif %}
-{# --- #}
 
-{# --- #}
 {% endblock maincontent %}
 
 {% block extrajs %}
