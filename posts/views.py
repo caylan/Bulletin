@@ -1,6 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import (
-    HttpResponseNotFound,
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseServerError,
@@ -9,15 +10,11 @@ from django.shortcuts import render
 from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
-from gevent.event import AsyncResult, Event
-import gevent
+from gevent import event as gevent
 
-class Posts(object):
+class PostViews(object):
     def __init__(self):
-        # map group.pk -> AsyncResult
-        #self.group_event = dict([])
-        self.eventy = Event()
-        gevent.monkey.patch_all()
+        self.group_event = None
 
     def comment(self, request, postid):
         '''
@@ -34,25 +31,18 @@ class Posts(object):
             form = CommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
+                # author = the membership whose group has a membership with the post we're looking at
                 comment.author = comment_author
                 try:
                     comment_post = Post.objects.get(pk=postid)
                 except DoesNotExist:
                     return HttpResponseNotFound()
-                comment.post = comment_post
                 comment.save()
-                
-                # is anybody listening in this group?
-                # if so, set AsyncResult to comment and alert those listening
-                # then delete the AsyncResult
-                '''grpid = comment_author.group.pk
-                if grpid in self.group_event:
-                    self.group_event[grpid].set(comment)
-                    del self.group_event[grpid]'''
-                self.eventy.set();
-                self.eventy.clear();
-                
-                #return HttpResponse(comment.json(), mimetype='application/json')
+                # is anybody listening?
+                # if so, send new comment to everyone and reset
+                if self.group_event:
+                    self.group_event.set(comment)
+                    self.group_event = None
                 return render(request, 'group_comment.html', {'comment': comment})
         return HttpResponseBadRequest()
 
@@ -63,7 +53,7 @@ class Posts(object):
         try:
             post_author = request.user.membership_set.get(group__pk=grpid)
         except:
-            return HttpResponseForbidden
+            return HttpResponseForbidden()
 
         if request.method == 'POST':
             form = PostForm(request.POST)
@@ -73,14 +63,6 @@ class Posts(object):
                 #          has a group with matching group id (pk)
                 post.author = post_author
                 post.save()
-
-                # is anybody listening in this group?
-                # if so, alert them
-                if grpid in self.group_event:
-                    self.group_event[grpid].set(post)
-                    del self.group_event[grpid]
-
-                #return HttpResponse(post.json(), mimetype='application/json')
                 return render(request, 'group_post.html', {'post': post})
         return HttpResponseBadRequest()
 
@@ -88,25 +70,18 @@ class Posts(object):
         '''
         wait until a post or comment has been made
         '''
-        # # are there already people waiting in this group?
-        # # if not, start an AsyncResult!
-        # if grpid not in self.group_event:
-        #     self.group_event[grpid] = AsyncResult()
-        # # wait for something to get posted
-        # result = self.group_event[grpid].get()
+        if not self.group_event:
+            self.group_event = gevent.AsyncResult()
+        update_content = self.group_event.get()
+        if type(update_content) is Comment:
+            return render(request, 'group_comment.html', {'comment': update_content})
+        elif type(update_content) is Post:
+            return HttpResponseServerError("not yet implemented")
+        else:
+            # i have no idea how this happened
+            return HttpResponseServerError("unknown return type: {0}".format(type(update_content)))
 
-        # # got something, check type
-        # if type(result) is Post:
-        #     return render(request, 'group_post.html', {'post': post})
-        # elif type(result) is Comment:
-        #     return render(request, 'group_comment.html', {'comment': comment})
-        # else:
-        #     # wasn't a post or comment, wonder how that happened...
-        #     return HttpResponseServerError()
-        self.eventy.wait()
-        return HttpResponseForbidden
-
-posts = Posts()
-comment = posts.comment
-post = posts.post
-update = posts.update
+post_views = PostViews()
+comment = post_views.comment
+post = post_views.post
+update = post_views.update
