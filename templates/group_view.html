@@ -29,16 +29,18 @@
 {{ block.super }}
 <script src="{{ STATIC_URL }}js/md5.js" type="text/javascript"></script>
 <script>
-/* Automatically makes an ajax call to 'update/' view
- * times out after 40s
- * after timeout or sucess, recursively calls itself again
- * throws retrieved data on top of current content
- * most of the code involves parsing the xml
- */
-(function update() {
-    $.ajax({url: "update/", success: function(data) {
-    	alert("hi");
-    }, dataType: "html", complete: update, timeout: 40000});
-})();
+$(document).ready(function() {
+    /* Automatically makes an ajax call to 'update/' view
+     * times out after 40s
+     * after timeout or sucess, recursively calls itself again
+     * throws retrieved data on top of current content
+     * most of the code involves parsing the xml
+     */
+    (function update() {
+        $.ajax({url: "update/", success: function(data) {
+        	alert("hi");
+        }, dataType: "html", complete: update, timeout: 40000});
+    })();
+});
 </script>
 {% endblock extrajs %}

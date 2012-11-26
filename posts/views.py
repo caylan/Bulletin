@@ -9,12 +9,15 @@ from django.shortcuts import render
 from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
-from gevent.event import AsyncResult
+from gevent.event import AsyncResult, Event
+import gevent
 
 class Posts(object):
     def __init__(self):
         # map group.pk -> AsyncResult
-        self.group_event = dict([])
+        #self.group_event = dict([])
+        self.eventy = Event()
+        gevent.monkey.patch_all()
 
     def comment(self, request, postid):
         '''
@@ -42,10 +45,12 @@ class Posts(object):
                 # is anybody listening in this group?
                 # if so, set AsyncResult to comment and alert those listening
                 # then delete the AsyncResult
-                grpid = comment_author.group.pk
+                '''grpid = comment_author.group.pk
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
-                    del self.group_event[grpid]
+                    del self.group_event[grpid]'''
+                self.eventy.set();
+                self.eventy.clear();
                 
                 #return HttpResponse(comment.json(), mimetype='application/json')
                 return render(request, 'group_comment.html', {'comment': comment})
@@ -83,21 +88,23 @@ class Posts(object):
         '''
         wait until a post or comment has been made
         '''
-        # are there already people waiting in this group?
-        # if not, start an AsyncResult!
-        if grpid not in self.group_event:
-            self.group_event[grpid] = AsyncResult()
-        # wait for something to get posted
-        result = self.group_event[grpid].get()
+        # # are there already people waiting in this group?
+        # # if not, start an AsyncResult!
+        # if grpid not in self.group_event:
+        #     self.group_event[grpid] = AsyncResult()
+        # # wait for something to get posted
+        # result = self.group_event[grpid].get()
 
-        # got something, check type
-        if type(result) is Post:
-            return render(request, 'group_post.html', {'post': post})
-        elif type(result) is Comment:
-            return render(request, 'group_comment.html', {'comment': comment})
-        else:
-            # wasn't a post or comment, wonder how that happened...
-            return HttpResponseServerError()
+        # # got something, check type
+        # if type(result) is Post:
+        #     return render(request, 'group_post.html', {'post': post})
+        # elif type(result) is Comment:
+        #     return render(request, 'group_comment.html', {'comment': comment})
+        # else:
+        #     # wasn't a post or comment, wonder how that happened...
+        #     return HttpResponseServerError()
+        self.eventy.wait()
+        return HttpResponseForbidden
 
 posts = Posts()
 comment = posts.comment
