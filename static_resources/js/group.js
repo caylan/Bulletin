@@ -43,15 +43,16 @@ function initCommentAjax() {
              */
             form.find("#id_message").val("");
             
-            $('.comment.new').each(function() { 
-                var postHeight = $(this).height();
-                
-                $(this).children('.avatar-container').each(function() { // Avatars within posts
-                    $(this).find('.avatar').each(function() {
-                        resizeAvatar(this, postHeight);
-                    });
-                });
-            });
+            /* $('.comment.new').each(function() { 
+             *     var postHeight = $(this).height();
+             *     
+             *     $(this).children('.avatar-container').each(function() { // Avatars within posts
+             *         $(this).find('.avatar').each(function() {
+             *             resizeAvatar(this, postHeight);
+             *         });
+             *     });
+             * });
+             */
 			$post = $(form).parents('.post');
 			var postHeight = $($post).height();
 			$($post).children('.avatar-container').each(function() { // Avatars within posts
