@@ -1,3 +1,27 @@
+/* Automatically makes an ajax call to 'update/' view
+ * times out after 40s
+ * after timeout or sucess, recursively calls itself again
+ */
+function update() {
+    $.ajax({url: "update/", success: function(data) {
+    	if ($(data).hasClass("comment")) {
+            // returned data is a comment
+            var postID = "#post-" + $(data).attr("post");
+            var newComment = $(data)
+            $(postID).find(".comments").append(newComment);
+            $(newComment).find(".avatar").fadeIn();
+        } else if ($(data).hasClass("post")) {
+            // returned data is a post
+            $("#posts").prepend(data);
+        }
+        update();
+    }, error: function() {
+        // an error occured, so wait a little. Otherwise, if error keeps
+        // occuring, this function starts looping very quickly
+        setTimeout(update, 10000)
+    }, dataType: "html", timeout: 40000});
+}
+
 function initCommentSlider() {
     $('.comment-unhide-btn').click(function(event) {
     	var $commentForm;
@@ -149,28 +173,7 @@ $(document).ready(function() {
     initCommentSlider();
     initCommentAjax();
     initPostAjax();
-
-    /* Automatically makes an ajax call to 'update/' view
-     * times out after 40s
-     * after timeout or sucess, recursively calls itself again
-     */
-    (function update() {
-        $.ajax({url: "update/", success: function(data) {
-        	if ($(data).hasClass("comment")) {
-                // returned data is a comment
-                var postID = "#post-" + $(data).attr("post");
-                $(postID).find('.comments').append(data);
-            } else if ($(data).hasClass("post")) {
-                // returned data is a post
-                $("#posts").prepend(data);
-            }
-            update();
-        }, error: function() {
-            // an error occured, so wait a little. Otherwise, if error keeps
-            // occuring, this function starts looping very quickly
-            setTimeout(update, 10000)
-        }, dataType: "html", timeout: 40000});
-    })();
+    update();
 });
 
 $(window).load(function() {
