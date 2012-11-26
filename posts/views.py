@@ -37,6 +37,7 @@ class PostViews(object):
                     comment_post = Post.objects.get(pk=postid)
                 except DoesNotExist:
                     return HttpResponseNotFound()
+                comment.post = comment_post
                 comment.save()
                 # is anybody listening?
                 # if so, send new comment to everyone and reset
@@ -68,7 +69,7 @@ class PostViews(object):
 
     def update(self, request, grpid):
         '''
-        wait until a post or comment has been made
+        wait until a post or comment has been made, render and return it
         '''
         if not self.group_event:
             self.group_event = gevent.AsyncResult()
@@ -79,7 +80,7 @@ class PostViews(object):
             return HttpResponseServerError("not yet implemented")
         else:
             # i have no idea how this happened
-            return HttpResponseServerError("unknown return type: {0}".format(type(update_content)))
+            return HttpResponseServerError("unhandled return type: {0}".format(type(update_content)))
 
 post_views = PostViews()
 comment = post_views.comment
