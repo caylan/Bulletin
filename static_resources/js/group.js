@@ -38,8 +38,9 @@ function initCommentAjax() {
 
         $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
             // copy of message is returned via html, insert into page
-            comment_html = data;
-            form.parent().siblings('.comments').append($(comment_html));
+            /* comment_html = data;
+             * form.parent().siblings('.comments').append($(comment_html));
+             */
             form.find("#id_message").val("");
             
             $('.comment.new').each(function() { 
@@ -75,6 +76,21 @@ function initCommentAjax() {
             $('.timeago.new').timeago().fadeIn();
         }, 'html');
     });
+}
+
+function initPostAjax() {
+	$("#post_form").submit(function(event) {
+		event.preventDefault();
+
+		var form = $(this);
+		var url = 'post/';
+		var msg = form.find("#id_message").val();
+		var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+
+		$.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
+			form.find("#id_message").val("");
+		}, "html");
+	});
 }
 
 var timer = setInterval(recomputeTimeAgo, 60000);
@@ -131,6 +147,29 @@ $(document).ready(function() {
 	$('abbr.timeago').timeago().fadeIn();
     initCommentSlider();
     initCommentAjax();
+    initPostAjax();
+
+    /* Automatically makes an ajax call to 'update/' view
+     * times out after 40s
+     * after timeout or sucess, recursively calls itself again
+     */
+    (function update() {
+        $.ajax({url: "update/", success: function(data) {
+        	if ($(data).hasClass("comment")) {
+                // returned data is a comment
+                var postID = "#post-" + $(data).attr("post");
+                $(postID).find('.comments').append(data);
+            } else if ($(data).hasClass("post")) {
+                // returned data is a post
+                $("#posts").prepend(data);
+            }
+            update();
+        }, error: function() {
+            // an error occured, so wait a little. Otherwise, if error keeps
+            // occuring, this function starts looping very quickly
+            setTimeout(update, 10000)
+        }, dataType: "html", timeout: 40000});
+    })();
 });
 
 $(window).load(function() {

@@ -64,6 +64,11 @@ class PostViews(object):
                 #          has a group with matching group id (pk)
                 post.author = post_author
                 post.save()
+                # is anybody listening?
+                # if so, send new post to everyone and reset
+                if self.group_event:
+                    self.group_event.set(post)
+                    self.group_event = None
                 return render(request, 'group_post.html', {'post': post})
         return HttpResponseBadRequest()
 
@@ -77,7 +82,7 @@ class PostViews(object):
         if type(update_content) is Comment:
             return render(request, 'group_comment.html', {'comment': update_content})
         elif type(update_content) is Post:
-            return HttpResponseServerError("not yet implemented")
+            return render(request, 'group_post.html', {'post': update_content})
         else:
             # i have no idea how this happened
             return HttpResponseServerError("unhandled return type: {0}".format(type(update_content)))
