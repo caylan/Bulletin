@@ -8,11 +8,25 @@ function update() {
             // returned data is a comment
             var postID = "#post-" + $(data).attr("post");
             var newComment = $(data)
+            $(newComment).hide();
+            $(newComment).find(".avatar").show();
+            $(newComment).find(".timeago").timeago().show();
             $(postID).find(".comments").append(newComment);
-            $(newComment).find(".avatar").fadeIn();
+            $(newComment).fadeIn();
+            var parentPost = $(newComment).parents(".post");
+            var postAvatar = $(parentPost).children(".avatar-container").find(".avatar");
+            var postHeight = parentPost.height();
+            animateResize(postAvatar, postHeight);
         } else if ($(data).hasClass("post")) {
             // returned data is a post
-            $("#posts").prepend(data);
+            var newPost = $(data);
+            $(newPost).hide();
+            $(newPost).find(".avatar").show();
+            $(newPost).find(".timeago").timeago().show();
+            $("#posts").prepend(newPost);
+            $(newPost).fadeIn();
+            initCommentSlider();
+            initCommentAjax();
         }
         update();
     }, error: function() {
@@ -77,14 +91,14 @@ function initCommentAjax() {
              *     });
              * });
              */
-			$post = $(form).parents('.post');
-			var postHeight = $($post).height();
-			$($post).children('.avatar-container').each(function() { // Avatars within posts
-				$(this).find('.avatar').each(function() {
-					animateResize(this, postHeight);
-				});
-			});
-			
+			/* $post = $(form).parents('.post');
+			 * var postHeight = $($post).height();
+			 * $($post).children('.avatar-container').each(function() { // Avatars within posts
+			 * 	$(this).find('.avatar').each(function() {
+			 * 		animateResize(this, postHeight);
+			 * 	});
+			 * });
+			 */
 			$commentForm = $(form).parents('.comment-form-container');
 			var scroll = window.pageYOffset - $('.navbar').height();
 			if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
@@ -98,7 +112,8 @@ function initCommentAjax() {
 				$($commentForm).find('input[type="text"]').focus();
 			}
             
-            $('.timeago.new').timeago().fadeIn();
+            /* $('.timeago.new').timeago().fadeIn();
+             */
         }, 'html');
     });
 }
