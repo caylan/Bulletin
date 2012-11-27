@@ -11,7 +11,6 @@ from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
 from gevent import event as gevent
-import sys
 
 class PostViews(object):
     def __init__(self):
