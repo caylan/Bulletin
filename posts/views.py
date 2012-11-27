@@ -13,7 +13,21 @@ from groups.models import Group
 from gevent import event as gevent
 
 class PostViews(object):
+    '''
+    PostViews: python object to hold posting related post_views
+    
+    The reason this is all wrapped up in a class, instead of just module of
+    def's, is for keeping track of a dictionary of events (group_event) in
+    which all users have access to.
+    
+    So that it appears to be a typical views.py module, located at the bottom
+    are variables called by the urlpatterns.
+
+    Based on example from
+    https://github.com/SiteSupport/gevent/tree/master/examples/webchat
+    '''
     def __init__(self):
+        # map grpid -> gevent.AsyncResult()
         self.group_event = dict([])
 
     def comment(self, request, postid):
@@ -92,6 +106,7 @@ class PostViews(object):
             # i have no idea how this happened
             return HttpResponseServerError("unhandled return type: {0}".format(type(update_content)))
 
+# called by the urlpatterns
 post_views = PostViews()
 comment = post_views.comment
 post = post_views.post

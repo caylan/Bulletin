@@ -1,6 +1,9 @@
 /* Automatically makes an ajax call to 'update/' view
  * times out after 40s
  * after timeout or sucess, recursively calls itself again
+ *
+ * based on example from
+ * http://techoctave.com/c7/posts/60-simple-long-polling-example-with-javascript-and-jquery
  */
 function update() {
     $.ajax({url: "update/", success: function(data) {
