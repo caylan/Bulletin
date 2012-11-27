@@ -36,7 +36,7 @@ function update() {
         // an error occured, so wait a little. Otherwise, if error keeps
         // occuring, this function starts looping very quickly
         setTimeout(update, 10000)
-    }, dataType: "html", timeout: 40000});
+    }, dataType: "html", timeout: 29000});
 }
 
 function initCommentSlider() {
