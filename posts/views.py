@@ -11,10 +11,11 @@ from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
 from gevent import event as gevent
+import sys
 
 class PostViews(object):
     def __init__(self):
-        self.group_event = None
+        self.group_event = dict([])
 
     def comment(self, request, postid):
         '''
@@ -41,9 +42,11 @@ class PostViews(object):
                 comment.save()
                 # is anybody listening?
                 # if so, send new comment to everyone and reset
-                if self.group_event:
-                    self.group_event.set(comment)
-                    self.group_event = None
+                grpid = int(comment_post.author.group.pk)
+                if grpid in self.group_event:
+                    self.group_event[grpid].set(comment)
+                    # self.group_event = None
+                    del self.group_event[grpid]
                 return render(request, 'group_comment.html', {'comment': comment})
         return HttpResponseBadRequest()
 
@@ -66,9 +69,11 @@ class PostViews(object):
                 post.save()
                 # is anybody listening?
                 # if so, send new post to everyone and reset
-                if self.group_event:
-                    self.group_event.set(post)
-                    self.group_event = None
+                grpid = int(grpid)
+                if grpid in self.group_event:
+                    self.group_event[grpid].set(post)
+                    # self.group_event = None
+                    del self.group_event[grpid]
                 return render(request, 'group_post.html', {'post': post})
         return HttpResponseBadRequest()
 
@@ -76,9 +81,10 @@ class PostViews(object):
         '''
         wait until a post or comment has been made, render and return it
         '''
-        if not self.group_event:
-            self.group_event = gevent.AsyncResult()
-        update_content = self.group_event.get()
+        grpid = int(grpid)
+        if grpid not in self.group_event:
+            self.group_event[grpid] = gevent.AsyncResult()
+        update_content = self.group_event[grpid].get()
         if type(update_content) is Comment:
             return render(request, 'group_comment.html', {'comment': update_content})
         elif type(update_content) is Post:
