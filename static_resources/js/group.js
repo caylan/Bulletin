@@ -72,12 +72,20 @@ function initCommentAjax() {
         var msg = form.find('#id_message').val();
         var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
 
-        $.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
+        form.find("#id_message").val("");
+        form.find("#id_message").attr("disabled", "disabled");
+        form.find("input[type='submit']").hide();
+        form.find(".ajax-loader").show();
+
+        $.ajax({type: 'POST',
+               url: url,
+               data: {message: msg, csrfmiddlewaretoken: csrf},
+               datatype: 'html',
+               success: function(data) {
             // copy of message is returned via html, insert into page
             /* comment_html = data;
              * form.parent().siblings('.comments').append($(comment_html));
              */
-            form.find("#id_message").val("");
             
             /* $('.comment.new').each(function() { 
              *     var postHeight = $(this).height();
@@ -112,7 +120,12 @@ function initCommentAjax() {
             
             /* $('.timeago.new').timeago().fadeIn();
              */
-        }, 'html');
+        }, complete: function() {
+            form.find(".ajax-loader").hide();
+            form.find("input[type='submit']").show();
+            form.find("#id_message").val("");
+            form.find("#id_message").removeAttr("disabled");
+        }});
     });
 }
 
@@ -125,9 +138,21 @@ function initPostAjax() {
 		var msg = form.find("#id_message").val();
 		var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
 
-		$.post(url, {message: msg, csrfmiddlewaretoken: csrf}, function(data) {
-			form.find("#id_message").val("");
-		}, "html");
+        form.find("#id_message").val("");
+        form.find("#id_message").attr("disabled", "disabled");
+        form.find("input[type='submit']").hide();
+        form.find(".ajax-loader").show();
+
+		$.ajax({type: "POST",
+               url: url,
+               data: {message: msg, csrfmiddlewaretoken: csrf},
+               datatype: "html",
+               complete: function() {
+			form.find(".ajax-loader").hide();
+            form.find("input[type='submit']").show();
+            form.find("#id_message").val("");
+            form.find("#id_message").removeAttr("disabled");
+		}});
 	});
 }
 

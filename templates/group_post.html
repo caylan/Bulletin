@@ -34,6 +34,7 @@
                 <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
                 <input type="hidden" name="id_post" value="{{ post.pk }}" />
                 <input type="submit" value="Comment" class="btn pull-left btn-primary" />
+                <img class="ajax-loader hide" src="{{ STATIC_URL }}images/ajax-loader.gif" alt="loading..." />
             </form>
         </div>
     </div>

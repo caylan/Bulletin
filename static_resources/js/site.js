@@ -1,9 +1,9 @@
 $(document).ready(function() {
     // Find ALL <form> tags
-    $('form').submit(function(){
+    /*$('form').submit(function(){
         // On submit disable its submit button
         $('.submit-btn', this).attr("disabled", "disabled");
-    });
+    });*/
 });
 
 // Google Analytics
