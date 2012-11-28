@@ -1,5 +1,5 @@
 /* Automatically makes an ajax call to 'update/' view
- * times out after 40s
+ * times out after 25s
  * after timeout or sucess, recursively calls itself again
  *
  * based on example from
@@ -7,27 +7,28 @@
  */
 function update() {
     $.ajax({url: "update/", success: function(data) {
-    	if ($(data).hasClass("comment")) {
+    	$data = $(data);
+    	if ($data.hasClass("comment")) {
             // returned data is a comment
-            var postID = "#post-" + $(data).attr("post");
-            var newComment = $(data)
-            $(newComment).hide();
-            $(newComment).find(".avatar").show();
-            $(newComment).find(".timeago").timeago().show();
-            $(postID).find(".comments").append(newComment);
-            $(newComment).fadeIn();
-            var parentPost = $(newComment).parents(".post");
-            var postAvatar = $(parentPost).children(".avatar-container").find(".avatar");
-            var postHeight = parentPost.height();
-            animateResize(postAvatar, postHeight);
-        } else if ($(data).hasClass("post")) {
+            var postID = "#post-" + $data.attr("post");
+            var $newComment = $data
+            $newComment.hide();
+            $newComment.find(".avatar").show();
+            $newComment.find(".timeago").timeago().show();
+            $(postID).find(".comments").append($newComment);
+            $newComment.fadeIn();
+            var $parentPost = $newComment.parents(".post");
+            var $postAvatar = $parentPost.children(".avatar-container").find(".avatar");
+            var postHeight = $parentPost.height();
+            animateResize($postAvatar, postHeight);
+        } else if ($data.hasClass("post")) {
             // returned data is a post
-            var newPost = $(data);
-            $(newPost).hide();
-            $(newPost).find(".avatar").show();
-            $(newPost).find(".timeago").timeago().show();
-            $("#posts").prepend(newPost);
-            $(newPost).fadeIn();
+            var $newPost = $data;
+            $newPost.hide();
+            $newPost.find(".avatar").show();
+            $newPost.find(".timeago").timeago().show();
+            $("#posts").prepend($newPost);
+            $newPost.fadeIn();
             initCommentSlider();
             initCommentAjax();
         }
@@ -68,65 +69,68 @@ function initCommentAjax() {
         event.preventDefault();
 
         var form = $(this);
+        var $submitBtn = form.find('input[type="submit"]');
         var url = '/post/' + form.find('input[name="id_post"]').val() + '/comment/';
-        var msg = form.find('#id_message').val();
+        var $msgContainer = form.find('#id_message');
+        var msg = $msgContainer.val();
         var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+        var $loadingSpinner = form.siblings('.loading-spinner');
 
-        form.find("#id_message").val("");
-        form.find("#id_message").attr("disabled", "disabled");
-        form.find("input[type='submit']").hide();
-        form.find(".ajax-loader").show();
+        $msgContainer.attr("disabled", "disabled");
+        $submitBtn.attr("disabled", "disabled");
+        $loadingSpinner.show();
 
         $.ajax({type: 'POST',
-               url: url,
-               data: {message: msg, csrfmiddlewaretoken: csrf},
-               datatype: 'html',
-               success: function(data) {
-            // copy of message is returned via html, insert into page
-            /* comment_html = data;
-             * form.parent().siblings('.comments').append($(comment_html));
-             */
-            
-            /* $('.comment.new').each(function() { 
-             *     var postHeight = $(this).height();
-             *     
-             *     $(this).children('.avatar-container').each(function() { // Avatars within posts
-             *         $(this).find('.avatar').each(function() {
-             *             resizeAvatar(this, postHeight);
-             *         });
-             *     });
-             * });
-             */
-			/* $post = $(form).parents('.post');
-			 * var postHeight = $($post).height();
-			 * $($post).children('.avatar-container').each(function() { // Avatars within posts
-			 * 	$(this).find('.avatar').each(function() {
-			 * 		animateResize(this, postHeight);
-			 * 	});
-			 * });
-			 */
-			$commentForm = $(form).parents('.comment-form-container');
-			var scroll = window.pageYOffset - $('.navbar').height();
-			if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
-				scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
-				$('html, body').animate({
-					scrollTop: scroll
-				}, 500, function() {
-					$($commentForm).find('input[type="text"]').focus();
-				});
-			} else {
-				$($commentForm).find('input[type="text"]').focus();
-			}
-            
-            /* $('.timeago.new').timeago().fadeIn();
-             */
-        }, complete: function() {
-            form.find(".ajax-loader").hide();
-            form.find("input[type='submit']").show();
-            form.find("#id_message").val("");
-            form.find("#id_message").removeAttr("disabled");
-        }});
-    });
+        	url: url,
+        	data: {message: msg, csrfmiddlewaretoken: csrf},
+        	datatype: 'html',
+        	success: function(data) {
+        		// copy of message is returned via html, insert into page
+        		/* comment_html = data;
+        		 * form.parent().siblings('.comments').append($(comment_html));
+        		 */
+
+        		/* $('.comment.new').each(function() { 
+        		 *     var postHeight = $(this).height();
+        		 *     
+        		 *     $(this).children('.avatar-container').each(function() { // Avatars within posts
+        		 *         $(this).find('.avatar').each(function() {
+        		 *             resizeAvatar(this, postHeight);
+        		 *         });
+        		 *     });
+        		 * });
+        		 */
+        		/* $post = $(form).parents('.post');
+        		 * var postHeight = $($post).height();
+        		 * $($post).children('.avatar-container').each(function() { // Avatars within posts
+        		 * 	$(this).find('.avatar').each(function() {
+        		 * 		animateResize(this, postHeight);
+        		 * 	});
+        		 * });
+        		 */
+        		$msgContainer.val("");
+        		$commentForm = $(form).parents('.comment-form-container');
+        		var scroll = window.pageYOffset - $('.navbar').height();
+        		if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
+        			scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
+        			$('html, body').animate({
+        				scrollTop: scroll
+        			}, 500, function() {
+        				$($commentForm).find('input[type="text"]').focus();
+        			});
+        		} else {
+        			$($commentForm).find('input[type="text"]').focus();
+        		}
+
+        		/* $('.timeago.new').timeago().fadeIn();
+        		 */
+        	},
+        	complete: function() {
+        		$loadingSpinner.hide();
+        		$submitBtn.removeAttr("disabled");
+        		$msgContainer.removeAttr("disabled");
+        	}});
+	});
 }
 
 function initPostAjax() {
@@ -134,32 +138,30 @@ function initPostAjax() {
 		event.preventDefault();
 
 		var form = $(this);
+		var $submitBtn = form.find('input[type="submit"]');
 		var url = 'post/';
-		var msg = form.find("#id_message").val();
+		var $msgContainer = form.find('#id_message');
+		var msg = $msgContainer.val();
 		var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
+		var $loadingSpinner = form.find('.loading-spinner');
 
-        form.find("#id_message").val("");
-        form.find("#id_message").attr("disabled", "disabled");
-        form.find("input[type='submit']").hide();
-        form.find(".ajax-loader").show();
+        $msgContainer.attr("disabled", "disabled");
+        $submitBtn.attr("disabled", "disabled");
+        $loadingSpinner.show();
 
 		$.ajax({type: "POST",
                url: url,
                data: {message: msg, csrfmiddlewaretoken: csrf},
                datatype: "html",
+               success: function() {
+            	   $msgContainer.val("");
+               },
                complete: function() {
-			form.find(".ajax-loader").hide();
-            form.find("input[type='submit']").show();
-            form.find("#id_message").val("");
-            form.find("#id_message").removeAttr("disabled");
-		}});
+            	   $loadingSpinner.hide();
+            	   $submitBtn.removeAttr("disabled");
+            	   $msgContainer.removeAttr("disabled");
+               }});
 	});
-}
-
-var timer = setInterval(recomputeTimeAgo, 60000);
-
-function recomputeTimeAgo () {
-	$('.timeago.new').timeago();
 }
 
 function initDynamicAvatarSize() {

@@ -24,18 +24,18 @@
             {% endfor %}
             {% endif %}
         </ul>
-        <div class="comment-form-container well-small well clearfix hide">
+        <div class="comment-form-container loading-spinner-container well-small well clearfix hide">
             <div class='avatar-container pull-left'>
                 <img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
             </div>
             <strong class="pull-left name">{{ user.first_name }} {{ user.last_name }}</strong><br/>
-            <form method="post" class="comment-form">
+            <form method="post" class="comment-form clearfix">
                 {% csrf_token %}
                 <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
                 <input type="hidden" name="id_post" value="{{ post.pk }}" />
                 <input type="submit" value="Comment" class="btn pull-left btn-primary" />
-                <img class="ajax-loader hide" src="{{ STATIC_URL }}images/ajax-loader.gif" alt="loading..." />
             </form>
+            <div class="loading-spinner hide"></div>
         </div>
     </div>
 </li>

@@ -4,12 +4,12 @@
 {% load gravatar %}
 
 {% block maincontent %}
-<form id="post_form" method="post" class="well">
+<form id="post_form" method="post" class="well loading-spinner-container">
 	<img class="pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
 	<textarea class="input-block-level pull-left" placeholder="Communicate with your group..." id="id_message" rows="10" cols="40" name="message"></textarea>
 	<input type="submit" value="Post" class="btn pull-right btn-primary" />
-	<img class="ajax-loader hide" src="{{ STATIC_URL }}images/ajax-loader.gif" alt="loading..." />
     {% csrf_token %}
+    <div class="loading-spinner hide"></div>
 </form>
 
 {% if post_list %}
