@@ -4,7 +4,9 @@ from posts.models import Post
 from posts.models import Comment
 from groups.models import Group
 from django.contrib.auth.models import User
+import os
 
+os.environ['DJANGO_SETTINGS_MODULE'] = "bulletin_project.settings"
 
 class GroupModelTest(TestCase):
     def test_post(self):
