@@ -1,6 +1,9 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import os
+
+os.environ['DJANGO_SETTINGS_MODULE'] = "bulletin_project.settings"
 
 
 class SessionsTest(LiveServerTestCase):
