@@ -9,12 +9,12 @@
 	<textarea class="input-block-level pull-left" placeholder="Communicate with your group..." id="id_message" rows="10" cols="40" name="message"></textarea>
 	<input type="submit" value="Post" class="btn pull-right btn-primary" />
     {% csrf_token %}
-    <div class="loading-spinner hide"></div>
+    <div class="loading-spinner hide"></div>	
 </form>
 
 {% if post_list %}
 <ul id="posts" class="media-list">
-    {% for post in post_list %}
+    {% for post in post_list %}	
     	{% include "group_post.html" %}
     {% endfor %}
 </ul>

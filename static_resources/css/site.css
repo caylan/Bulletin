@@ -48,7 +48,7 @@ abbr {
 	height: 60px;
 }
 
-.post > .media-body, .comment > .media-body  {
+.post > .media-body {
 	margin-left: 60px;
 }
 
@@ -119,19 +119,32 @@ abbr {
 	color: #AAA;
 }
 
-.post, .comment {
+.comments .name, .comments em {
+	margin-left: 5px;
+	font-size: 13px;
+	color: #AAA;
+	font-weight: normal;
+	line-height: 17px;
+}
+
+.post, .comment, .discuss, .comment-form-container  {
 	margin: 0;
 	word-wrap: break-word;
+	border-left: solid 1px #EEE;
+	border-right: solid 1px #EEE;
+}
+
+.post {
 	min-height: 60px;
 }
 
 .comments {
 	margin-top: 5px;
 	margin-left: 10px;
-}
-
-.comments .comment:last-child {
+	background-color: #f5f5f5;
+	border-top: solid 1px #EEE;
 	border-bottom: solid 1px #EEE;
+	line-height: 17px;
 }
 
 .post:last-child {
@@ -147,20 +160,49 @@ abbr {
 	border-top: 1px solid #EEE;
 }
 
+.discuss {
+	text-align: center;
+}
+
+.discuss > .timestamp {
+	max-width: 0;
+}
+
 .post-message, .comment-message {
 	word-wrap: break-word;
 	margin-left: 10px;
+	line-height: 17px;
+}
+
+.comment-unhide-btn {
+}
+
+.post-message {
 	margin-bottom: 10px;
 	line-height: 17px;
 }
 
+.comment-message {
+	margin-left: 15px;
+	margin-bottom: 5px;
+}
+
+.triangle {
+	margin: auto;
+	margin-top: -10px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 10px 10px 10px;
+	border-color: transparent transparent #EEE transparent;
+}
 
 .media .pull-left {
 	margin-right: 0;
 }
 
 .comment {
-	border-top: 1px solid #EEE;
+	font-size: 13px;
 }
 
 .comment-form {
@@ -168,16 +210,17 @@ abbr {
 }
 
 .comment-form-container {
-	margin-left: 10px;
 	border-width: 0;
 }
 
 .comment-box {
-	margin: -4px 5px 0 5px!important;
+	margin: 0 5px 0 0!important;
 }
 
 .comment-form input[type="text"] {
 	width: 50%;
+	height: 17px;
+	padding: 2px;
 }
 
 #post_form {
@@ -186,7 +229,9 @@ abbr {
 }
 
 .comment-form-container input {
-	margin-top: -4px;
+	font-size: 13px;
+	padding: 0 3px;
+	max-height: 23px;
 }
 
 #footer {

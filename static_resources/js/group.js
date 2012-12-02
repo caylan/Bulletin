@@ -15,12 +15,14 @@ function update() {
             $newComment.hide();
             $newComment.find(".avatar").show();
             $newComment.find(".timeago").timeago().show();
-            $(postID).find(".comments").append($newComment);
+            $(postID).find(".comment-form-container").before($newComment);
+			$(postID).find(".comment-form-container input[type='text']").focus();
             $newComment.fadeIn();
             var $parentPost = $newComment.parents(".post");
             var $postAvatar = $parentPost.children(".avatar-container").find(".avatar");
             var postHeight = $parentPost.height();
             animateResize($postAvatar, postHeight);
+			lastCommentTimestamp();
         } else if ($data.hasClass("post")) {
             // returned data is a post
             var $newPost = $data;
@@ -29,6 +31,7 @@ function update() {
             $newPost.find(".timeago").timeago().show();
             $("#posts").prepend($newPost);
             $newPost.fadeIn();
+			animateResize($newPost.find(".avatar"), $($newPost).height());
             initCommentSlider();
             initCommentAjax();
         }
@@ -43,8 +46,8 @@ function initCommentSlider() {
         event.preventDefault();
         $post = $(this).parents('.post');
         $commentForm = $post.find(".comment-form-container");
-        $(this).parent().fadeOut();
-        $commentForm.show("blind", function() {
+        $(this).parent().hide();
+        $commentForm.fadeIn(function() {
 			var scroll = $post.offset().top - $('.navbar').height();
 			if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
 				scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
@@ -174,12 +177,12 @@ function initDynamicAvatarSize() {
             });
         });
         
-        $(this).find('.comment').each(function() { // Avatars within comments
-            var commentHeight = $(this).height();
-            $(this).find('.avatar').each(function() {
-                resizeAvatar(this, commentHeight);
-            });
-        });
+        //$(this).find('.comment').each(function() { // Avatars within comments
+        //    var commentHeight = $(this).height();
+        //    $(this).find('.avatar').each(function() {
+        //        resizeAvatar(this, commentHeight);
+        //    });
+        //});
     });
 }
 
@@ -208,12 +211,25 @@ function animateResize (avatar, parentHeight) {
     });
 }
 
+function lastCommentTimestamp () {
+	$('.comments').each(function() {
+			var discuss = $(this).find('.discuss');
+			$(this).find('em').hide();
+			$(this).find('em:last').each(function() {
+				//$(discuss).before(this);
+				$(this).show();
+			});
+		}
+	);
+}
+
 $(document).ready(function() {
 	$('abbr.timeago').timeago().fadeIn();
     initCommentSlider();
     initCommentAjax();
     initPostAjax();
     update();
+	lastCommentTimestamp();
 });
 
 $(window).load(function() {
