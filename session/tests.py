@@ -18,11 +18,11 @@ class SessionsTest(LiveServerTestCase):
         
         # admin email
         email_field = self.browser.find_element_by_name('email')
-        email_field.send_keys('a@b.com')
+        email_field.send_keys('test@test.com')
 
         #admin password
         password_field = self.browser.find_element_by_name('password')
-        password_field.send_keys('admin')
+        password_field.send_keys('test')
         password_field.send_keys(Keys.RETURN)
 
         header = self.browser.find_element_by_tag_name('h1')
