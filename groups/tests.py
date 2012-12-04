@@ -3,9 +3,6 @@ from django.utils import timezone
 from groups.models import Group
 from groups.models import Membership
 from django.contrib.auth.models import User
-import os
-
-os.environ['DJANGO_SETTINGS_MODULE'] = "bulletin_project.settings"
 
 
 class GroupModelTest(TestCase):
