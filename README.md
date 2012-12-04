@@ -50,3 +50,7 @@ file.
 After installing any new apps, always make sure to update the new requirements:
 
         pip freeze > requirements.txt
+        
+For testing from the root using nose
+        ./manage.py test
+
