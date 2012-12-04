@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
-from groups.models import Group
-from groups.models import Membership
+from groups.models import Group, Membership
 from django.contrib.auth.models import User
 
 
