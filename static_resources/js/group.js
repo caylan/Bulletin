@@ -228,9 +228,21 @@ function animateResize (avatar, parentHeight) {
 function lastCommentTimestamp () {
 	$('.comments').each(function() {
 			var discuss = $(this).find('.discuss');
-			$(this).find('em').hide();
+			$(this).find('.comment').each(function() {
+				var comment = this;
+				$(this).find('em').each(function() {
+					var timestamp = this;
+					$(this).hide();
+					$(comment).mouseover(function() {
+						$(timestamp).show();
+					});
+					$(comment).mouseout(function() {
+						$(timestamp).hide();
+					});
+				});
+			});
 			$(this).find('em:last').each(function() {
-				//$(discuss).before(this);
+				$(this).parent().parent().parent().unbind('mouseout');
 				$(this).show();
 			});
 		}
