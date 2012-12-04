@@ -13,8 +13,11 @@ class SessionsTest(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_log_in_and_out(self):
+    def test_basic_functions(self):
         self.browser.get(self.live_server_url)
+
+        header = self.browser.find_element_by_tag_name('h1')
+        self.assertIn('Bulletin', header.text)
         
         # admin email
         email_field = self.browser.find_element_by_name('email')
@@ -24,11 +27,7 @@ class SessionsTest(LiveServerTestCase):
         password_field = self.browser.find_element_by_name('password')
         password_field.send_keys('test')
         password_field.send_keys(Keys.RETURN)
+        #log in
 
         header = self.browser.find_element_by_tag_name('h1')
         self.assertIn('inbox', header.text)
-
-        self.browser.find_elements_by_link_text('Logout').click()
-
-        header = self.browser.find_element_by_tag_name('h1')
-        self.assertIn('Bulletin', header.text)
