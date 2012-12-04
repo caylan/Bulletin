@@ -32,10 +32,10 @@
 			<div id='left-column' class="well">
 				{% block nav %}
 				<ul id="team-nav" class="nav nav-list">
-				    <li {% if not grpid %} class="active" {% endif %} ><a href="/">Inbox</a></li>
+				    <li {% if not group %} class="active" {% endif %} ><a href="/">Inbox</a></li>
 				    <li class="nav-header">Groups</li>
 				    {% for member in user.membership_set.all %}
-				    <li {% ifequal grpid member.group.id %} class="active" {% endifequal %}>
+				    <li {% ifequal group.pk member.group.id %} class="active" {% endifequal %}>
 				        <a href="/group/{{ member.group.id }}/">
 				            {{ member.group.name }}
 				        </a>
@@ -45,6 +45,16 @@
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 				{% if is_admin %}<a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>{% endif %}
+
+                <ul class="nav nav-list">
+                    <li class="divider"></li>
+                    <li class="nav-header">Group Members</li>
+                    {% for member in group.members.all %}
+                    <li>
+                        {{ member.get_full_name }}
+                    </li>
+                    {% endfor %}
+                </ul>
 
 				{% endblock nav %}
 			</div>

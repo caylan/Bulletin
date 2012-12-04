@@ -27,7 +27,9 @@ def group(request, grpid):
     
     # If the user viewing is not a member of this group,
     # tell them it's a 404.
-    if not request.user.group_set.filter(id=grpid):
+    try:
+        group = request.user.group_set.get(id=grpid)
+    except:
         raise Http404
 
     if request.method == 'POST':
@@ -48,7 +50,7 @@ def group(request, grpid):
     # Is the user an admin for this group?
     is_admin = request.user.membership_set.get(group__pk=grpid).is_admin
     return render(request, 'group_view.html', {'post_list': post_list,
-                                          'grpid': int(grpid),
+                                          'group': group,
                                           'user': request.user,
                                           'form': form,
                                           'is_admin': is_admin})
