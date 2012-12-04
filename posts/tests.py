@@ -58,7 +58,7 @@ class PostModelTest(TestCase):
         post.save()
         
         comment.author = Membership.objects.get(id = membership.id)
-        comment.message = " 123Testing"
+        comment.message = "123Testing"
         comment.post = Post.objects.get(id = post.id)
         comment.save()
     
