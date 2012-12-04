@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.utils import timezone
 from posts.models import Post
 from posts.models import Comment
-from groups.models import Group
+from groups.models import Group, Membership
 from django.contrib.auth.models import User
 
-class GroupModelTest(TestCase):
+class PostModelTest(TestCase):
     def test_post(self):
         post = Post()
         
@@ -16,20 +16,24 @@ class GroupModelTest(TestCase):
         group.name = "Test Group"
         group.save()
         
-        post.author = User.objects.get(id = user.id)
+        membership = Membership()
+        membership.user = User.objects.get(id = user.id)
+        membership.group = Group.objects.get(id = group.id)
+        membership.save()
+        
+        post.author = Membership.objects.get(id = membership.id)
         post.message = "Testing321"
-        post.group = Group.objects.get(id = group.id)
 
         post.save()
     
         test_post = Post.objects.get(id = post.id)
         
         self.assertEquals(test_post, post)
-        self.assertEquals(test_post.author, User.objects.get(id = user.id))
+        self.assertEquals(test_post.author, Membership.objects.get(id = membership.id))
         self.assertEquals(test_post.message, "Testing321")
-        self.assertEquals(test_post.group, Group.objects.get(id = group.id))
    
         post.delete()
+        membership.delete()
         group.delete()
         user.delete()
         
