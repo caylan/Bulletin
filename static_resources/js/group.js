@@ -233,6 +233,8 @@ function lastCommentTimestamp () {
 				$(this).find('em').each(function() {
 					var timestamp = this;
 					$(this).hide();
+					$(comment).unbind('mouseout');
+					$(comment).unbind('mouseover');
 					$(comment).mouseover(function() {
 						$(timestamp).show();
 					});
@@ -247,6 +249,16 @@ function lastCommentTimestamp () {
 			});
 		}
 	);
+	$('.comment-form').find('input[type="text"]').focus(function() {
+		//$(this).parent().find('input[type="submit"]').removeClass('btn-primary');
+		//$(this).parent().find('input[type="submit"]').addClass('btn-primary');
+		$(this).parent().find('input[type="submit"]').fadeIn(200);
+	});
+	$('.comment-form').find('input[type="text"]').blur(function() {
+		//$(this).parent().find('input[type="submit"]').removeClass('btn-primary');
+		$(this).parent().find('input[type="submit"]').fadeOut(200);
+
+	});
 }
 
 $(document).ready(function() {
