@@ -26,9 +26,9 @@ class SessionsTest(LiveServerTestCase):
         password_field.send_keys(Keys.RETURN)
 
         header = self.browser.find_element_by_tag_name('h1')
-        self.assertIn('inbox', body.text)
+        self.assertIn('inbox', header.text)
 
         self.browser.find_elements_by_link_text('Logout').click()
 
         header = self.browser.find_element_by_tag_name('h1')
-        self.assertIn('Bulletin', body.text)
+        self.assertIn('Bulletin', header.text)
