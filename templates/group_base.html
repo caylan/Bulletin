@@ -47,16 +47,17 @@
                 <!-- REMOVE THIS ASAP -->
                 <style>
                     .remove-user {
-                        color: red;
-                        display: none;
+                        color: #777;
+                        visibility: hidden;
                     }
 
                     li:hover .remove-user {
-                        display: inline;
+                        visibility: visible;
                     }
 
                     .remove-user:hover {
                         cursor: pointer;
+                        color: red;
                     }
 
                     .btn {
@@ -71,7 +72,7 @@
                     <li>
                         {{ member.get_full_name }}
                         {% if is_admin and member != user %}
-                        <span class="remove-user">X</span>
+                        <i class="remove-user icon-trash"></i>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -84,7 +85,7 @@
                     <li class="nav-header">Active Invites</li>
                     {% if invites %}
                         {% for invite in invites %}
-                        <li style="font-size: .7em;">{{ invite.recipient_email }} <span class="remove-user">X</span></li>
+                        <li style="font-size: .7em;">{{ invite.recipient_email }} <i class="remove-user icon-remove"></i></li>
                         {% endfor %}
                     {% else %}
                     <li>0 invites</li>
