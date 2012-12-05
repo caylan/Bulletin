@@ -6,7 +6,7 @@ from django.conf.urls.defaults import patterns, include, url
 #
 # The current solution to this problem would be to use something similar to
 # Java's xeger to generatr a string from a regex, given the ids are the same,
-# but the current implementations of xeger for python don't allow setting the ID
+# but the current implementations of xeger for python doesn't allow setting the ID
 # params within the regex, which is the only reason we'd want to use it.
 
 

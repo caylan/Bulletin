@@ -25,7 +25,7 @@ class PostNotification(AbstractNotification):
         '''
         Gets the uri for the post.
 
-        Note: This depends on the views for groups.  If the URI changes there,
+        NOTE: This depends on the views for groups.  If the URI changes there,
         sadly it must change here.
         '''
         grpid = post.author.group.pk
