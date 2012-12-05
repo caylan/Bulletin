@@ -46,15 +46,21 @@ def group(request, grpid):
         form = PostForm()
 
     '''relations are represented by double underscores (i heart django)'''
-    post_list = list(Post.objects.filter(author__group__id=grpid))
+    post_list = list(Post.objects.filter(author__group__pk=grpid))
 
     # Is the user an admin for this group?
     is_admin = request.user.membership_set.get(group__pk=grpid).is_admin
+
+    # if the user is an admin, give them a list of the current invites
+    invites = []
+    if (is_admin):
+        invites = EmailInvite.objects.filter(group__pk=int(grpid))
     return render(request, 'group_view.html', {'post_list': post_list,
-                                          'group': group,
-                                          'user': request.user,
-                                          'form': form,
-                                          'is_admin': is_admin})
+                                               'group': group,
+                                               'user': request.user,
+                                               'form': form,
+                                               'is_admin': is_admin,
+                                               'invites': invites})
 
 def _get_extra_emails(request):
     '''
