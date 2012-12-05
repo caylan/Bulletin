@@ -24,7 +24,7 @@ Bulletin is being developed by
   * when server is ran, you can find these files at /static/
 
 ## Virtual environment setup
-*Pretty much how Heroku says to do it.*
+*Pretty much how Heroku says to do it.* (for reference - https://devcenter.heroku.com/articles/django)
 
 Project settings are currently setup for running on Heroku. In order to run locally on your machine, 
 you may need to comment out the two lines at the bottom of the settings file for dj_database_url.
@@ -50,3 +50,8 @@ file.
 After installing any new apps, always make sure to update the new requirements:
 
         pip freeze > requirements.txt
+        
+For testing from the root using nose
+
+        ./manage.py test
+

@@ -1,9 +1,6 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import os
-
-os.environ['DJANGO_SETTINGS_MODULE'] = "bulletin_project.settings"
 
 
 class SessionsTest(LiveServerTestCase):
@@ -16,22 +13,21 @@ class SessionsTest(LiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_log_in_and_out(self):
+    def test_basic_functions(self):
         self.browser.get(self.live_server_url)
+
+        header = self.browser.find_element_by_tag_name('h1')
+        self.assertIn('Bulletin', header.text)
         
         # admin email
         email_field = self.browser.find_element_by_name('email')
-        email_field.send_keys('a@b.com')
+        email_field.send_keys('test@test.com')
 
         #admin password
         password_field = self.browser.find_element_by_name('password')
-        password_field.send_keys('admin')
+        password_field.send_keys('test')
         password_field.send_keys(Keys.RETURN)
+        #log in
 
         header = self.browser.find_element_by_tag_name('h1')
-        self.assertIn('inbox', body.text)
-
-        self.browser.find_elements_by_link_text('Logout').click()
-
-        header = self.browser.find_element_by_tag_name('h1')
-        self.assertIn('Bulletin', body.text)
+        self.assertIn('inbox', header.text)
