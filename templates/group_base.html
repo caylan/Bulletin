@@ -68,7 +68,7 @@
                     {% for member in group.members.all %}
                     <li>
                         {{ member.get_full_name }}
-                        {% if is_admin %}
+                        {% if is_admin and member != user %}
                         <span class="remove-user">X</span>
                         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                         <script>

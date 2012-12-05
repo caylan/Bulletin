@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
+    HttpResponseForbidden,
     Http404,
     HttpResponse,
 )
@@ -136,3 +137,28 @@ def create(request):
     else:
         raise Http404
     return render(request, 'group_create_modal.html', {'form': form,})
+
+@login_required
+def remove_member(request, memid):
+    '''
+    Given a membership id, delete membership from database.
+    
+    In order for this operation to be successful, the user calling must be
+    labeled as admin of the group in which the membership belongs to.
+    '''
+    # first, check if current user is authorized to delete this membership
+    try:
+        rem_member = Membership.objects.get(pk=memid)
+        usr_member = request.user.membership_set.get(group=rem_member.group)
+    except:
+        return HttpResponseForbidden("something doesn't match")
+    if not usr_member.is_admin:
+        return HttpResponseForbidden("not admin")
+
+    # don't allow user to delete themself
+    if usr_member == rem_member:
+        return HttpResponseBadRequest("can't remove yourself")
+
+    # current user is authorized
+    rem_member.delete()
+    return HttpResponse("success")
