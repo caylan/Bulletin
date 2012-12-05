@@ -22,8 +22,8 @@
                 {% include "group_comment.html" %}
             {% endfor %}
             {% endif %}
-            <div class='discuss'><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
-            <div class="comment-form-container loading-spinner-container clearfix hide">
+<!--            <div class='discuss'><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
+-->            <div class="comment-form-container loading-spinner-container clearfix">
                 <!--<div class='avatar-container pull-left'>
                     <img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
                 </div>-->
@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
                     <input type="hidden" name="id_post" value="{{ post.pk }}" />
-                    <input type="submit" value="Comment" class="btn pull-left btn-primary" />
+                    <input type="submit" value="Comment" class="btn pull-left btn-primary hide" />
                 </form>
                 <div class="loading-spinner hide"></div>
             </div>

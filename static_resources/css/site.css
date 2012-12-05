@@ -87,6 +87,10 @@ abbr {
     -webkit-border-top-right-radius: 0;
 }
 
+.comment .timeago {
+	margin-right: 3px;
+}
+
 .loading-spinner {
     height: 100%;
     width: 100%;
@@ -174,21 +178,10 @@ abbr {
 	border-top: 1px solid #EEE;
 }
 
-.discuss {
-	text-align: center;
-}
-
-.discuss > .timestamp {
-	max-width: 0;
-}
-
 .post-message, .comment-message {
 	word-wrap: break-word;
 	margin-left: 10px;
 	line-height: 17px;
-}
-
-.comment-unhide-btn {
 }
 
 .post-message {

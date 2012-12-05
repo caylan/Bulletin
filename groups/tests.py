@@ -1,11 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
-from groups.models import Group
-from groups.models import Membership
+from groups.models import Group, Membership
 from django.contrib.auth.models import User
-import os
-
-os.environ['DJANGO_SETTINGS_MODULE'] = "bulletin_project.settings"
 
 
 class GroupModelTest(TestCase):
@@ -18,7 +14,7 @@ class GroupModelTest(TestCase):
         test_group = Group.objects.get(id = group.id)
         
         self.assertEquals(test_group, group)
-        self.assertEquals(test_group.name, "New Group")
+        self.assertEquals(test_group.name, "Test Group")
         self.assertEquals(test_group.date_created, group.date_created)
    
         group.delete()

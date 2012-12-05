@@ -26,9 +26,12 @@ function update() {
         } else if ($data.hasClass("post")) {
             // returned data is a post
             var $newPost = $data;
+            var $noPost = $('.alert.alert-warning');
             $newPost.hide();
             $newPost.find(".avatar").show();
             $newPost.find(".timeago").timeago().show();
+
+            removeNoPostWarning($noPost);
             $("#posts").prepend($newPost);
             $newPost.fadeIn();
 			animateResize($newPost.find(".avatar"), $($newPost).height());
@@ -71,13 +74,13 @@ function initCommentAjax() {
 	$('.comment-form').submit(function(event) {
         event.preventDefault();
 
-        var form = $(this);
-        var $submitBtn = form.find('input[type="submit"]');
-        var url = '/post/' + form.find('input[name="id_post"]').val() + '/comment/';
-        var $msgContainer = form.find('#id_message');
+        var $form = $(this);
+        var $submitBtn = $form.find('input[type="submit"]');
+        var url = '/post/' + $form.find('input[name="id_post"]').val() + '/comment/';
+        var $msgContainer = $form.find('#id_message');
         var msg = $msgContainer.val();
-        var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
-        var $loadingSpinner = form.siblings('.loading-spinner');
+        var csrf = $form.find('input[name="csrfmiddlewaretoken"]').val();
+        var $loadingSpinner = $form.siblings('.loading-spinner');
 
         $msgContainer.attr("disabled", "disabled");
         $submitBtn.attr("disabled", "disabled");
@@ -112,7 +115,7 @@ function initCommentAjax() {
         		 * });
         		 */
         		$msgContainer.val("");
-        		$commentForm = $(form).parents('.comment-form-container');
+        		$commentForm = $($form).parents('.comment-form-container');
         		var scroll = window.pageYOffset - $('.navbar').height();
         		if (scroll + $(window).height() < $commentForm.offset().top + $commentForm.height()) {
         			scroll += $commentForm.offset().top + $commentForm.height() - (scroll + $(window).height());
@@ -140,13 +143,14 @@ function initPostAjax() {
 	$("#post_form").submit(function(event) {
 		event.preventDefault();
 
-		var form = $(this);
-		var $submitBtn = form.find('input[type="submit"]');
+		var $form = $(this);
+		var $submitBtn = $form.find('input[type="submit"]');
 		var url = 'post/';
-		var $msgContainer = form.find('#id_message');
+		var $msgContainer = $form.find('#id_message');
 		var msg = $msgContainer.val();
-		var csrf = form.find('input[name="csrfmiddlewaretoken"]').val();
-		var $loadingSpinner = form.find('.loading-spinner');
+		var csrf = $form.find('input[name="csrfmiddlewaretoken"]').val();
+		var $loadingSpinner = $form.find('.loading-spinner');
+        var $noPost = $form.siblings('.alert.alert-warning');
 
         $msgContainer.attr("disabled", "disabled");
         $submitBtn.attr("disabled", "disabled");
@@ -157,6 +161,7 @@ function initPostAjax() {
                data: {message: msg, csrfmiddlewaretoken: csrf},
                datatype: "html",
                success: function() {
+                   removeNoPostWarning($noPost);
             	   $msgContainer.val("");
                },
                complete: function() {
@@ -165,6 +170,15 @@ function initPostAjax() {
             	   $msgContainer.removeAttr("disabled");
                }});
 	});
+}
+
+function removeNoPostWarning($noPost) {
+    if ($noPost.length != 0) {
+        $noPost.parent().append($("<ul id='posts' class='media-list'></ul>"));
+        $noPost.slideUp(function() {
+            $noPost.remove();
+        });
+    }
 }
 
 function initDynamicAvatarSize() {
@@ -214,13 +228,37 @@ function animateResize (avatar, parentHeight) {
 function lastCommentTimestamp () {
 	$('.comments').each(function() {
 			var discuss = $(this).find('.discuss');
-			$(this).find('em').hide();
+			$(this).find('.comment').each(function() {
+				var comment = this;
+				$(this).find('em').each(function() {
+					var timestamp = this;
+					$(this).hide();
+					$(comment).unbind('mouseout');
+					$(comment).unbind('mouseover');
+					$(comment).mouseover(function() {
+						$(timestamp).show();
+					});
+					$(comment).mouseout(function() {
+						$(timestamp).hide();
+					});
+				});
+			});
 			$(this).find('em:last').each(function() {
-				//$(discuss).before(this);
+				$(this).parent().parent().parent().unbind('mouseout');
 				$(this).show();
 			});
 		}
 	);
+	$('.comment-form').find('input[type="text"]').focus(function() {
+		//$(this).parent().find('input[type="submit"]').removeClass('btn-primary');
+		//$(this).parent().find('input[type="submit"]').addClass('btn-primary');
+		$(this).parent().find('input[type="submit"]').fadeIn(200);
+	});
+	$('.comment-form').find('input[type="text"]').blur(function() {
+		//$(this).parent().find('input[type="submit"]').removeClass('btn-primary');
+		$(this).parent().find('input[type="submit"]').fadeOut(200);
+
+	});
 }
 
 $(document).ready(function() {
