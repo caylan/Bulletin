@@ -46,12 +46,37 @@
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 				{% if is_admin %}<a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>{% endif %}
 
+                <!-- REMOVE THIS ASAP -->
+                <style>
+                    .remove-user {
+                        color: red;
+                        display: none;
+                    }
+
+                    li:hover .remove-user {
+                        display: inline;
+                    }
+
+                    .remove-user:hover {
+                        cursor: pointer;
+                    }
+                </style>
+
                 <ul class="nav nav-list">
                     <li class="divider"></li>
                     <li class="nav-header">Group Members</li>
                     {% for member in group.members.all %}
                     <li>
                         {{ member.get_full_name }}
+                        {% if is_admin %}
+                        <span class="remove-user">X</span>
+                        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                        <script>
+                            $(".remove-user").click(function() {
+                                $(this).parent().hide();
+                            });
+                        </script>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
