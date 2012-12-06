@@ -32,7 +32,7 @@
 			<div id='left-column' class="well">
 				{% block nav %}
 				<ul id="team-nav" class="nav nav-list">
-				    <li {% if not group %} class="active" {% endif %} ><a href="/">Inbox</a></li>
+				    <li {% if not group %} class="active" {% endif %} ><a href="/"><i class="icon-dashboard"></i> Inbox</a></li>
 				    <li class="nav-header">Groups</li>
 				    {% for member in user.membership_set.all %}
 				    <li {% ifequal group.pk member.group.id %} class="active" {% endifequal %}>

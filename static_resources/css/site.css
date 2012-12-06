@@ -208,15 +208,22 @@ abbr {
 	margin-bottom: 5px;
 }
 
+.show_comments {
+	padding-top: 2px;
+}
+
 .triangle {
 	margin: auto;
 	margin-top: -10px;
-	margin-bottom: 2px;
 	width: 0px;
 	height: 0px;
 	border-style: solid;
 	border-width: 0 10px 10px 10px;
-	border-color: transparent transparent rgb(245, 245, 245) transparent;
+	border-color: transparent transparent rgb(227, 227, 227) transparent;
+}
+
+.triangle.dark {
+	border-color: transparent transparent rgb(227, 227, 227) transparent;
 }
 
 .media .pull-left {
@@ -235,8 +242,12 @@ abbr {
 	border-width: 0;
 }
 
-.comments .comment:nth-child(odd) {
+.comments > .comment:nth-child(odd), .show_comments {
    background-color: rgb(227, 227, 227);
+}
+
+.comments .comment:first-child {
+   padding-top: 2px;
 }
 
 .comment-box {

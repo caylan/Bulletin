@@ -16,10 +16,15 @@
         </span>
         <div class="post-message">{{ post.message }}</div>
         <ul class="media-list comments">
-            <div class='triangle'></div>
+            <div class='triangle 
+            {% if post.comment_set.all|length > 7 %}
+                dark
+            {% endif %}
+            '></div>
             {% if post.comment_set.all %}
             {% if post.comment_set.all|length > 7 %}
-                <a href="#show-comments" class='comment show_comments'>Show all comments</a>
+                <a href="#show-comments" class='comment show_comments'><i class="icon-comments-alt"></i> Show all comments
+                </a>
                 <div class='hide hidden_comments'>
                 {% for comment in post.comment_set.all %}
                 {% include "group_comment.html" %}
