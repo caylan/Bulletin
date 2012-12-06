@@ -236,6 +236,17 @@ function initShowComments () {
 	);
 }
 
+function initShowPosts () {
+	$('.show_posts').click(function() {
+			var parent = this;
+			$(this).parent().find('.hidden_posts > .post').each(function() {
+				$(parent).before(this);
+			});
+			$(this).hide();
+		}
+	);
+}
+
 function lastCommentTimestamp () {
 	$('.comments').each(function() {
 			var discuss = $(this).find('.discuss');
@@ -280,6 +291,7 @@ $(document).ready(function() {
     update();
 	lastCommentTimestamp();
 	initShowComments();
+	initShowPosts();
 });
 
 $(window).load(function() {

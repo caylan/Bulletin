@@ -24,7 +24,11 @@ body {
 	color: #999;
 }
 
-.show_comments {
+.comments {
+	padding-bottom: 3px;
+}
+
+.show_comments, .show_posts {
 	text-align: center;
 	display: block;
 }
@@ -174,9 +178,6 @@ abbr {
 	line-height: 17px;
 }
 
-.post:last-child {
-	margin-bottom: 0!important;
-}
 
 .media.post {
 	margin-bottom: 15px;
@@ -206,6 +207,7 @@ abbr {
 .triangle {
 	margin: auto;
 	margin-top: -10px;
+	margin-bottom: 3px;
 	width: 0px;
 	height: 0px;
 	border-style: solid;
