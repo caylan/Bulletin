@@ -1,11 +1,11 @@
 {% load gravatar %}
 <li class="media comment" post="{{ comment.post.pk }}">
-    <!--<div class='avatar-container pull-left media-object'>
-        <img class="avatar pull-left media-object"
-             src="{{ comment.author.user.email|gravatar:'300' }}"
+    <div class='pull-left media-object'>
+        <img class="comment-avatar pull-left media-object"
+             src="{{ comment.author.user.email|gravatar:'20' }}"
              alt="commenters's gravatar"
         />
-    </div>-->
+    </div>
     <div class="media-body">
         <span class="media-heading">
             <em class="hide"><abbr class="timeago pull-right" title="{{ comment.time_stamp }}">{{ comment.date_posted }}</abbr></em>

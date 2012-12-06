@@ -34,10 +34,8 @@
             {% endif %}
             {% endif %}
 <!--            <div class='discuss'><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
--->            <div class="comment-form-container loading-spinner-container clearfix">
-                <!--<div class='avatar-container pull-left'>
-                    <img class="avatar pull-left" src="{{ user.email|gravatar:'60' }}" alt="user's gravatar" />
-                </div>-->
+-->            <div class="comment comment-form-container loading-spinner-container clearfix">
+                <img class="comment-avatar pull-left" src="{{ user.email|gravatar:'20' }}" alt="user's gravatar" />
                 <span class="pull-left name">{{ user.first_name }} {{ user.last_name }}:&nbsp</span>
                 <form method="post" class="comment-form">
                     {% csrf_token %}

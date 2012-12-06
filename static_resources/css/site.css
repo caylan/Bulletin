@@ -157,12 +157,15 @@ abbr {
 	font-weight: normal;
 	line-height: 17px;
 }
+.comment-avatar {
+	margin-left: 3px;
+}
 
 .post, .comment, .discuss, .comment-form-container  {
 	margin: 0;
 	word-wrap: break-word;
-	border-left: solid 1px #EEE;
-	border-right: solid 1px #EEE;
+	border-left: solid 1px #EEE!important;
+	border-right: solid 1px #EEE!important;
 }
 
 .post {
