@@ -26,6 +26,7 @@ body {
 
 .comments {
 	padding-bottom: 3px;
+	background-color: rgb(245, 245, 245);
 }
 
 .show_comments, .show_posts {
@@ -164,8 +165,8 @@ abbr {
 .post, .comment, .discuss, .comment-form-container  {
 	margin: 0;
 	word-wrap: break-word;
-	border-left: solid 1px #EEE!important;
-	border-right: solid 1px #EEE!important;
+	border-left: solid 1px rgb(227, 227, 227)!important;
+	border-right: solid 1px rgb(227, 227, 227)!important;
 }
 
 .post {
@@ -215,7 +216,7 @@ abbr {
 	height: 0px;
 	border-style: solid;
 	border-width: 0 10px 10px 10px;
-	border-color: transparent transparent #EEE transparent;
+	border-color: transparent transparent rgb(245, 245, 245) transparent;
 }
 
 .media .pull-left {
