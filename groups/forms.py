@@ -20,3 +20,15 @@ class GroupCreationForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ('name',)
+
+class GroupAliasForm(forms.Form):
+    '''
+    group_alias - allow users to define a custom name for groups
+                  empty string implies default
+    '''
+    alias = forms.CharField(max_length=64,
+                            required=False,
+                            attrs={'placeholder': 'Group Name',})
+
+    class Meta:
+        fields = ('alias',)

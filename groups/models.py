@@ -53,6 +53,9 @@ class Membership(models.Model):
     group = models.ForeignKey('Group')
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
+    # group_alias - allow users to define a custom name for groups
+    #               empty string implies default
+    group_alias = models.CharField(max_length=64, default='')
 
     def __unicode__(self):
         return self.group.__unicode__() + " | " + self.user.__unicode__()

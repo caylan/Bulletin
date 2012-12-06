@@ -11,7 +11,7 @@ from django.core.validators import email_re
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.utils import simplejson
-from forms import GroupCreationForm
+from forms import GroupCreationForm, GroupAliasForm
 from models import Group, Membership
 from posts.forms import PostForm
 from posts.models import Post, Comment
@@ -168,3 +168,22 @@ def remove_member(request, memid):
     # current user is authorized
     rem_member.delete()
     return HttpResponse("success")
+
+@login_required
+def change_alias(request, grpid):
+    '''
+    Given a membership id and a new name, change group_alias under membership
+    to new name. Empty name implies default.
+    '''
+    if request.method == 'POST':
+        form = GroupAliasForm(request.POST)
+        if form.is_valid():
+            try:
+                membership = request.user.membership_set.get(group__pk=grpid)
+            except Membership.DoesNotExist:
+                return HttpResponseForbidden('no membership')
+            alias = form.cleaned_data['alias']
+            membership.group_alias = alias
+            membership.save()
+    else:
+        raise Http404

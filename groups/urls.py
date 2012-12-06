@@ -5,4 +5,5 @@ urlpatterns = patterns("groups.views",
     url(r'^create/$', 'create'),
     url(r'^group/(?P<grpid>\d+)/send_invites/$', 'send_invites'),
     url(r'^membership/(?P<memid>\d+)/remove/$', 'remove_member'),
+    url(r'^group/(?P<grpid>\d+)/change_alias/$', 'change_alias'),
 )

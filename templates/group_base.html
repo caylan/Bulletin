@@ -35,11 +35,20 @@
 				    <li {% if not group %} class="active" {% endif %} ><a href="/">Inbox</a></li>
 				    <li class="nav-header">Groups</li>
 				    {% for member in user.membership_set.all %}
-				    <li {% ifequal group.pk member.group.id %} class="active" {% endifequal %}>
-				        <a href="/group/{{ member.group.id }}/">
-				            {{ member.group.name }}
-				        </a>
-				    </li>
+                        {% if group.pk == member.group.id %}
+                        <li class="active">
+                            <a>
+                                {{ member.group.name }}&nbsp;
+                                <i class="edit-group icon-edit"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="/group/{{ member.group.id }}/">
+                                {{ member.group.name }}
+                            </a>
+                        </li>
+                        {% endif %}
 				    {% endfor %}
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
@@ -51,13 +60,22 @@
                         visibility: hidden;
                     }
 
-                    li:hover .remove-user {
+                    .edit-group {
+                        color: #333;
+                    }
+
+                    li:hover .remove-user, li:hover .edit-group {
                         visibility: visible;
                     }
 
                     .remove-user:hover {
                         cursor: pointer;
                         color: red;
+                    }
+
+                    .edit-group:hover {
+                        cursor: pointer;
+                        color: inherit;
                     }
 
                     .btn {
@@ -104,6 +122,10 @@
                 <script>
                     $(".remove-user").click(function() {
                         $(this).parent().hide();
+                    });
+
+                    $(".edit-group").click(function() {
+                        alert("hi");
                     });
                 </script>
 
