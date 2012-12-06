@@ -194,22 +194,27 @@ abbr {
 
 .post-message, .comment-message {
 	word-wrap: break-word;
-	margin-left: 10px;
 	line-height: 17px;
 }
 
 .post-message {
 	margin-bottom: 10px;
 	line-height: 17px;
+	margin-left: 10px;
 }
 
 .comment-message {
-	margin-left: 15px;
 	margin-bottom: 5px;
+	margin-left: 5px;
 }
 
 .show_comments {
 	padding-top: 2px;
+}
+
+.comment-avatar-container {
+	width: 20px;
+	height: 20px;
 }
 
 .triangle {
