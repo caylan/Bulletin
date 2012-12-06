@@ -64,7 +64,7 @@
                         margin-top: .5em;
                     }
                 </style>
-
+                {% if group %}
                 <ul class="nav nav-list">
                     <li class="divider"></li>
                     <li class="nav-header">Group Members</li>
@@ -77,6 +77,7 @@
                     </li>
                     {% endfor %}
                 </ul>
+                {% endif %}
 
                 {% if is_admin %}
                 <a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
