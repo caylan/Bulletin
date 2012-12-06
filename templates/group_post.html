@@ -18,9 +18,20 @@
         <ul class="media-list comments">
             <div class='triangle'></div>
             {% if post.comment_set.all %}
-            {% for comment in post.comment_set.all %}
+            {% if comment_set.all|length > 7 %}
+                <a href="#show-comments" class='comment show_comments'>Show all comments</a>
+                <div class='hide hidden_comments'>
+                {% for comment in post.comment_set.all %}
+                {% include "group_comment.html" %}
+                {% if forloop.revcounter0 == 5 %}
+                </div>
+            {% endif %}
+             {% endfor %}
+            {% else %}
+                {% for comment in post.comment_set.all %}
                 {% include "group_comment.html" %}
             {% endfor %}
+            {% endif %}
             {% endif %}
 <!--            <div class='discuss'><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
 -->            <div class="comment-form-container loading-spinner-container clearfix">

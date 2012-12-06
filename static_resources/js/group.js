@@ -225,25 +225,15 @@ function animateResize (avatar, parentHeight) {
     });
 }
 
-function truncateComments () {
-	$('.comments').each(function() {
-			var comments = $(this).find('.comment');
-			if (comments.length > 5) {
-				for (var i = 0; i < comments.length - 3; i++) {
-					$(comments[i]).hide();
-				}
-			}
+function initShowComments () {
+	$('.show_comments').click(function() {
+			var parent = this;
+			$(this).parent().find('.hidden_comments > .comment').each(function() {
+				$(parent).before(this);
+			});
+			$(this).hide();
 		}
 	);
-}
-
-function truncatePosts () {
-	var posts = $(this).find('.post');
-	if (posts.length > 10) {
-		for (var i = 10; i < posts.length; i++) {
-			$(posts[i]).hide();
-		}
-	}
 }
 
 function lastCommentTimestamp () {
@@ -289,6 +279,7 @@ $(document).ready(function() {
     initPostAjax();
     update();
 	lastCommentTimestamp();
+	initShowComments();
 });
 
 $(window).load(function() {
