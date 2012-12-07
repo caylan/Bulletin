@@ -43,12 +43,11 @@
                 <div class='comment-avatar-container pull-left'>
                     <img class="comment-avatar pull-left" src="{{ user.email|gravatar:'20' }}" alt="user's gravatar" />
                 </div>
-                <span class="pull-left name">{{ user.first_name }} {{ user.last_name }}:&nbsp</span>
                 <form method="post" class="comment-form">
                     {% csrf_token %}
-                    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box" autocomplete="off" />
+                    <input type="text" placeholder="Comment on this post" id="id_message" name="comment" class="pull-left comment-box input-block-level" autocomplete="off" />
                     <input type="hidden" name="id_post" value="{{ post.pk }}" />
-                    <input type="submit" value="Comment" class="btn pull-left btn-primary hide" />
+                    <input type="submit" value="Comment" class="btn pull-left btn-primary hide pull-right" />
                 </form>
                 <div class="loading-spinner hide"></div>
             </div>

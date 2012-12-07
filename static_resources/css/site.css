@@ -217,6 +217,12 @@ abbr {
 	height: 20px;
 }
 
+.comment-form input[type='submit'] {
+	width: 65px;
+	height: 21px;
+	margin: 0 -70px 0 0;
+}
+
 .triangle {
 	margin: auto;
 	margin-top: -10px;
@@ -243,6 +249,11 @@ abbr {
 	margin-top: 2px;
 }
 
+.comment-form {
+	padding-left: 24px;
+	padding-right: 75px;
+}
+
 .comment-form-container {
 	border-width: 0;
 }
@@ -260,9 +271,9 @@ abbr {
 }
 
 .comment-form input[type="text"] {
-	width: 50%;
-	height: 17px;
-	padding: 2px;
+	min-height: 21px!important;
+	max-height: 17px!important;
+	padding: 2px!important;
 }
 
 #post_form {
