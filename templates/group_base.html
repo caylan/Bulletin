@@ -46,16 +46,16 @@
 
                 <!-- REMOVE THIS ASAP -->
                 <style>
-                    .remove-user {
+                    .remove-btn {
                         color: #777;
                         visibility: hidden;
                     }
 
-                    li:hover .remove-user {
+                    li:hover .remove-btn {
                         visibility: visible;
                     }
 
-                    .remove-user:hover {
+                    .remove-btn:hover {
                         cursor: pointer;
                         color: red;
                     }
@@ -70,9 +70,9 @@
                     <li class="nav-header">Group Members</li>
                     {% for member in group.members.all %}
                     <li>
-                        {{ member.get_full_name }}
+                        <span class="member-name" memid="{{ member.pk }}">{{ member.get_full_name }}</span>
                         {% if is_admin and member != user %}
-                        <i class="remove-user icon-trash"></i>
+                        <i class="remove-btn remove-user icon-trash"></i></a>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -93,7 +93,7 @@
                             {% else %}
                             <li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Accepted)
                             {% endif %}
-                        <i class="remove-user icon-remove"></i></li>
+                        <i class="remove-btn remove-invite icon-remove"></i></li>
                         {% endfor %}
                     {% else %}
                     <li>0 invites</li>
@@ -102,8 +102,33 @@
                 {% endif %}
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                 <script>
-                    $(".remove-user").click(function() {
-                        $(this).parent().hide();
+                    $(document).ready(function() {
+                        $(".remove-user").click(function() {
+                            var user_name = $(this).prev(".member-name").html();
+                            var member_id = $(this).prev(".member-name").attr("memid");
+                            $("#remove-user-confirm").find("#user-name-here").html(user_name);
+                            $("#remove-user-confirm").find("#user-name-here").attr("memid", member_id);
+                            $("#remove-user-confirm").modal();
+                        });
+
+                        $("#remove-user-btn").click(function() {
+                            $(this).attr("disabled", "disabled");
+                            var member_id = $(this).parents("#remove-user-confirm").find("#user-name-here").attr("memid");
+                            $.ajax({
+                                url: "/membership/" + member_id + "/remove/",
+                                error: function(data) {alert("failed to delete user");},
+                                success: function(){},
+                                complete: function() {
+                                    $("#remove-user-btn").removeAttr("disabled");
+                                    $(".member-name[memid='" + member_id + "']").parent().hide();
+                                    $("#remove-user-confirm").modal('hide');
+                                }
+                            });
+                        });
+
+                        $(".remove-invite").click(function() {
+                            $(this).parent().hide();
+                        });
                     });
                 </script>
 
@@ -123,7 +148,10 @@
 	</div>
 </div>
 
-{% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
+{% if is_admin %}
+    {% include "group_invite_modal.html" %}
+    {% include "group_remove_member_modal.html" %}
+{% endif %}
 {% include "group_create_modal.html" with csrf_token=csrf_token only %}
 {% include "password_change_modal.html" with csrf_token=csrf_token only %}
 
