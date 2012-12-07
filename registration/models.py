@@ -278,6 +278,21 @@ class EmailInvite(AbstractKeyConfirmation):
     group = models.ForeignKey(Group)
     recipient_email = models.EmailField()
 
+    # mark EmailInvite object as either pending, accepted, or rejected.
+    #   pending - person who this invite was sent to has not yet acted on this
+    #             invite
+    #   accept  - person accepted the invite and should now be a member of the
+    #             group the invite represents
+    #   reject  - person rejected the invite and probably doesn't want to be
+    #             part of the group
+    acceptance = models.CharField(max_length=1,
+                                  choices=(
+                                      ('P', 'pending'),
+                                      ('A', 'accept'),
+                                      ('R', 'reject'),
+                                  ),
+                                  default='P')  # default='pending'
+
     class MemberExists(Exception):
         '''
         An exception within EmailInvite that is raised when a member with the

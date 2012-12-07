@@ -10,12 +10,16 @@ from django.contrib.auth import (
         login,
         logout,
 )
+
+from registration.forms import (
+    RegistrationForm
+)
 from django.utils.translation import ugettext, ugettext_lazy as _
 from forms import LoginForm
 
 def _login_form(request, state=""):
-    return render(request, 'login.html', {'state': state,
-                                             'form': LoginForm()})
+    return render(request, 'landing_page.html', {'state': state,
+                                             'form': RegistrationForm()})
 
 def login_view(request):
 

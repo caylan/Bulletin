@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
+    HttpResponseForbidden,
     Http404,
     HttpResponse,
 )
@@ -27,7 +28,9 @@ def group(request, grpid):
     
     # If the user viewing is not a member of this group,
     # tell them it's a 404.
-    if not request.user.group_set.filter(id=grpid):
+    try:
+        group = request.user.group_set.get(id=grpid)
+    except:
         raise Http404
 
     if request.method == 'POST':
@@ -43,15 +46,21 @@ def group(request, grpid):
         form = PostForm()
 
     '''relations are represented by double underscores (i heart django)'''
-    post_list = list(Post.objects.filter(author__group__id=grpid))
+    post_list = list(Post.objects.filter(author__group__pk=grpid))
 
     # Is the user an admin for this group?
     is_admin = request.user.membership_set.get(group__pk=grpid).is_admin
+
+    # if the user is an admin, give them a list of the current invites
+    invites = []
+    if (is_admin):
+        invites = EmailInvite.objects.filter(group__pk=int(grpid))
     return render(request, 'group_view.html', {'post_list': post_list,
-                                          'grpid': int(grpid),
-                                          'user': request.user,
-                                          'form': form,
-                                          'is_admin': is_admin})
+                                               'group': group,
+                                               'user': request.user,
+                                               'form': form,
+                                               'is_admin': is_admin,
+                                               'invites': invites})
 
 def _get_extra_emails(request):
     '''
@@ -134,3 +143,28 @@ def create(request):
     else:
         raise Http404
     return render(request, 'group_create_modal.html', {'form': form,})
+
+@login_required
+def remove_member(request, memid):
+    '''
+    Given a membership id, delete membership from database.
+    
+    In order for this operation to be successful, the user calling must be
+    labeled as admin of the group in which the membership belongs to.
+    '''
+    # first, check if current user is authorized to delete this membership
+    try:
+        rem_member = Membership.objects.get(pk=memid)
+        usr_member = request.user.membership_set.get(group=rem_member.group)
+    except:
+        return HttpResponseForbidden("something doesn't match")
+    if not usr_member.is_admin:
+        return HttpResponseForbidden("not admin")
+
+    # don't allow user to delete themself
+    if usr_member == rem_member:
+        return HttpResponseBadRequest("can't remove yourself")
+
+    # current user is authorized
+    rem_member.delete()
+    return HttpResponse("success")

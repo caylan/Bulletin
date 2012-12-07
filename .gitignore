@@ -6,3 +6,4 @@ PYENV
 static
 .DS_Store
 .env
+migrations

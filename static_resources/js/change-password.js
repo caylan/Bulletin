@@ -33,6 +33,7 @@ function ajaxChangePassword() {
 
 	$('#change-password').on("hide", function() {
 		$('#change-password-form input[type="password"]').val("");
+        $('#change-password .alert-error').remove();
 	});
 }
 
