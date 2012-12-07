@@ -41,6 +41,8 @@ def register(request):
     have expired invitations in their inbox, or they deleted the confirmation
     email on accident.
     '''
+    if request.user.is_authenticated():
+        return render(request, 'register.html', {})
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

@@ -2,19 +2,25 @@
 
 {% block head %}
 <link href="{{ STATIC_URL }}css/starter.css" rel="stylesheet" />
+<style type="text/css">
+    #starter-container { background-image: url('{{ STATIC_URL }}images/retina_wood.png'); }
+    #accordion { background-image: url('{{ STATIC_URL }}images/linen-white.png'); }
+</style>
 {% endblock head %}
 
 {% block body %}
     <br />
     <div id="starter-container" class="hero-unit clearfix row-fluid">
-        <div class="clearfix container">
+        <div class="clearfix container{% if not landing %}-frontpage{% endif %}">
             <h1>Bulletin</h1>
             <hr />
-            {% block content %}
-            {% endblock content %}
+            <div id="content-container">
+                {% block content %}
+                {% endblock content %}
+            </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container{% if not landing %}-frontpage{% endif %}">
         <span>Bulletin © 2012</span>
         <br />
         <span><a href="/about/">About Us</a></span>

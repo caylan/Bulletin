@@ -1,5 +1,4 @@
 #starter-container {
-    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/retina_wood.png');
     padding-left: 0;
     padding-right: 0;
     border: 0;
@@ -25,8 +24,4 @@ p {
 
 .accordion-toggle h3 {
     margin: 0;
-}
-
-#accordion {
-    background-image: url('http://subtlepatterns.com/patterns/linen.png');
 }

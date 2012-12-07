@@ -1,12 +1,10 @@
 {% extends "starter_base.html" %}
 
 {% block content %}
-<div id="content-container">
-    {% if email %}
-        <h4>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</h4>
-    {% else %}
-        <h4>This page has expired.</h4>
-    {% endif %}
-    <a href="/" class="btn back-btn btn-large">Home</a>
-</div>
+{% if email %}
+    <h4>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</h4>
+{% else %}
+    <h4>This page has expired.</h4>
+{% endif %}
+<a href="/" class="btn back-btn btn-large">Home</a>
 {% endblock content %}
