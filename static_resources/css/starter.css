@@ -1,0 +1,32 @@
+#starter-container {
+    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/retina_wood.png');
+    padding-left: 0;
+    padding-right: 0;
+    border: 0;
+}
+
+hr {
+    border-top-color: #333;
+}
+
+p {
+    text-align: justify;
+}
+
+.accordion-group {
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+}
+
+.accordion-heading .accordion-toggle {
+    padding: 0 10px;
+}
+
+.accordion-toggle h3 {
+    margin: 0;
+}
+
+#accordion {
+    background-image: url('http://subtlepatterns.com/patterns/linen.png');
+}

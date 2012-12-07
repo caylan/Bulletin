@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/starter.css" rel="stylesheet" />
 {% endblock head %}
 
 {% block body %}
-
-<div class="container-frontpage">
-	<div class="hero-unit clearfix">
-		<h1>Bulletin</h1>
-		<hr />
-		<h4>{{ state|safe }}</h4>
-		<div id="content-container">
-			{% block formtype %}
-			<!-- login or register form-->
-			{% endblock formtype %}
-		</div>
-	</div>
-</div>
+    <br />
+    <div id="starter-container" class="hero-unit clearfix row-fluid">
+        <div class="clearfix container">
+            <h1>Bulletin</h1>
+            <hr />
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+    <div class="container">
+        <span>Bulletin © 2012</span>
+        <br />
+        <span><a href="/about/">About Us</a></span>
+    </div>
+    <br />
 {% endblock body %}

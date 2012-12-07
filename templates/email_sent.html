@@ -1,10 +1,12 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
+{% block content %}
+<div id="content-container">
     {% if email %}
-        <p>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</p>
+        <h4>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</h4>
     {% else %}
-        This page has expired.
+        <h4>This page has expired.</h4>
     {% endif %}
-    <a href="/" class="btn back-btn btn-large">Continue</a>
-{% endblock formtype %}
+    <a href="/" class="btn back-btn btn-large">Home</a>
+</div>
+{% endblock content %}

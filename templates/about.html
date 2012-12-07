@@ -1,6 +1,6 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
+{% block content %}
 <div class="clearfix">
 	<h2 class="form-signin-heading">What is Bulletin?</h2>
 	<p>Bulletin is a collaboration tool for small, private groups. It enables anyone to quickly set up a space for private status updates and comments, which only the group members have access to, allowing quick and easy communication. As it grows, Bulletin will have more functionality to help groups get work done, like project agendas and task lists.</p>
@@ -8,66 +8,63 @@
 	<hr />
 	<h2>Our team</h2>
 	<div class="row-fluid">
-		<div class="span3">
+		<div class="span2">
 		     <img src="{{ STATIC_URL }}images/caylan.jpeg" alt="Caylan">
 		</div>
-		<div class="span3">
+		<div class="span2">
 		  <h4> Caylan Lee </h4>
 		  <p><em> Team Lead </em></p>
 		</div>
-		<div class="span3">
+		<div class="span2">
 		     <img src="{{ STATIC_URL }}images/yoong.jpeg" alt="Yoong">
 		</div>
-		<div class="span3">
+		<div class="span2">
 		  <h4> Yoong Kim </h4>
 		  <p><em> Project Manager </em></p>
 		</div>
+        <div class="span2">
+            <img src="{{ STATIC_URL }}images/ivan.jpeg" alt="Ivan">
+        </div>
+        <div class="span2">
+            <h4> Ivan Darmansyah </h4>
+            <p><em> Front End </em></p>
+        </div>
 	</div>
 	<br />
 	<div class="row-fluid">
-		<div class="span3">
-		     <img src="{{ STATIC_URL }}images/ivan.jpeg" alt="Ivan">
-		</div>
-		<div class="span3">
-		  <h4> Ivan Darmansyah </h4>
-		  <p><em> Front End </em></p>
-		</div>
-		<div class="span3">
+		<div class="span2">
 		     <img src="{{ STATIC_URL }}images/andrew.jpeg" alt="Andrew">
 		</div>
-		<div class="span3">
+		<div class="span2">
 		  <h4> Andrew Davies </h4>
 		  <p><em> Back End </em></p>
 		</div>
+        <div class="span2">
+            <img src="{{ STATIC_URL }}images/peter.jpg" alt="Peter">
+        </div>
+        <div class="span2">
+            <h4> Peter Weisbeck </h4>
+            <p><em> Front End </em></p>
+        </div>
+        <div class="span2">
+            <img src="{{ STATIC_URL }}images/kyle.jpeg" alt="Kyle">
+        </div>
+        <div class="span2">
+            <h4> Kyle Boone </h4>
+            <p><em> Back End </em></p>
+        </div>
 	</div>
 	<br />
 	<div class="row-fluid">
-		<div class="span3">
-		     <img src="{{ STATIC_URL }}images/peter.jpg" alt="Peter">
-		</div>
-		<div class="span3">
-		  <h4> Peter Weisbeck </h4>
-		  <p><em> Front End </em></p>
-		</div>
-		<div class="span3">
-		     <img src="{{ STATIC_URL }}images/kyle.jpeg" alt="Kyle">
-		</div>
-		<div class="span3">
-		  <h4> Kyle Boone </h4>
-		  <p><em> Back End </em></p>
-		</div>
-	</div>
-	<br />
-	<div class="row-fluid">
-		<div class="span3">
+		<div class="span2">
 		     <img src="{{ STATIC_URL }}images/brian.jpg" alt="Brian">
 		</div>
-		<div class="span3">
+		<div class="span2">
 		  <h4> Brian Oliphant </h4>
 		  <p><em> Back End </em></p>
 		</div>
 	</div>
 
-	<a href="/" class="back-btn btn btn-large pull-right">Back</a>
+	<a href="/" class="back-btn btn btn-large pull-right">Home</a>
 </div>
-{% endblock formtype %}
+{% endblock content %}

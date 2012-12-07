@@ -1,14 +1,14 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
-{% if user %}
+{% block content %}
+    {% if user %}
     <h3>Congratulations {{user.first_name}} {{user.last_name}}!</h3>
     <p>
-    You have successfully registered your account 
+    You have successfully registered your account
     for {{ user.email }} on Bulletin.
     </p>
-{% else %}
-    <p>Invalid confirmation key.</p>
-{% endif %}
-<a href="../.." class="btn back-btn btn-large">Back</a>
-{% endblock formtype %}
+    {% else %}
+    <h3>Invalid confirmation key.</h3>
+    {% endif %}
+    <a href="../.." class="btn back-btn btn-large">Home</a>
+{% endblock content %}

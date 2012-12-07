@@ -1,6 +1,6 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
+{% block content %}
     {% if group and user %}
         <p>
         Congratulations, {{ user.first_name }}, you have now joined the group
@@ -10,4 +10,4 @@
         This page has expired.
     {% endif %}
     <a href="/" class="btn back-btn btn-large">Continue</a>
-{% endblock formtype %}
+{% endblock content %}
