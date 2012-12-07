@@ -89,9 +89,9 @@
                             {% if invite.acceptance == 'P' %}
                             <li style="font-size: .7em;">{{ invite.recipient_email }} (Pending)
                             {% elif invite.acceptance == 'A' %}
-                            <li style="font-size: .7em; color: green;">{{ invite.recipient_email }} (Rejected)
+                            <li style="font-size: .7em; color: green;">{{ invite.recipient_email }} (Accepted)
                             {% else %}
-                            <li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Accepted)
+                            <li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Rejected)
                             {% endif %}
                         <i class="remove-btn remove-invite icon-remove"></i></li>
                         {% endfor %}
