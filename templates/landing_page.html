@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block body %}
+<br />
+<div class="hero-unit clearfix row-fluid" style="background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/retina_wood.png')">
+    <div class="clearfix container">
+{#        <a class="btn btn-link pull-right"><h4><i class="icon-signin"></i> Log In</h4></a>#}
+        <h1>Bulletin</h1>
+        <hr style="border-top-color: #333" />
+        <div class="row-fluid">
+            <div class="span7">
+                <h3>Start communicating with your group today!</h3>
+                 <p style="text-align: justify;">Bulletin is a collaboration tool for small, private groups.
+               It enables anyone to quickly set up a space for private status updates and comments,
+               which only the group members have access to, allowing quick and easy communication.
+               As it grows, Bulletin will have more functionality to help groups get work done,
+               like project agendas and task lists.</p>
+            </div>
+            <div class="span5 clearfix">
+{#                <form id="register-form" class="form-signin well well-small loading-spinner-container clearfix hide" method="post">#}
+{#                    {% csrf_token %}#}
+{#                    <h2 class="form-signin-heading">Get started</h2>#}
+{#                    {{ form }}#}
+{#                    <input id="register-btn" class="btn btn-large btn-primary pull-left" type="submit" value="Register" />#}
+{#                    <div class="loading-spinner hide"></div>#}
+{#                </form>#}
+                <style>
+                    .accordion-group {
+                        border-left: 0;
+                        border-top: 0;
+                        border-right: 0;
+                    }
+
+                    .accordion-heading .accordion-toggle {
+                        padding: 0 10px;
+                    }
+
+                    .accordion-toggle h3 {
+                        margin: 0;
+                    }
+                </style>
+                <div class="accordion well well-small" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                <h3>Get started</h3>
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="accordion-body collapse in">
+                            <div class="accordion-inner">
+                                <form id="register-form" class="form-signin loading-spinner-container clearfix" method="post">
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <input id="register-btn" class="btn btn-large btn-primary pull-left" type="submit" value="Register" />
+                                    <div class="loading-spinner hide"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                <h4><i class="icon-signin"></i> Log In</h4>
+                            </a>
+                        </div>
+                        <div id="collapseTwo" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <form class="form-signin clearfix" method="post">
+                                    {% csrf_token %}
+                                    <input id="id_email" type="text" name="email" maxlength="40" class="input-block-level" placeholder="Email address">
+                                    <input id="id_password" type="password" name="password" maxlength="40" type="password" class="input-block-level" placeholder="Password">
+                                    <input class="submit-btn btn btn-large btn-primary pull-left" type="submit" value="Sign in" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{#</div>#}
+{% endblock body %}
