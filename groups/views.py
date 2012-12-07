@@ -162,8 +162,8 @@ def remove_member(request, memid):
         return HttpResponseForbidden("not admin")
 
     # don't allow user to delete themself
-    if usr_member == rem_member:
-        return HttpResponseBadRequest("can't remove yourself")
+    if usr_member.pk == rem_member.pk:
+        return HttpResponseBadRequest("can't remove yourself") 
 
     # current user is authorized
     rem_member.delete()
