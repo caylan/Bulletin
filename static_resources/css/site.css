@@ -127,6 +127,19 @@ abbr {
 	margin-right: 10px;
 }
 
+.nav-header {
+	text-align: center;
+}
+
+.member-name {
+	padding: 1px;
+	height: 30px;
+}
+
+.members {
+	line-height: 33px!important;
+}
+
 #self-identity {
 	margin-right: 30px;
 }
@@ -275,8 +288,7 @@ abbr {
 }
 
 .comment-form-container .loading-spinner {
-	height: 75%;
-	width: 75%;
+	
 }
 
 .comments > .comment:nth-child(odd), .show_comments {

@@ -65,22 +65,30 @@
                     }
                 </style>
                 {% if group %}
-                <ul class="nav nav-list">
-                    <li class="divider"></li>
-                    <li class="nav-header">Group Members</li>
-                    {% for member in group.members.all %}
-                    <li>
-                        <span class="member-name" memid="{{ member.pk }}">{{ member.get_full_name }}</span>
-                        {% if is_admin and member != user %}
-                        <i class="remove-btn remove-user icon-trash"></i></a>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
+					<div>
+						<ul class="nav nav-list members">
+							<li class="divider"></li>
+							<li class="nav-header">Group Members</li>
+							{% for member in group.members.all %}
+							<li>
+								<abbr class="member-avatar" title="{{ member.get_full_name }}"><img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" /></abbr>
+								<!--<div class="member-name" memid="{{ member.pk }}">
+									<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
+									{{ member.get_full_name }}
+								</div>-->
+								{% if is_admin and member != user %}
+								<i class="remove-btn remove-user icon-trash"></i></a>
+								{% endif %}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
                 {% endif %}
 
                 {% if is_admin %}
-                <a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
+				<div>
+					<a href="#invite-people" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
+				</div>
                 <ul class="nav nav-list">
                     <li class="divider"></li>
                     <li class="nav-header">Active Invites</li>
@@ -124,7 +132,7 @@
                                     $("#remove-user-confirm").modal('hide');
                                 }
                             });
-                        });
+                        
 
                         $(".remove-invite").click(function() {
                             $(this).parent().hide();
