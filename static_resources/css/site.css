@@ -239,8 +239,8 @@ abbr {
 	font-size: 13px;
 }
 
-.comment-form {
-	margin: 0;
+.comment-form, .comment-form-container .name, .comment-form-container .comment-avatar-container {
+	margin-top: 2px;
 }
 
 .comment-form-container {
