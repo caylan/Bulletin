@@ -29,7 +29,7 @@
 <div id="top" class="row-fluid">
 	<div class="container-narrow">
 		<div class="span3">
-			<div id='left-column' class="well">
+			<div class="well">
 				{% block nav %}
 				<ul id="team-nav" class="nav nav-list">
 				    <li {% if not group %} class="active" {% endif %} ><a href="/"><i class="icon-inbox"></i> Inbox</a></li>
@@ -40,6 +40,36 @@
 				            {{ member.group.name }}
 				        </a>
 				    </li>
+					{% ifequal group.pk member.group.id %}
+						{% if group %}
+						<div>
+							<ul class="nav nav-list members clearfix">
+								<li class="divider"></li>
+								<li class="nav-header">Group Members</li>
+								{% for member in group.members.all %}
+								<li>
+									<abbr class='' title="{{ member.get_full_name }}">
+										<img class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'46' }}" alt="member's gravatar" /></abbr>
+									<!--<div class="member-name" memid="{{ member.pk }}">
+										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
+										{{ member.get_full_name }}
+									</div>-->
+									{% if is_admin and member != user %}
+									<i class="remove-btn remove-user icon-trash"></i></a>
+									{% endif %}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+						{% if is_admin %}
+						<div>
+							<a href="#invite-people" class='invite-users' data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
+						</div>
+					{% endif %}
+					<hr />
+					{% endif %}
+				{% endifequal %}
+					
 				    {% endfor %}
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
@@ -64,32 +94,8 @@
                         margin-top: .5em;
                     }
                 </style>
-                {% if group %}
-					<div>
-						<ul class="nav nav-list members clearfix">
-							<li class="divider"></li>
-							<li class="nav-header">Group Members</li>
-							{% for member in group.members.all %}
-							<li>
-								<abbr title="{{ member.get_full_name }}">
-									<img class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'46' }}" alt="member's gravatar" /></abbr>
-								<!--<div class="member-name" memid="{{ member.pk }}">
-									<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
-									{{ member.get_full_name }}
-								</div>-->
-								{% if is_admin and member != user %}
-								<i class="remove-btn remove-user icon-trash"></i></a>
-								{% endif %}
-							</li>
-							{% endfor %}
-						</ul>
-					</div>
-                {% endif %}
 
                 {% if is_admin %}
-				<div>
-					<a href="#invite-people" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
-				</div>
                 <ul class="nav nav-list">
                     <li class="divider"></li>
                     <li class="nav-header">Active Invites</li>
@@ -105,7 +111,7 @@
                         <i class="remove-btn remove-invite icon-remove"></i></li>
                         {% endfor %}
                     {% else %}
-                    <li>0 invites</li>
+                    <li>No invites pending</li>
                     {% endif %}
                 </ul>
                 {% endif %}

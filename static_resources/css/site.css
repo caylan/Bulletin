@@ -240,8 +240,10 @@ abbr {
 	border-style: solid;
 }
 
-.members {
+.invite-users {
 	text-align: center;
+	display: block;
+	padding-top: 3px;
 }
 
 .member-avatar {
