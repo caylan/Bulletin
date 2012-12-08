@@ -226,12 +226,13 @@ function animateResize (avatar, parentHeight) {
 }
 
 function initShowComments () {
-	$('.show_comments').click(function() {
+	$('.show-comments').click(function(event) {
+            event.preventDefault();
 			var parent = this;
-			$(this).parent().find('.hidden_comments > .comment').each(function() {
+			$(this).parent().find('.hidden-comments > .comment').each(function() {
 				$(parent).before(this);
 			});
-			$(this).parent().find('.triangle.dark').removeClass('dark');
+			$(this).parent().find('.triangle.dark').removeClass("dark");
 			$(this).hide();
 		}
 	);
@@ -267,9 +268,10 @@ $(document).ready(function() {
 });
 
 function initShowPosts () {
-	$('.show_posts').click(function() {
+	$('.show-posts').click(function(event) {
+            event.preventDefault();
 			var parent = this;
-			$(this).parent().find('.hidden_posts > .post').each(function() {
+			$(this).parent().find('.hidden-posts > .post').each(function() {
 				$(parent).before(this);
 			});
 			$(this).hide();
