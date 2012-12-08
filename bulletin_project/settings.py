@@ -159,7 +159,7 @@ INSTALLED_APPS = (
     'gunicorn', # The server!
     'groups',   # General user and account management.
     'posts',   # Inter-user communication (handles posts/invites/comments) 
-    'inbox',   # modules pertaining to the inbox.
+    'inbox_notifications',  # modules pertaining to the inbox notifications.
     'session',
     'registration',
     'south',

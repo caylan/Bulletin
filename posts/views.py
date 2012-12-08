@@ -11,6 +11,7 @@ from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
 from gevent import event as gevent
+from inbox_notifications.views import notifications
 import time
 
 class PostViews(object):
