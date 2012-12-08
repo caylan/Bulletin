@@ -2,14 +2,15 @@
 
 body {
     background-color: #f5f5f5;
+    overflow-y: scroll;
 }
 
 #content .btn {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 .navbar {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .navbar-inner {
@@ -77,13 +78,6 @@ abbr {
 	margin-left: 60px;
 }
 
-#left-column {
-	-moz-border-radius-bottomright: 0;
-    -webkit-border-bottom-right-radius: 0;
-	border-top-width: 0px;
-    background-color: rgba(255,255,255,0.6);
-}
-
 .comment-form-container {
 	-moz-border-radius: 0;
     -webkit-border-radius: 0;
@@ -95,11 +89,28 @@ abbr {
 #content-container > .hero-unit {
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
+	border-left-width: 0;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+	min-height: 500px;
 }
 
 #left-column {
+	border-width: 0;
+	padding: 0;
+    background-color: rgba(255,255,255,0.6);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+}
+
+#left-column .well {
+	margin:0;
 	-moz-border-radius-topright: 0;
     -webkit-border-top-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
 }
 
 .comment .timeago {
@@ -125,6 +136,19 @@ abbr {
 
 .spacing-right {
 	margin-right: 10px;
+}
+
+.nav-header {
+	text-align: center;
+}
+
+.member-name {
+	padding: 1px;
+	height: 30px;
+}
+
+.members {
+	line-height: 33px!important;
 }
 
 #self-identity {
@@ -163,6 +187,7 @@ abbr {
 .comment-avatar {
 	margin-left: 2px;
 	margin-top: 1px;
+	margin-bottom: 2px;
 }
 
 .post, .comment, .discuss, .comment-form-container  {
@@ -204,17 +229,11 @@ abbr {
 }
 
 .comment-message {
-	margin-bottom: 5px;
 	margin-left: 5px;
 }
 
 .show_comments {
 	padding-top: 2px;
-}
-
-.comment-avatar-container {
-	width: 20px;
-	height: 20px;
 }
 
 .comment-form input[type='submit'] {
@@ -223,18 +242,40 @@ abbr {
 	margin: 0 -70px 0 0;
 }
 
-.triangle {
+.triangle,.triangle-border  {
 	margin: auto;
 	margin-top: -10px;
-	width: 0px;
-	height: 0px;
+	width: 0;
+	height: 0;
 	border-style: solid;
+}
+
+.invite-users {
+	text-align: center;
+	display: block;
+	padding-top: 3px;
+}
+
+
+
+.member-avatar {
+	margin: 2px;
+}
+
+.triangle {
+	margin-top: -9px!important;
+	border-width: 0 9px 9px 9px!important;
+	border-color: transparent transparent rgb(245, 245, 245) transparent;
+}
+
+.triangle-border {
 	border-width: 0 10px 10px 10px;
+	margin-top: -10px;
 	border-color: transparent transparent rgb(227, 227, 227) transparent;
 }
 
 .triangle.dark {
-	border-color: transparent transparent rgb(227, 227, 227) transparent;
+	border-color: transparent transparent rgb(235, 235, 235) transparent;
 }
 
 .media .pull-left {
@@ -243,14 +284,35 @@ abbr {
 
 .comment {
 	font-size: 13px;
+	padding-top: 2px;
+	padding-bottom: 3px!important;
+	position: relative;
 }
 
-.comment-form, .comment-form-container .name, .comment-form-container .comment-avatar-container {
+.comment-avatar-container {
+	width: 24px;
+	height: 24px;
+	margin-top: -1px;
+}
+
+.comment-message, .comment .name {
+	padding-top: 4px;
+}
+
+.comment-form, .comment-form-container .name, .comment .timeago{
 	margin-top: 2px;
 }
 
+.comment .timeago {
+	margin-top: 3px;
+	position: absolute;
+	right: 2px;
+	background-color: white;
+	padding: 0 2px;
+}
+
 .comment-form {
-	padding-left: 24px;
+	padding-left: 29px;
 	padding-right: 75px;
 }
 
@@ -258,8 +320,8 @@ abbr {
 	border-width: 0;
 }
 
-.comments > .comment:nth-child(odd), .show_comments {
-   background-color: rgb(227, 227, 227);
+.comments > .comment:nth-child(even), .show_comments {
+   background-color: rgb(235, 235, 235);
 }
 
 .comments .comment:first-child {
@@ -316,7 +378,7 @@ textarea {
 
 .hero-unit {
 	text-align: left;
-	margin-bottom: 0px;
+	margin-bottom: 0;
     padding: 9px 19px 9px;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;

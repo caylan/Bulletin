@@ -19,7 +19,7 @@ from forms import LoginForm
 
 def _login_form(request, state=""):
     return render(request, 'landing_page.html', {'state': state,
-                                             'form': RegistrationForm()})
+                                             'form': RegistrationForm(), 'landing': True})
 
 def login_view(request):
 

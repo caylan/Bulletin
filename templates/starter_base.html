@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/starter.css" rel="stylesheet" />
+<style type="text/css">
+    #starter-container { background-image: url('{{ STATIC_URL }}images/retina_wood.png'); }
+    #accordion { background-image: url('{{ STATIC_URL }}images/linen-white.png'); }
+</style>
 {% endblock head %}
 
 {% block body %}
-
-<div class="container-frontpage">
-	<div class="hero-unit clearfix">
-		<h1>Bulletin</h1>
-		<hr />
-		<h4>{{ state|safe }}</h4>
-		<div id="content-container">
-			{% block formtype %}
-			<!-- login or register form-->
-			{% endblock formtype %}
-		</div>
-	</div>
-</div>
+    <br />
+    <div id="starter-container" class="hero-unit clearfix row-fluid">
+        <div class="clearfix container{% if not landing %}-frontpage{% endif %}">
+            <h1>Bulletin</h1>
+            <hr />
+            <div id="content-container">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+    <div class="container{% if not landing %}-frontpage{% endif %}">
+        <span>Bulletin © 2012</span>
+        <br />
+        <span><a href="/about/">About Us</a></span>
+    </div>
 {% endblock body %}

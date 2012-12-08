@@ -1,14 +1,20 @@
 function register() {
-	var $containerInPage = $('#content-container');
-	$('.loading-spinner').show();
+	var $containerInPage = $('#register-form-container');
+    $('#register-form-container .loading-spinner').removeClass("hide");
 	$.post(
-		".",
+		"/register/",
 		$('#register-form').serialize(),
 		function(output) {
-			var $nextPage = $('#content-container', output);
+			var $nextPage = $('#register-form-container', output);
+            if ($nextPage.length == 0) {
+                $nextPage = $('#content-container', output)
+            } else if (typeof landing != "undefined" && landing) {
+                $nextPage.find('.back-btn').remove();
+                $nextPage.find('.form-signin-heading').remove();
+            }
 			$containerInPage.fadeOut(function() {
 				$containerInPage.html($nextPage.html());
-				$containerInPage.find('ul.errorlist').addClass("alert alert-error")
+				$containerInPage.find('ul.errorlist').addClass("alert alert-error");
 				ajaxRegister();
 				if($.browser.msie && parseInt($.browser.version, 10) < 10) {
 					$('input, textarea').placeholder();
@@ -27,5 +33,5 @@ function ajaxRegister() {
 }
 
 $(document).ready(function() {
-	ajaxRegister();
+    ajaxRegister();
 });

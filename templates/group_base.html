@@ -28,10 +28,10 @@
 {% block content %}
 <div id="top" class="row-fluid">
 	<div class="container-narrow">
-		<div class="span3">
-			<div id='left-column' class="well">
+		<div id='left-column' class="span3 well">
+			<div class="well">
 				{% block nav %}
-				<ul id="team-nav" class="nav nav-list">
+				<ul class="team-nav nav nav-list top">
 				    <li {% if not group %} class="active" {% endif %} ><a href="/"><i class="icon-inbox"></i> Inbox</a></li>
 				    <li class="nav-header">Groups</li>
 				    {% for member in user.membership_set.all %}
@@ -40,22 +40,74 @@
 				            {{ member.group.name }}
 				        </a>
 				    </li>
+					{% ifequal group.pk member.group.id %}
+						{% if group %}
+						</ui>
+						</div>
+							
+						<div>
+							<ul class="nav nav-list members clearfix">
+								<li class="nav-header">Group Members</li>
+								{% for member in group.members.all %}
+								<li>
+									<abbr class='' title="{{ member.get_full_name }}">
+										<img class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'46' }}" alt="member's gravatar" /></abbr>
+									<!--<div class="member-name" memid="{{ member.pk }}">
+										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
+										{{ member.get_full_name }}
+									</div>-->
+									{% if is_admin and member != user %}
+									<i class="remove-btn remove-user icon-trash"></i></a>
+									{% endif %}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+						{% if is_admin %}
+						<div>
+							<a href="#invite-people" class='invite-users' data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
+						</div>
+						{% if is_admin %}
+						<ul class="nav nav-list">
+							<li class="nav-header">Active Invites</li>
+							{% if invites %}
+								{% for invite in invites %}
+									{% if invite.acceptance == 'P' %}
+									<li style="font-size: .7em;">{{ invite.recipient_email }} (Pending)
+									{% elif invite.acceptance == 'A' %}
+									<li style="font-size: .7em; color: green;">{{ invite.recipient_email }} (Accepted)
+									{% else %}
+									<li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Rejected)
+									{% endif %}
+								<i class="remove-btn remove-invite icon-remove"></i></li>
+								{% endfor %}
+							{% else %}
+							<li>No invites pending</li>
+							{% endif %}
+						</ul>
+						{% endif %}
+					<div class='well'>
+						<ul class="team-nav nav nav-list bottom">
+					{% endif %}
+					{% endif %}
+				{% endifequal %}
+					
 				    {% endfor %}
 				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 
                 <!-- REMOVE THIS ASAP -->
                 <style>
-                    .remove-user {
+                    .remove-btn {
                         color: #777;
                         visibility: hidden;
                     }
 
-                    li:hover .remove-user {
+                    li:hover .remove-btn {
                         visibility: visible;
                     }
 
-                    .remove-user:hover {
+                    .remove-btn:hover {
                         cursor: pointer;
                         color: red;
                     }
@@ -63,50 +115,8 @@
                     .btn {
                         margin-top: .5em;
                     }
-                </style>
-                {% if group %}
-                <ul class="nav nav-list">
-                    <li class="divider"></li>
-                    <li class="nav-header">Group Members</li>
-                    {% for member in group.members.all %}
-                    <li>
-                        {{ member.get_full_name }}
-                        {% if is_admin and member != user %}
-                        <i class="remove-user icon-trash"></i>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-
-                {% if is_admin %}
-                <a href="#invite-people" class="btn btn-block" data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
-                <ul class="nav nav-list">
-                    <li class="divider"></li>
-                    <li class="nav-header">Active Invites</li>
-                    {% if invites %}
-                        {% for invite in invites %}
-                            {% if invite.acceptance == 'P' %}
-                            <li style="font-size: .7em;">{{ invite.recipient_email }} (Pending)
-                            {% elif invite.acceptance == 'A' %}
-                            <li style="font-size: .7em; color: green;">{{ invite.recipient_email }} (Rejected)
-                            {% else %}
-                            <li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Accepted)
-                            {% endif %}
-                        <i class="remove-user icon-remove"></i></li>
-                        {% endfor %}
-                    {% else %}
-                    <li>0 invites</li>
-                    {% endif %}
-                </ul>
-                {% endif %}
+				</style>
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                <script>
-                    $(".remove-user").click(function() {
-                        $(this).parent().hide();
-                    });
-                </script>
-
 				{% endblock nav %}
 			</div>
 		</div>
@@ -123,7 +133,10 @@
 	</div>
 </div>
 
-{% if is_admin %}{% include "group_invite_modal.html" %}{% endif %}
+{% if is_admin %}
+    {% include "group_invite_modal.html" %}
+    {% include "group_remove_member_modal.html" %}
+{% endif %}
 {% include "group_create_modal.html" with csrf_token=csrf_token only %}
 {% include "password_change_modal.html" with csrf_token=csrf_token only %}
 

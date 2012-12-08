@@ -1,15 +1,24 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
-<form id="register-form" class="form-signin loading-spinner-container clearfix" method="post">
-	{% csrf_token %}
-	<h2 class="form-signin-heading">Register your account</h2>
-	{{ form }}
-	<input id="register-btn" class="btn btn-large btn-primary pull-left" type="submit" value="Register" />
-	<a href="/" class="back-btn btn btn-large pull-right">Back</a>
-    <div class="loading-spinner hide"></div>
-</form>
-{% endblock formtype %}
+{% block content %}
+{% if form %}
+<div id="accordion" class="well span8 offset2">
+    <div id="register-form-container">
+        <form id="register-form" action="/register/" class="form-signin loading-spinner-container clearfix" method="post">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Register your account</h2>
+            {{ form }}
+            <input id="register-btn" class="btn btn-large btn-primary pull-left" type="submit" value="Register" />
+            <a href="/" class="back-btn btn btn-large pull-right">Home</a>
+            <div class="loading-spinner loading-spinner-48 hide"></div>
+        </form>
+    </div>
+</div>
+{% else %}
+<h4>You are already logged in.</h4>
+<a href="/" class="back-btn btn btn-large">Home</a>
+{% endif %}
+{% endblock content %}
 
 {% block extrajs %}
 <script src="{{ STATIC_URL }}js/register.js"></script>

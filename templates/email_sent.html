@@ -1,10 +1,10 @@
 {% extends "starter_base.html" %}
 
-{% block formtype %}
-    {% if email %}
-        <p>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</p>
-    {% else %}
-        This page has expired.
-    {% endif %}
-    <a href="/" class="btn back-btn btn-large">Continue</a>
-{% endblock formtype %}
+{% block content %}
+{% if email %}
+    <h4>Confirmation sent to <em>{{ email }}</em>, please check your email and follow the link.</h4>
+{% else %}
+    <h4>This page has expired.</h4>
+{% endif %}
+<a href="/" class="btn back-btn btn-large">Home</a>
+{% endblock content %}

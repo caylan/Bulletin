@@ -41,6 +41,8 @@ def register(request):
     have expired invitations in their inbox, or they deleted the confirmation
     email on accident.
     '''
+    if request.user.is_authenticated():
+        return render(request, 'register.html', {})
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -90,8 +92,13 @@ def confirm_email_invite(request, key):
 
         # Check to see if they're already in the group, as this might not be the
         # first time they've visited this link.
-        group = EmailInvite.objects.get(confirmation_key=key).group
+        invite = EmailInvite.objects.get(confirmation_key=key)
+        group = invite.group
         if not group.members.all().filter(email=user.email):
+            # change invite to show that user accepted
+            invite.acceptance = 'A'
+            invite.save()
+            #
             membership = Membership(user=user, group=group)
             membership.save()
             group.membership_set.add(membership)  # user is now a member!
@@ -143,7 +150,12 @@ def invite_registration(request, key):
             that'll say something like 'yay, you're registered with Bulletin!'
             '''
             user = form.save(email)
-            group = EmailInvite.objects.get(confirmation_key=key).group
+            invite = EmailInvite.objects.get(confirmation_key=key)
+            # change invite to show that user accepted
+            invite.acceptance = 'A'
+            invite.save()
+            #
+            group = invite.group
             membership = Membership(user=user, group=group)
             membership.save()
             group.membership_set.add(membership)
