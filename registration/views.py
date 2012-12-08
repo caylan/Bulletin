@@ -42,7 +42,7 @@ def register(request):
     email on accident.
     '''
     if request.user.is_authenticated():
-        return render(request, 'register.html', {})
+        return render(request, 'register.html', {'action': '/register/'})
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -55,7 +55,8 @@ def register(request):
             return render(request, 'email_sent.html', {'email': form.cleaned_data['email'] })
     else:
         form = RegistrationForm()
-    return render(request, 'register.html', {'form': form,})
+    return render(request, 'register.html', {'form': form,
+                                             'action': '/register/'})
 
 def confirm_email(request, key):
     '''
@@ -167,7 +168,9 @@ def invite_registration(request, key):
             return render(request, 'invite_complete.html', params)
     else:
         form = InviteRegistrationForm()
-    return render(request, 'register.html', {'form': form,})
+    ctx = {'form': form, 
+           'action': '/invite_registration/{0}/'.format(key)}
+    return render(request, 'register.html', ctx)
 
 @login_required
 def change_password(request):

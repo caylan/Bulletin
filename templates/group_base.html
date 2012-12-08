@@ -28,7 +28,7 @@
 {% block content %}
 <div id="top" class="row-fluid">
 	<div class="container-narrow">
-		<div id='left-column' class="span3 well">
+		<div id="left-column" class="span3 well">
 			<div class="well">
 				{% block nav %}
 				<ul class="team-nav nav nav-list top">
@@ -42,7 +42,7 @@
 				    </li>
 					{% ifequal group.pk member.group.id %}
 						{% if group %}
-						</ui>
+						</ul>
 						</div>
 							
 						<div>
@@ -66,7 +66,7 @@
 							</ul>
 						</div>
 						{% if is_admin %}
-						<ul id='invites' class="nav nav-list clearfix">
+						<ul id="invites" class="nav nav-list clearfix">
 							{% if invites %}
 								<span class="nav-header">Active Invites</span>
 								{% for invite in invites %}
@@ -124,6 +124,7 @@
 				{% endblock nav %}
 			</div>
 		</div>
+        <div class="row">
 		<div id="content-container" class="span9">
 			<div class="hero-unit">
 				<div id="content">
@@ -134,6 +135,7 @@
 			</div>
 			<div id="footer" class="pull-right">Whitespace</div>
 		</div>
+        </div>
 	</div>
 </div>
 

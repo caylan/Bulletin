@@ -2,7 +2,7 @@ function register() {
 	var $containerInPage = $('#register-form-container');
     $('#register-form-container .loading-spinner').removeClass("hide");
 	$.post(
-		"/register/",
+		$('#register-form').attr('action'),
 		$('#register-form').serialize(),
 		function(output) {
 			var $nextPage = $('#register-form-container', output);
