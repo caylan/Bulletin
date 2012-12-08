@@ -40,9 +40,10 @@
 				            {{ member.group.name }}
 				        </a>
 				    </li>
-					{% ifequal group.pk member.group.id %}
-						{% if group %}
-						</ul>
+					
+				    {% endfor %}
+				</ul>
+				{% if group %}
 						</div>
 							
 						<div>
@@ -92,12 +93,7 @@
 						<a href="#invite-people" class="invite-users clearfix" data-toggle="modal"><i class="icon-user"></i> Invite More People</a>
 						{% endif %}
 					<div class="well">
-						<ul class="team-nav nav nav-list bottom">
 					{% endif %}
-				{% endifequal %}
-					
-				    {% endfor %}
-				</ul>
 			    <a class="btn btn-block" href="#create-group" data-toggle="modal"><i class="icon-plus"></i> New Group</a>
 
                 <!-- REMOVE THIS ASAP -->
