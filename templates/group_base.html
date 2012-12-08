@@ -66,12 +66,12 @@
                 </style>
                 {% if group %}
 					<div>
-						<ul class="nav nav-list members">
+						<ul class="nav nav-list members clearfix">
 							<li class="divider"></li>
 							<li class="nav-header">Group Members</li>
 							{% for member in group.members.all %}
 							<li>
-								<abbr class="member-avatar" title="{{ member.get_full_name }}"><img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" /></abbr>
+								<abbr class="member-avatar" title="{{ member.get_full_name }}"><img class="pull-left clear-fix" src="{{ member.email|gravatar:'45' }}" alt="member's gravatar" /></abbr>
 								<!--<div class="member-name" memid="{{ member.pk }}">
 									<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
 									{{ member.get_full_name }}
