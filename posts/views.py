@@ -33,7 +33,7 @@ class PostViews(object):
         # map grpid -> gevent.AsyncResult()
         self.group_event = dict([])
 
-    def _send_notifications(self, grpid, notif_type, notif_member):
+    def _send_notifications(self, ignore_id, grpid, notif_type, notif_member):
         '''
         Sends notifications to all the users in the group.  This will also save
         the corresponding notification types for said notification.
@@ -44,16 +44,19 @@ class PostViews(object):
 
         -- notif_type: the class of notification to be sent.
 
+        -- ignore_id: the id of the user to be ignored.
+
         -- notif_member: the member to be placed in the notif_type when being
                          sent to the users.
         '''
         group = Group.objects.all().get(pk=grpid)
         for user in group.members.all():
-            notification = notif_type()
-            notification.content = notif_member
-            notification.user = user
-            notification.save()
-            notifications.put(notification)
+            if user.id != ignore_id:
+                notification = notif_type()
+                notification.content = notif_member
+                notification.user = user
+                notification.save()
+                notifications.put(notification)
 
     def comment(self, request, postid):
         '''
@@ -84,7 +87,7 @@ class PostViews(object):
                 grpid = int(comment_post.author.group.pk)
                 # Send notifications.
                 self._send_notifications(
-                    grpid, CommentNotification, comment)
+                    request.user.id, grpid, CommentNotification, comment)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
                     # self.group_event = None
@@ -113,8 +116,7 @@ class PostViews(object):
 
                 # Send notifications.
                 self._send_notifications(
-                    grpid, PostNotification, post)
-
+                    request.user.id, grpid, PostNotification, post)
                 # is anybody listening?
                 # if so, send new post to everyone and reset
                 grpid = int(grpid)

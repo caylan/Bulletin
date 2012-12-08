@@ -1,5 +1,5 @@
 {% load gravatar %}
-<li id="post-{{ post.pk }}" class="media post well">
+<a id="post{{ post.pk }}"></a><li id="post-{{ post.pk }}" class="media post well">
     <div class='avatar-container pull-left media-object'>
         <img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
     </div>
