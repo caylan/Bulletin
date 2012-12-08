@@ -21,10 +21,11 @@ class InboxNotifications(object):
     def __init__(self):
         self.notifications = dict([])
 
-    def put(self, notification, user_id):
+    def put(self, notification):
         '''
         Sets the event for the notification.
         '''
+        user_id = notification.user.pk
         if user_id not in self.notifications:
             self.notifications[user_id] = GQueue()
         self.notifications[user_id].put(notification)
@@ -48,7 +49,7 @@ class InboxNotifications(object):
 notifications = InboxNotifications()
 
 @login_required
-def update(self, request):
+def update(request):
     update_content = notifications.get(request.user.pk)
     context = {'notifications': update_content}
 
@@ -58,4 +59,4 @@ def update(self, request):
 
     TODO: Perhaps enforce this some way...
     '''
-    render(request, 'inbox_notification.html', context)
+    return render(request, 'inbox_notification.html', context)

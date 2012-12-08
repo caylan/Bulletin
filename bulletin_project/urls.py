@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url("", include("posts.urls")),
     url("", include('registration.urls')),
     url("", include('session.urls')),
+    url("", include('inbox_notifications.urls')),
     url(r'^about/$', direct_to_template, {
         'template': 'about.html',
     }),

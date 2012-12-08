@@ -11,6 +11,7 @@ from forms import CommentForm, PostForm
 from models import Comment, Post
 from groups.models import Group
 from gevent import event as gevent
+from inbox_notifications.models import *
 from inbox_notifications.views import notifications
 import time
 
@@ -31,6 +32,28 @@ class PostViews(object):
     def __init__(self):
         # map grpid -> gevent.AsyncResult()
         self.group_event = dict([])
+
+    def _send_notifications(self, grpid, notif_type, notif_member):
+        '''
+        Sends notifications to all the users in the group.  This will also save
+        the corresponding notification types for said notification.
+
+        The parameters are as follows:
+
+        -- grpid: the id of the group
+
+        -- notif_type: the class of notification to be sent.
+
+        -- notif_member: the member to be placed in the notif_type when being
+                         sent to the users.
+        '''
+        group = Group.objects.all().get(pk=grpid)
+        for user in group.members.all():
+            notification = notif_type()
+            notification.content = notif_member
+            notification.user = user
+            notification.save()
+            notifications.put(notification)
 
     def comment(self, request, postid):
         '''
@@ -59,6 +82,9 @@ class PostViews(object):
                 # is anybody listening?
                 # if so, send new comment to everyone and reset
                 grpid = int(comment_post.author.group.pk)
+                # Send notifications.
+                self._send_notifications(
+                    grpid, CommentNotification, comment)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
                     # self.group_event = None
@@ -84,6 +110,11 @@ class PostViews(object):
                 #          has a group with matching group id (pk)
                 post.author = post_author
                 post.save()
+
+                # Send notifications.
+                self._send_notifications(
+                    grpid, PostNotification, post)
+
                 # is anybody listening?
                 # if so, send new post to everyone and reset
                 grpid = int(grpid)
