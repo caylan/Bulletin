@@ -231,18 +231,28 @@ abbr {
 	margin: 0 -70px 0 0;
 }
 
-.triangle {
+.triangle,.triangle-border  {
 	margin: auto;
 	margin-top: -10px;
 	width: 0px;
 	height: 0px;
 	border-style: solid;
+}
+
+.triangle {
+	margin-top: -9px!important;
+	border-width: 0 9px 9px 9px!important;
+	border-color: transparent transparent rgb(245, 245, 245) transparent;
+}
+
+.triangle-border {
 	border-width: 0 10px 10px 10px;
+	margin-top: -10px;
 	border-color: transparent transparent rgb(227, 227, 227) transparent;
 }
 
 .triangle.dark {
-	border-color: transparent transparent rgb(227, 227, 227) transparent;
+	border-color: transparent transparent rgb(235, 235, 235) transparent;
 }
 
 .media .pull-left {
@@ -291,7 +301,7 @@ abbr {
 	
 }
 
-.comments > .comment:nth-child(odd), .show_comments {
+.comments > .comment:nth-child(even), .show_comments {
    background-color: rgb(235, 235, 235);
 }
 
