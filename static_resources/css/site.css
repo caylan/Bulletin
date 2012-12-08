@@ -78,13 +78,6 @@ abbr {
 	margin-left: 60px;
 }
 
-#left-column {
-	-moz-border-radius-bottomright: 0;
-    -webkit-border-bottom-right-radius: 0;
-	border-top-width: 0;
-    background-color: rgba(255,255,255,0.6);
-}
-
 .comment-form-container {
 	-moz-border-radius: 0;
     -webkit-border-radius: 0;
@@ -96,11 +89,28 @@ abbr {
 #content-container > .hero-unit {
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
+	border-left-width: 0;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+	min-height: 500px;
 }
 
 #left-column {
+	border-width: 0;
+	padding: 0;
+    background-color: rgba(255,255,255,0.6);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+}
+
+#left-column .well {
+	margin:0;
 	-moz-border-radius-topright: 0;
     -webkit-border-top-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
 }
 
 .comment .timeago {
@@ -245,6 +255,8 @@ abbr {
 	display: block;
 	padding-top: 3px;
 }
+
+
 
 .member-avatar {
 	margin: 2px;
