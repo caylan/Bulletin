@@ -6,11 +6,11 @@ body {
 }
 
 #content .btn {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 .navbar {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .navbar-inner {
@@ -81,7 +81,7 @@ abbr {
 #left-column {
 	-moz-border-radius-bottomright: 0;
     -webkit-border-bottom-right-radius: 0;
-	border-top-width: 0px;
+	border-top-width: 0;
     background-color: rgba(255,255,255,0.6);
 }
 
@@ -235,8 +235,8 @@ abbr {
 .triangle,.triangle-border  {
 	margin: auto;
 	margin-top: -10px;
-	width: 0px;
-	height: 0px;
+	width: 0;
+	height: 0;
 	border-style: solid;
 }
 
@@ -356,7 +356,7 @@ textarea {
 
 .hero-unit {
 	text-align: left;
-	margin-bottom: 0px;
+	margin-bottom: 0;
     padding: 9px 19px 9px;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
