@@ -240,6 +240,14 @@ abbr {
 	border-style: solid;
 }
 
+.members {
+	text-align: center;
+}
+
+.member-avatar {
+	margin: 2px;
+}
+
 .triangle {
 	margin-top: -9px!important;
 	border-width: 0 9px 9px 9px!important;

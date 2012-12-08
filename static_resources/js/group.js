@@ -237,6 +237,35 @@ function initShowComments () {
 	);
 }
 
+$(document).ready(function() {
+	$(".remove-user").click(function() {
+		var user_name = $(this).prev(".member-name").html();
+		var member_id = $(this).prev(".member-name").attr("memid");
+		$("#remove-user-confirm").find("#user-name-here").html(user_name);
+		$("#remove-user-confirm").find("#user-name-here").attr("memid", member_id);
+		$("#remove-user-confirm").modal();
+	});
+
+	$("#remove-user-btn").click(function() {
+		$(this).attr("disabled", "disabled");
+		var member_id = $(this).parents("#remove-user-confirm").find("#user-name-here").attr("memid");
+		$.ajax({
+			url: "/membership/" + member_id + "/remove/",
+			error: function(data) {alert("failed to delete user");},
+			success: function(){},
+			complete: function() {
+				$("#remove-user-btn").removeAttr("disabled");
+				$(".member-name[memid='" + member_id + "']").parent().hide();
+				$("#remove-user-confirm").modal('hide');
+			}
+		});
+	});
+
+	$(".remove-invite").click(function() {
+		$(this).parent().hide();
+	});
+});
+
 function initShowPosts () {
 	$('.show_posts').click(function() {
 			var parent = this;

@@ -71,7 +71,8 @@
 							<li class="nav-header">Group Members</li>
 							{% for member in group.members.all %}
 							<li>
-								<abbr class="member-avatar" title="{{ member.get_full_name }}"><img class="pull-left clear-fix" src="{{ member.email|gravatar:'45' }}" alt="member's gravatar" /></abbr>
+								<abbr title="{{ member.get_full_name }}">
+									<img class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'46' }}" alt="member's gravatar" /></abbr>
 								<!--<div class="member-name" memid="{{ member.pk }}">
 									<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
 									{{ member.get_full_name }}
@@ -109,37 +110,6 @@
                 </ul>
                 {% endif %}
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                <script>
-                    $(document).ready(function() {
-                        $(".remove-user").click(function() {
-                            var user_name = $(this).prev(".member-name").html();
-                            var member_id = $(this).prev(".member-name").attr("memid");
-                            $("#remove-user-confirm").find("#user-name-here").html(user_name);
-                            $("#remove-user-confirm").find("#user-name-here").attr("memid", member_id);
-                            $("#remove-user-confirm").modal();
-                        });
-
-                        $("#remove-user-btn").click(function() {
-                            $(this).attr("disabled", "disabled");
-                            var member_id = $(this).parents("#remove-user-confirm").find("#user-name-here").attr("memid");
-                            $.ajax({
-                                url: "/membership/" + member_id + "/remove/",
-                                error: function(data) {alert("failed to delete user");},
-                                success: function(){},
-                                complete: function() {
-                                    $("#remove-user-btn").removeAttr("disabled");
-                                    $(".member-name[memid='" + member_id + "']").parent().hide();
-                                    $("#remove-user-confirm").modal('hide');
-                                }
-                            });
-                        });
-
-                        $(".remove-invite").click(function() {
-                            $(this).parent().hide();
-                        });
-                    });
-                </script>
-
 				{% endblock nav %}
 			</div>
 		</div>
