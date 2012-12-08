@@ -51,7 +51,7 @@
 								{% for member in group.members.all %}
 								<li>
 									<abbr class='' title="{{ member.get_full_name }}">
-										<img class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'46' }}" alt="member's gravatar" /></abbr>
+										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
 									<!--<div class="member-name" memid="{{ member.pk }}">
 										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
 										{{ member.get_full_name }}
@@ -59,36 +59,40 @@
 									{% if is_admin and member != user %}
 									<i class="remove-btn remove-user icon-trash"></i></a>
 									{% endif %}
+								
 								</li>
+								
 								{% endfor %}
 							</ul>
 						</div>
 						{% if is_admin %}
-						<div>
-							<a href="#invite-people" class='invite-users' data-toggle="modal"><i class="icon-user"></i> Invite To Group</a>
-						</div>
-						{% if is_admin %}
-						<ul class="nav nav-list">
-							<li class="nav-header">Active Invites</li>
+						<ul id='invites' class="nav nav-list clearfix">
 							{% if invites %}
+								<span class="nav-header">Active Invites</span>
 								{% for invite in invites %}
+									<li>
 									{% if invite.acceptance == 'P' %}
-									<li style="font-size: .7em;">{{ invite.recipient_email }} (Pending)
+										<abbr class='' title="(Pending) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<i class="remove-btn remove-invite icon-remove"></i>
+										</abbr>
 									{% elif invite.acceptance == 'A' %}
-									<li style="font-size: .7em; color: green;">{{ invite.recipient_email }} (Accepted)
+									<abbr class='' title="(Accepted) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% else %}
-									<li style="font-size: .7em; color: red;">{{ invite.recipient_email }} (Rejected)
+									<abbr class='' title="(Rejected) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% endif %}
-								<i class="remove-btn remove-invite icon-remove"></i></li>
+									</li>
 								{% endfor %}
-							{% else %}
-							<li>No invites pending</li>
 							{% endif %}
 						</ul>
+						<a href="#invite-people" class='invite-users clearfix' data-toggle="modal"><i class="icon-user"></i> Invite More People</a>
 						{% endif %}
 					<div class='well'>
 						<ul class="team-nav nav nav-list bottom">
-					{% endif %}
 					{% endif %}
 				{% endifequal %}
 					
