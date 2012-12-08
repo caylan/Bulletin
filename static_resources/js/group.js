@@ -231,6 +231,7 @@ function initShowComments () {
 			$(this).parent().find('.hidden_comments > .comment').each(function() {
 				$(parent).before(this);
 			});
+			$(this).parent().find('.triangle.dark').removeClass('dark');
 			$(this).hide();
 		}
 	);
