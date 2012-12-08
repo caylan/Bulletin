@@ -30,7 +30,7 @@ body {
 	border: 1px solid rgb(227, 227, 227);
 }
 
-.show_comments, .show_posts {
+.show-comments, .show-posts {
 	text-align: center;
 	display: block;
 }
@@ -140,6 +140,7 @@ abbr {
 
 .nav-header {
 	text-align: center;
+    cursor: default;
 }
 
 .member-name {

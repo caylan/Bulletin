@@ -1,6 +1,6 @@
 {% load gravatar %}
 <a id="post{{ post.pk }}"></a><li id="post-{{ post.pk }}" class="media post well">
-    <div class='avatar-container pull-left media-object'>
+    <div class="avatar-container pull-left media-object">
         <img class="avatar" src="{{ post.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
     </div>
     <div class="media-body">
@@ -16,17 +16,17 @@
         </span>
         <div class="post-message">{{ post.message }}</div>
         <ul class="media-list comments">
-            <div class='triangle-border'></div>
-            <div class='triangle 
+            <div class="triangle-border"></div>
+            <div class="triangle
             {% if post.comment_set.all|length > 7 %}
                 dark
             {% endif %}
-            '></div>
+            "></div>
             {% if post.comment_set.all %}
             {% if post.comment_set.all|length > 7 %}
-                <a href="#show-comments" class='comment show_comments'><i class="icon-comments-alt"></i> Show all comments
+                <a href="javascript:void(0);" class="comment show-comments"><i class="icon-comments-alt"></i> Show all comments
                 </a>
-                <div class='hide hidden_comments'>
+                <div class="hide hidden-comments">
                 {% for comment in post.comment_set.all %}
                 {% include "group_comment.html" %}
                 {% if forloop.revcounter0 == 5 %}
@@ -39,9 +39,9 @@
                 {% endfor %}
             {% endif %}
             {% endif %}
-<!--            <div class='discuss'><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
+<!--            <div class="discuss"><a href="javascript:void(0)" class="comment-unhide-btn">Comment</a></div>
 -->            <div class="comment comment-form-container loading-spinner-container clearfix">
-                <div class='comment-avatar-container pull-left'>
+                <div class="comment-avatar-container pull-left">
                     <img class="comment-avatar pull-left" src="{{ user.email|gravatar:'24' }}" alt="user's gravatar" />
                 </div>
                 <form method="post" class="comment-form">

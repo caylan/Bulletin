@@ -18,8 +18,8 @@
 		{% for post in post_list %}	
 			{% include "group_post.html" %}
 			{% if forloop.counter == 5 %}
-				<a href="#show-posts" class='well show_posts'><i class="icon-comment-alt"></i> Show more posts</a>
-			<div class='hide hidden_posts'>
+				<a href="javascript:void(0);" class="well well-small show-posts"><i class="icon-comment-alt"></i> Show more posts</a>
+			<div class="hide hidden-posts">
 			{% endif %}
 			{% if forloop.last %}
 				</div>
