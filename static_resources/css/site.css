@@ -128,6 +128,19 @@ abbr {
 	margin-right: 10px;
 }
 
+.nav-header {
+	text-align: center;
+}
+
+.member-name {
+	padding: 1px;
+	height: 30px;
+}
+
+.members {
+	line-height: 33px!important;
+}
+
 #self-identity {
 	margin-right: 30px;
 }
