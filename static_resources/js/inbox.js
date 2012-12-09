@@ -117,14 +117,9 @@ $(document).ready(function() {
 	    });
 	});	
 	$('abbr.timeago').timeago().fadeIn();
-<<<<<<< HEAD
-  update();
-	initShowNotifications();
-=======
   update_notifications();
 	initShowNotifications();
 	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
->>>>>>> origin/Inbox
 });
 
 $(window).load(function() {
