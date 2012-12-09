@@ -8,7 +8,9 @@ from django.http import (
 )
 from django.shortcuts import render
 from models import PostNotification, CommentNotification
-from gevent.queue import Queue as GQueue
+from gevent.queue import Empty
+from gevent.queue import Queue
+from gevent.coros import Semaphore
 import time
 
 class InboxNotifications(object):
@@ -20,27 +22,41 @@ class InboxNotifications(object):
     '''
     def __init__(self):
         self.notifications = dict([])
+        self.locks = dict([])
+
+    def _set_queue(self, uid):
+        if uid not in self.notifications:
+            self.notifications[uid] = Queue()
+            self.locks[uid] = Semaphore()
 
     def put(self, notification):
         '''
         Sets the event for the notification.
         '''
         user_id = notification.user.pk
-        if user_id not in self.notifications:
-            self.notifications[user_id] = GQueue()
+        self._set_queue(user_id)
         self.notifications[user_id].put(notification)
 
-    def get(self, user_id):
+    def lock(self, uid):
+        self._set_queue(uid)
+        return self.locks[uid]
+
+    def get(self, user_id, blocking=True):
         '''
         Attempts to get all of the recently added elements in the queue.  Blocks
         until there is at least one element in the queue.  After that everything
         is pulled out and returned as an array of events.
         '''
         res = []
-        if user_id not in self.notifications:
-            self.notifications[user_id] = GQueue()
+        self._set_queue(user_id)
         while True:
-            res.append(self.notifications[user_id].get())
+            try:
+                if blocking:
+                    res.append(self.notifications[user_id].get())
+                else:
+                    res.append(self.notifications[user_id].get_nowait())
+            except Empty:
+                break
             if self.notifications[user_id].qsize() == 0:
                 break
         return res
@@ -50,6 +66,9 @@ notifications = InboxNotifications()
 
 @login_required
 def update(request):
+    # NOTE:  Using a lock here will cause deadlock.  Better to have odd issues
+    # than deadlock (this happens because a lock must be acquired to put an
+    # update when running a post, but this could potentially block).
     update_content = notifications.get(request.user.pk)
     context = {'notifications': update_content}
 

@@ -51,12 +51,13 @@ class PostViews(object):
         '''
         group = Group.objects.all().get(pk=grpid)
         for user in group.members.all():
-            if user.id != ignore_id:
+            if user.pk != ignore_id:
                 notification = notif_type()
                 notification.content = notif_member
                 notification.user = user
                 notification.save()
-                notifications.put(notification)
+                with notifications.lock(user.pk):
+                    notifications.put(notification)
 
     def comment(self, request, postid):
         '''
@@ -86,7 +87,7 @@ class PostViews(object):
                 grpid = int(comment_post.author.group.pk)
                 # Send notifications.
                 self._send_notifications(
-                    request.user.id, grpid, CommentNotification, comment)
+                    request.user.pk, grpid, CommentNotification, comment)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
                     # self.group_event = None
@@ -114,7 +115,7 @@ class PostViews(object):
 
                 # Send notifications.
                 self._send_notifications(
-                    request.user.id, grpid, PostNotification, post)
+                    request.user.pk, grpid, PostNotification, post)
                 # is anybody listening?
                 # if so, send new post to everyone and reset
                 grpid = int(grpid)
