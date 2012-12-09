@@ -121,6 +121,7 @@ $(document).ready(function() {
 	$('abbr.timeago').timeago().fadeIn();
   update();
 	initShowNotifications();
+	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
 
 $(window).load(function() {
