@@ -53,7 +53,7 @@
 								<li class='member-container pull-left {% if is_admin and member.user == user %} current-user {% endif %}'>
 									<abbr class="" title="{{ member.user.get_full_name }} ({{ member.user.get_full_name }})">
 										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.user.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
-									{% if is_admin and member != user %}
+									{% if is_admin and member.user != user %}
 									<i class="remove-btn remove-user icon-trash"></i></a>
 									{% endif %}
 								
@@ -71,18 +71,10 @@
 								{% for invite in invites %}
 									<li>
 									{% if invite.acceptance == 'P' %}
-										<abbr class="" title="(Pending) {{ invite.recipient_email }}">
+										<abbr class="" title="{{ invite.recipient_email }}">
 										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
 										<i class="remove-btn remove-invite icon-remove"></i>
 										</abbr>
-									{% elif invite.acceptance == 'A' %}
-									<abbr class="" title="(Accepted) {{ invite.recipient_email }}">
-										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix accepted" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
-									<i class="remove-btn remove-invite icon-remove"></i></abbr>
-									{% else %}
-									<abbr class="" title="(Rejected) {{ invite.recipient_email }}">
-										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix rejected" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
-									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% endif %}
 									</li>
 								{% endfor %}
@@ -101,7 +93,7 @@
                         visibility: hidden;
                     }
 
-                    li:hover .remove-btn {
+                    li.member-container:hover .remove-btn {
                         visibility: visible;
                     }
 
