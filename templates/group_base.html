@@ -50,7 +50,20 @@
 							<ul class="nav nav-list members clearfix">
 								<li class="nav-header">Group Members</li>
 								{% for member in group.members.all %}
-								<li>
+								<div class='member-container'>
+									<abbr class="" title="{{ member.get_full_name }} ({{ member.email }})">
+										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
+									<!--<div class="member-name" memid="{{ member.pk }}">
+										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
+										{{ member.get_full_name }}
+									</div>-->
+									{% if is_admin and member != user %}
+									<i class="remove-btn remove-user icon-trash"></i></a>
+									{% endif %}
+								
+								</div>
+								
+								<div class='member-container'>
 									<abbr class="" title="{{ member.get_full_name }}">
 										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
 									<!--<div class="member-name" memid="{{ member.pk }}">
@@ -61,7 +74,7 @@
 									<i class="remove-btn remove-user icon-trash"></i></a>
 									{% endif %}
 								
-								</li>
+								</div>
 								
 								{% endfor %}
 							</ul>
