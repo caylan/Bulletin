@@ -32,7 +32,7 @@ class InboxNotifications(object):
         user_id = notification.user.pk
         if user_id in self.notifications:
             self.notifications[user_id].set(notification)
-            self.notifications[user_id].clear()
+            del self.notifications[user_id]
 
     def get(self, user_id):
         '''
