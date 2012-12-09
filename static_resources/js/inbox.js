@@ -10,20 +10,18 @@
 function update() {
     $.ajax({url: "update/", success: function(data) { // Ajax retrieval
 		$(data).find('li').each(function() { // For each notification in the list
-			$data = $(this);
-			if ($data.hasClass("notification")) {
+			if ($(this).hasClass("notification")) {
 				// returned data is a proper notification.
-				var $newNotif = $data
 				var $noNotif = $('.alert.alert-warning');
-				$newNotif.hide();
-				$newNotif.find(".avatar").show();
-				$newNotif.find(".timeago").timeago().show();
+				$(this).hide();
+				$(this).find(".avatar").show();
+				$(this).find(".timeago").timeago().show();
 	
 				// Remove the "no updates" notification.
 				removeNoUpdateWarning($noNotif);
-				$("#notifications").prepend($newNotif);
-				$newNotif.fadeIn();
-				animateResize($newPost.find(".avatar"), $($newNotif).height());
+				$("#notifications").prepend(this);
+				$(this).fadeIn();
+				animateResize($(this).find(".avatar"), $(this).height());
 			}
 		});
     }, dataType: "html", complete: update, timeout: 25000});
