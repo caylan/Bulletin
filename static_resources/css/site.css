@@ -344,10 +344,16 @@ abbr {
 
 .comment .timeago {
 	margin-top: 3px;
-	position: absolute;
-	right: 2px;
 	background-color: white;
 	padding: 0 2px;
+	position: absolute;
+	right: 2px;
+}
+
+.timestamp {
+	position: absolute;
+	right: 2px;
+	width: 100%;
 }
 
 .comment-form {
