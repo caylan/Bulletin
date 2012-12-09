@@ -31,8 +31,8 @@ class PostNotification(__AbstractNotification):
         NOTE: This depends on the views for groups.  If the URI changes there,
         sadly it must change here.
         '''
-        grpid = post.author.group.pk
-        return u'group/{0}/#post{0}'.format(grpid, self.post.pk)
+        grpid = self.content.author.group.pk
+        return u'group/{0}/#post{1}'.format(grpid, self.content.pk)
 
 class CommentNotification(__AbstractNotification):
     '''
@@ -50,5 +50,5 @@ class CommentNotification(__AbstractNotification):
         notification, and if this changes, then so must the notification for the
         post.
         '''
-        grpid = comment.author.group.pk
-        return u'group/{0}/#comment{0}/'.format(grpid, self.comment.pk)
+        grpid = self.content.author.group.pk
+        return u'group/{0}/#comment{1}'.format(grpid, self.content.pk)
