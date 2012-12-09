@@ -121,7 +121,7 @@ def confirm_email_invite(request, key):
             # them to the inbox.
             return redirect('/invite_registration/{0}'.format(key))
         else:
-            raise Http404
+            return render(request, 'email_invite_error.html')
 
 def invite_registration(request, key):
     '''

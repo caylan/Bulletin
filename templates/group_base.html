@@ -49,10 +49,10 @@
 						<div>
 							<ul class="nav nav-list members clearfix">
 								<li class="nav-header">Group Members</li>
-								{% for member in group.members.all %}
+								{% for member in group.membership_set.all %}
 								<li>
-									<abbr class="" title="{{ member.get_full_name }}">
-										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
+									<abbr class="" title="{{ member.user.get_full_name }}">
+										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.user.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
 									<!--<div class="member-name" memid="{{ member.pk }}">
 										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
 										{{ member.get_full_name }}
@@ -79,11 +79,11 @@
 										</abbr>
 									{% elif invite.acceptance == 'A' %}
 									<abbr class="" title="(Accepted) {{ invite.recipient_email }}">
-										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix accepted" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
 									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% else %}
 									<abbr class="" title="(Rejected) {{ invite.recipient_email }}">
-										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix rejected" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
 									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% endif %}
 									</li>

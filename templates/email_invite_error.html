@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="alert alert-error">
+        <h2>There was an error with your invite</h2>
+        <p>Possibly:
+            <ul>
+                <li>A group admin deleted your invite</li>
+                <li>Your invite expired</li>
+                <li>Or you provided the incorrect url</li>
+            </ul>
+        </p>
+        <p><a class="btn" href="/">&lt;- Go Home</a></p>
+    </div>
+</div>
+{% endblock %}
