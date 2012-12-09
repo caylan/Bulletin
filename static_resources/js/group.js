@@ -279,6 +279,7 @@ function initShowPosts () {
 				number++;
 				if (number < 5) {
 					$(parent).before(this);
+					animateResize($(this).find(".avatar"), $(this).height());
 				}
 			});
 			if ($(this).parent().find('.hidden-posts > .post').length == 0) {
