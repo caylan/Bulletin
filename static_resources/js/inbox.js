@@ -115,7 +115,7 @@ $(document).ready(function() {
 	//	    }
 	//	}
 	//    });
-	//});	
+	//});
 	$('abbr.timeago').timeago().fadeIn();
 	update_notifications();
 	initShowNotifications();
