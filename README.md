@@ -17,11 +17,13 @@ Bulletin is being developed by
 ## Directories
 
 * /bulletin_project - project settings
-* /bulletin - app directory
-* /prototype - app prototype directory
-* /templates - template files
+* /groups - model/view/form for groups
+* /posts - model/view/form for posts and comments
+* /registration - all the registration goodies including email
+* /session - session stuff
 * /static_resources - anything that python doesn't dynamically generate, e.g. css, js, img
   * when server is ran, you can find these files at /static/
+* /templates - template files
 
 ## Virtual environment setup
 *Pretty much how Heroku says to do it.* (for reference - https://devcenter.heroku.com/articles/django)
@@ -47,11 +49,19 @@ file.
 
         pip install django psycopg2 dj-database-url   # for example.
 
+If this is the first time running the virtual environment - you need to set up the database
+
+        python manage.py syncdb
+
+Then run the server
+
+        python manage.py runserver
+
 After installing any new apps, always make sure to update the new requirements:
 
         pip freeze > requirements.txt
         
-For testing from the root using nose
+For testing from the root using nose (be sure to comment out the email goodies portion of settings.py -but don't commit that change)
 
         ./manage.py test
 

@@ -279,6 +279,7 @@ function initShowPosts () {
 				number++;
 				if (number < 5) {
 					$(parent).before(this);
+					animateResize($(this).find(".avatar"), $(this).height());
 				}
 			});
 			if ($(this).parent().find('.hidden-posts > .post').length == 0) {
@@ -355,6 +356,7 @@ $(document).ready(function() {
 	lastCommentTimestamp();
 	initShowComments();
 	initShowPosts();
+	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
 
 $(window).load(function() {
