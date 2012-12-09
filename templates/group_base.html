@@ -51,7 +51,7 @@
 								<li class="nav-header">Group Members</li>
 								{% for member in group.membership_set.all %}
 								<li class='member-container pull-left {% if is_admin and member.user == user %} current-user {% endif %}'>
-									<abbr class="" title="{{ member.user.get_full_name }} ({{ member.user.get_full_name }})">
+									<abbr class="" title="{{ member.user.get_full_name }} ({{ member.user.email }})">
 										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.user.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
 									{% if is_admin and member.user != user %}
 									<i class="remove-btn remove-user icon-trash"></i></a>
