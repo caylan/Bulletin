@@ -35,7 +35,6 @@ class PostViews(object):
         '''
         make a comment for given post and render
         '''
-        time.sleep(1)
         # comfirm current user is a member of the group the post belongs to
         try:
             # author = the membership whose group has a membership with the post we're looking at
@@ -69,7 +68,6 @@ class PostViews(object):
         '''
         make a post for given group and render
         '''
-        time.sleep(1)
         try:
             post_author = request.user.membership_set.get(group__pk=grpid)
         except:
