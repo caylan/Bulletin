@@ -91,29 +91,6 @@ function initCommentAjax() {
         	data: {message: msg, csrfmiddlewaretoken: csrf},
         	datatype: 'html',
         	success: function(data) {
-        		// copy of message is returned via html, insert into page
-        		/* comment_html = data;
-        		 * form.parent().siblings('.comments').append($(comment_html));
-        		 */
-
-        		/* $('.comment.new').each(function() { 
-        		 *     var postHeight = $(this).height();
-        		 *     
-        		 *     $(this).children('.avatar-container').each(function() { // Avatars within posts
-        		 *         $(this).find('.avatar').each(function() {
-        		 *             resizeAvatar(this, postHeight);
-        		 *         });
-        		 *     });
-        		 * });
-        		 */
-        		/* $post = $(form).parents('.post');
-        		 * var postHeight = $($post).height();
-        		 * $($post).children('.avatar-container').each(function() { // Avatars within posts
-        		 * 	$(this).find('.avatar').each(function() {
-        		 * 		animateResize(this, postHeight);
-        		 * 	});
-        		 * });
-        		 */
         		$msgContainer.val("");
         		$commentForm = $($form).parents('.comment-form-container');
         		var scroll = window.pageYOffset - $('.navbar').height();
@@ -127,9 +104,6 @@ function initCommentAjax() {
         		} else {
         			$($commentForm).find('input[type="text"]').focus();
         		}
-
-        		/* $('.timeago.new').timeago().fadeIn();
-        		 */
         	},
         	complete: function() {
         		$loadingSpinner.hide();
@@ -184,19 +158,11 @@ function removeNoPostWarning($noPost) {
 function initDynamicAvatarSize() {
 	$('.post').each(function() { 
         var postHeight = $(this).height();
-        
         $(this).children('.avatar-container').each(function() { // Avatars within posts
             $(this).find('.avatar').each(function() {
                 resizeAvatar(this, postHeight);
             });
         });
-        
-        //$(this).find('.comment').each(function() { // Avatars within comments
-        //    var commentHeight = $(this).height();
-        //    $(this).find('.avatar').each(function() {
-        //        resizeAvatar(this, commentHeight);
-        //    });
-        //});
     });
 }
 
@@ -248,7 +214,6 @@ $(document).ready(function() {
 		$("#remove-user-confirm").find("#user-name-here").attr("memid", member_id);
 		$("#remove-user-confirm").modal();
 	});
-
 	$("#remove-user-btn").click(function() {
 		$(this).attr("disabled", "disabled");
 		var member_id = $(this).parents("#remove-user-confirm").find("#user-name-here").attr("memid");
@@ -264,7 +229,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
 	$(".remove-invite").click(function() {
 		$(this).parent().parent().hide();
 	});
@@ -300,6 +264,7 @@ function lastCommentTimestamp () {
 					$(comment).unbind('mouseout');
 					$(comment).unbind('mouseover');
 					$(comment).find('.timeago').css('position', 'absolute');
+					$(comment).find('em').css('width', '100%');
 					$(comment).find('.timeago').css('background-color', 'white');
 					$(comment).mouseover(function() {
 						$(timestamp).show();
@@ -313,6 +278,7 @@ function lastCommentTimestamp () {
 				$(this).parent().parent().parent().unbind('mouseout');
 				$(this).show();
 				$(this).find('.timeago').css('position', 'static');
+				$(this).css('width', 'auto');
 				$(this).find('.timeago').css('background-color', 'transparent');
 			});
 		}
@@ -356,6 +322,7 @@ $(document).ready(function() {
 	lastCommentTimestamp();
 	initShowComments();
 	initShowPosts();
+	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
 
 $(window).load(function() {

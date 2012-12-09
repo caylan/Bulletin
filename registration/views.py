@@ -97,8 +97,9 @@ def confirm_email_invite(request, key):
         group = invite.group
         if not group.members.all().filter(email=user.email):
             # change invite to show that user accepted
-            invite.acceptance = 'A'
-            invite.save()
+            #invite.acceptance = 'A'
+            #invite.save()
+            invite.delete()
             #
             membership = Membership(user=user, group=group)
             membership.save()
@@ -153,8 +154,9 @@ def invite_registration(request, key):
             user = form.save(email)
             invite = EmailInvite.objects.get(confirmation_key=key)
             # change invite to show that user accepted
-            invite.acceptance = 'A'
-            invite.save()
+            #invite.acceptance = 'A'
+            #invite.save()
+            invite.delete()
             #
             group = invite.group
             membership = Membership(user=user, group=group)
