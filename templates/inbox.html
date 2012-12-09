@@ -1,15 +1,38 @@
 {% extends "group_base.html" %}
 
+{# comment: load custom gravatar filter #}
+{% load gravatar %}
+
 {% block maincontent %}
-{% if not notifications %}
-<div class="well" style="text-align: center">
-    <p><em>No updates available</em></p>
-</div>
+{% if notifications %}
+<ul id="notifications" class="media-list">
+	{% if notifications.all|length > 7 %}
+		{% for notification in notifications %}	
+			{% include "inbox_notification.html" %}
+			{% if forloop.counter == 5 %}
+				<a href="javascript:void(0);" class="well well-small
+                    show-posts"><i class="icon-comment-alt"></i> Show more
+                    notifications</a>
+			<div class="hide hidden-notifications">
+			{% endif %}
+			{% if forloop.last %}
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+	{% endif %}
+</ul>
 {% else %}
-    {% for notification in notifications %}
-    <div class="well" style="text-align: center">
-        <p><em>Author: {{ notification.user.first_name }} Msg: {{  notification.content.message }}</em></p>
-    </div>
-    {% endfor %}
+<div class="alert alert-warning">
+    No updates
+</div>
 {% endif %}
+
 {% endblock maincontent %}
+
+{% block extrajs %}
+{{ block.super }}
+<script src="{{ STATIC_URL }}js/md5.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/jquery.timeago.min.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/group.js" type="text/javascript"></script>
+{% endblock extrajs %}

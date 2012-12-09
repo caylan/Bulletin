@@ -1,7 +1,17 @@
 {% load gravatar %}
-{% for notification in notifications %}
-<li>
-<em>Notification type {{ notification.type_ }} for:{{ notification.user.first_name }}</em><br />
-<em>"{{ notification.content.message }}"</em>
+<li id="notification-{{ notification.pk }}" class="media post well">
+    <a id="notification{{ notification.pk }}"></a>
+    <div class="avatar-container pull-left media-object">
+        <img class="avatar" src="{{ notification.content.author.user.email|gravatar:'300' }}" alt="author's gravatar" />
+    </div>
+    <div class="media-body">
+        <span class="media-heading">
+            <abbr title="{{ notification.content.author.email }}">
+                <strong class="pull-left name">{{ notification.content.author.user.first_name }} {{ notification.content.author.user.last_name }}</strong>&nbsp;{{ notification.type_ }}ed in group "{{ notification.content.author.group.name }}"
+            </abbr>
+            <em class="pull-right"><abbr class="timeago" title="{{ notification.date_created }}">{{ notification.date_created }}</abbr></em>
+            <br />
+        </span>
+        <div class="post-message">{{ notification.content.message }}</div>
+    </div>
 </li>
-{% endfor%}
