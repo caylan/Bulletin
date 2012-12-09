@@ -264,6 +264,7 @@ function lastCommentTimestamp () {
 					$(comment).unbind('mouseout');
 					$(comment).unbind('mouseover');
 					$(comment).find('.timeago').css('position', 'absolute');
+					$(comment).find('em').css('position', 'absolute');
 					$(comment).find('em').css('width', '100%');
 					$(comment).find('.timeago').css('background-color', 'white');
 					$(comment).mouseover(function() {
@@ -278,7 +279,9 @@ function lastCommentTimestamp () {
 				$(this).parent().parent().parent().unbind('mouseout');
 				$(this).show();
 				$(this).find('.timeago').css('position', 'static');
+				$(this).find('.timeago').css('float', 'right');
 				$(this).css('width', 'auto');
+				$(this).css('position', 'static');
 				$(this).find('.timeago').css('background-color', 'transparent');
 			});
 		}
