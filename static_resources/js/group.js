@@ -274,10 +274,16 @@ function initShowPosts () {
 	$('.show-posts').click(function(event) {
             event.preventDefault();
 			var parent = this;
+			var number = 0;
 			$(this).parent().find('.hidden-posts > .post').each(function() {
-				$(parent).before(this);
+				number++;
+				if (number < 5) {
+					$(parent).before(this);
+				}
 			});
-			$(this).hide();
+			if ($(this).parent().find('.hidden-posts > .post').length == 0) {
+				$(this).hide();
+			}
 		}
 	);
 }
