@@ -234,10 +234,6 @@ abbr {
 	margin-left: 5px;
 }
 
-.show_comments {
-	padding-top: 2px;
-}
-
 .comment-form input[type='submit'] {
 	width: 65px;
 	height: 21px;
@@ -363,11 +359,11 @@ abbr {
 	border-width: 0;
 }
 
-.comments > .comment:nth-child(even), .show_comments {
+.comments > .comment:nth-child(even), .show-comments {
    background-color: rgb(235, 235, 235);
 }
 
-.show_comments {
+.show-comments {
 	display: block;
 }
 
