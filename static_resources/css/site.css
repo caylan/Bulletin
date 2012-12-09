@@ -270,8 +270,8 @@ abbr {
 	margin-left: 5px;
 }
 
-#invites  > li:first-child {
-	margin-left: 5px!important;
+#invites {
+	margin-left: 5px;
 }
 
 .member-avatar {
