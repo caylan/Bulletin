@@ -240,8 +240,10 @@ function initShowComments () {
 
 $(document).ready(function() {
 	$(".remove-user").click(function() {
-		var user_name = $(this).prev(".member-name").html();
-		var member_id = $(this).prev(".member-name").attr("memid");
+		// var user_name = $(this).prev(".member-name").html();
+		var user_name = $(this).prev("abbr").attr("title");
+		// var member_id = $(this).prev(".member-name").attr("memid");
+		var member_id = $(this).prev("abbr").find("img").attr("memid");
 		$("#remove-user-confirm").find("#user-name-here").html(user_name);
 		$("#remove-user-confirm").find("#user-name-here").attr("memid", member_id);
 		$("#remove-user-confirm").modal();
@@ -256,7 +258,8 @@ $(document).ready(function() {
 			success: function(){},
 			complete: function() {
 				$("#remove-user-btn").removeAttr("disabled");
-				$(".member-name[memid='" + member_id + "']").parent().hide();
+				// $(".member-name[memid='" + member_id + "']").parent().hide();
+				$("img[memid='" + member_id + "']").parent().parent().hide();
 				$("#remove-user-confirm").modal('hide');
 			}
 		});
