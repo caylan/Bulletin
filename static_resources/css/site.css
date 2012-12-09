@@ -266,6 +266,10 @@ abbr {
 	margin: 2px;
 }
 
+.member-container.current-user {
+	margin-right: 1px!important;
+}
+
 .member-avatar.pending {
 	border: 1px solid black;
 }
@@ -279,17 +283,19 @@ abbr {
 }
 
 .remove-btn {
-	margin-left: -17px;
+	margin-left: -18px;
 	display: inline-block;
-	width: 20px;
-	height: 20px;
+	width: 17px;
+	height: 17px;
 }
-
 
 #invites li {
 	position: relative;
 }
 
+.member-container {
+	display: inline-block;
+}
 
 .triangle {
 	margin-top: -9px!important;
