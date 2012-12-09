@@ -11,15 +11,18 @@
 			{% include "inbox_notification.html" %}
 			{% if forloop.counter == 5 %}
 				<a href="javascript:void(0);" class="well well-small
-                    show-posts"><i class="icon-comment-alt"></i> Show more
+                    show-notifications"><i class="icon-comment-alt"></i> Show more
                     notifications</a>
-			<div class="hide hidden-notifications">
+			    <div class="hide hidden-notifications">
 			{% endif %}
 			{% if forloop.last %}
 				</div>
 				{% endif %}
 			{% endfor %}
-		{% else %}
+    {% else %}
+        {% for notification in notifications %}
+            {% include "inbox_notification.html" %}
+        {% endfor %}
 	{% endif %}
 </ul>
 {% else %}

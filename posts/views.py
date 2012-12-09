@@ -55,9 +55,9 @@ class PostViews(object):
                 notification = notif_type()
                 notification.content = notif_member
                 notification.user = user
-                print "SETTING NOTIFICATION FOR USER:", user.first_name
                 notification.save()
                 with notifications.lock(user.pk):
+                    print "WROTE A NOTIFICATION FOR", user.first_name
                     notifications.put(notification)
 
     def comment(self, request, postid):

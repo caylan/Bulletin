@@ -36,7 +36,7 @@ def _render_inbox(request, user):
             user.postnotification_set.all(),
             user.commentnotification_set.all(),
         ))
-        notif_list.sort(key=lambda notif: notif.date_created, reverse=True)
+    notif_list.sort(key=lambda notif: notif.date_created, reverse=True)
     return render(request, 'inbox.html', {'user': user,
                                           'notifications': notif_list})
 

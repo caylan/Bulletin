@@ -1,5 +1,5 @@
 {% load gravatar %}
-<li id="notification-{{ notification.pk }}" class="media post well">
+<li id="notification-{{ notification.pk }}" class="media notification post well">
     <a id="notification{{ notification.pk }}"></a>
     <div class="avatar-container pull-left media-object">
         <img class="avatar" src="{{ notification.content.author.user.email|gravatar:'300' }}" alt="author's gravatar" />

@@ -90,7 +90,7 @@ def update(request):
     # than deadlock (this happens because a lock must be acquired to put an
     # update when running a post, but this could potentially block).
     update_content = notifications.get(request.user.pk)
-    context = {'notifications': update_content}
+    context = {'notifications': update_content[0]}
 
     '''
     Make the grand assumption that this will always be a proper list of
