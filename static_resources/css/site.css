@@ -234,10 +234,6 @@ abbr {
 	margin-left: 5px;
 }
 
-.show_comments {
-	padding-top: 2px;
-}
-
 .comment-form input[type='submit'] {
 	width: 65px;
 	height: 21px;
@@ -258,12 +254,28 @@ abbr {
 	text-align: center;
 }
 
-#invites  > li {
-	font-size: .9em;
+#invites > li {
+	display: inline-block;
+}
+
+#invites > li {
+	margin-left: -5px;
+}
+
+#invites {
+	margin-left: 5px;
+}
+
+#invites {
+	margin-left: 5px;
 }
 
 .member-avatar {
 	margin: 2px;
+}
+
+.member-container.current-user {
+	margin-right: 1px!important;
 }
 
 .member-avatar.pending {
@@ -279,17 +291,15 @@ abbr {
 }
 
 .remove-btn {
-	margin-left: -17px;
+	margin-left: -18px;
 	display: inline-block;
-	width: 20px;
-	height: 20px;
+	width: 17px;
+	height: 17px;
 }
 
-
-#invites li {
-	position: relative;
+.member-container {
+	display: inline-block;
 }
-
 
 .triangle {
 	margin-top: -9px!important;
@@ -349,11 +359,11 @@ abbr {
 	border-width: 0;
 }
 
-.comments > .comment:nth-child(even), .show_comments {
+.comments > .comment:nth-child(even), .show-comments {
    background-color: rgb(235, 235, 235);
 }
 
-.show_comments {
+.show-comments {
 	display: block;
 }
 
