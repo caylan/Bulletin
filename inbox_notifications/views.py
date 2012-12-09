@@ -21,34 +21,35 @@ class InboxNotifications(object):
     def __init__(self):
         self.notifications = dict([])
 
-    def _set_event(self, user):
+    def _set_event(self, uid):
         if uid not in self.notifications:
-            self.notifications[user] = AsyncResult()
+            self.notifications[uid] = AsyncResult()
 
     def set(self, notification):
         '''
         Sets the event for the notification.
         '''
-        user = notification.user
+        uid = notification.user.id
         if user in self.notifications:
-            self.notifications[user].set(notification)
-            del self.notifications[user]
+            self.notifications[uid].set(notification)
+            del self.notifications[uid]
 
-    def get(self, user):
+    def get(self, uid):
         '''
         Attempts to get all of the recently added elements in the queue.  Blocks
         until there is at least one element in the queue.  After that everything
         is pulled out and returned as an array of events.
         '''
-        self._set_event(user)
-        return self.notifications[user].get(timeout=20)
+        self._set_event(uid)
+        return self.notifications[uid].get(timeout=20)
 
 #  The set of events as mapped to each user.
 notifications = InboxNotifications()
 
 @login_required
 def update(request):
-    update_content = notifications.get(request.user)
+    uid = request.user.id
+    update_content = notifications.get(uid)
     if update_content is False:
         return HttpResponseBadRequest()
     context = {'notification': update_content}

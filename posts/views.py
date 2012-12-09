@@ -86,7 +86,7 @@ class PostViews(object):
                 grpid = int(comment_post.author.group.pk)
                 # Send notifications.
                 self._send_notifications(
-                    request.user.id, grpid, CommentNotification, comment)
+                    uid, grpid, CommentNotification, comment)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
                     # self.group_event = None
@@ -116,8 +116,9 @@ class PostViews(object):
                 grpid = int(grpid)
 
                 # Send notifications.
+                uid = request.user.id
                 self._send_notifications(
-                    request.user.id, grpid, PostNotification, post)
+                    uid, grpid, PostNotification, post)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(post)
                     # self.group_event = None
