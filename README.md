@@ -18,6 +18,7 @@ Bulletin is being developed by
 
 * /bulletin_project - project settings
 * /groups - model/view/form for groups
+* /inbox_notifications - code for the inbox and notification system
 * /posts - model/view/form for posts and comments
 * /registration - all the registration goodies including email
 * /session - session stuff
