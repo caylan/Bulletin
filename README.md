@@ -51,7 +51,7 @@ After installing any new apps, always make sure to update the new requirements:
 
         pip freeze > requirements.txt
         
-For testing from the root using nose
+For testing from the root using nose (be sure to comment out the email goodies portion of settings.py -but don't commit that change)
 
         ./manage.py test
 
