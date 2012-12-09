@@ -353,6 +353,10 @@ abbr {
    background-color: rgb(235, 235, 235);
 }
 
+.show_comments {
+	display: block;
+}
+
 .comments .comment:first-child {
    padding-top: 2px;
 }
