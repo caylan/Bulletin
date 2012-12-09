@@ -258,8 +258,20 @@ abbr {
 	text-align: center;
 }
 
-#invites  > li {
-	font-size: .9em;
+#invites > li {
+	display: inline-block;
+}
+
+#invites > li {
+	margin-left: -5px;
+}
+
+#invites {
+	margin-left: 5px;
+}
+
+#invites  > li:first-child {
+	margin-left: 5px!important;
 }
 
 .member-avatar {

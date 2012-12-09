@@ -264,9 +264,9 @@ $(document).ready(function() {
 			}
 		});
 	});
-
+	
 	$(".remove-invite").click(function() {
-		$(this).parent().hide();
+		$(this).parent().parent().hide();
 	});
 });
 
@@ -340,7 +340,7 @@ $(document).ready(function() {
 		    }
 		}
 	    });
-	});
+	});	
 	$('abbr.timeago').timeago().fadeIn();
     initCommentSlider();
     initCommentAjax();

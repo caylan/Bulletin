@@ -83,6 +83,54 @@
 									<i class="remove-btn remove-invite icon-remove"></i></abbr>
 									{% endif %}
 									</li>
+									<li>
+									{% if invite.acceptance == 'P' %}
+										<abbr class="" title="(Pending) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<i class="remove-btn remove-invite icon-remove"></i>
+										</abbr>
+									{% elif invite.acceptance == 'A' %}
+									<abbr class="" title="(Accepted) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% else %}
+									<abbr class="" title="(Rejected) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% endif %}
+									</li>
+									<li>
+									{% if invite.acceptance == 'P' %}
+										<abbr class="" title="(Pending) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<i class="remove-btn remove-invite icon-remove"></i>
+										</abbr>
+									{% elif invite.acceptance == 'A' %}
+									<abbr class="" title="(Accepted) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% else %}
+									<abbr class="" title="(Rejected) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% endif %}
+									</li>
+									<li>
+									{% if invite.acceptance == 'P' %}
+										<abbr class="" title="(Pending) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+										<i class="remove-btn remove-invite icon-remove"></i>
+										</abbr>
+									{% elif invite.acceptance == 'A' %}
+									<abbr class="" title="(Accepted) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% else %}
+									<abbr class="" title="(Rejected) {{ invite.recipient_email }}">
+										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
+									<i class="remove-btn remove-invite icon-remove"></i></abbr>
+									{% endif %}
+									</li>
 								{% endfor %}
 							{% endif %}
 						</ul>
