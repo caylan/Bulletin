@@ -130,9 +130,7 @@ class PostViews(object):
         wait until a post or comment has been made, render and return it
         '''
         # first, comfirm authorized user
-        try:
-            request.user.membership_set.get(group__pk=grpid)
-        except:
+        if not request.user.is_authenticated():
             return HttpResponseForbidden("403 Forbidden")
 
         grpid = int(grpid)
