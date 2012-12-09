@@ -24,18 +24,11 @@ def _login_form(request, state=""):
                                              'form': RegistrationForm(), 'landing': True})
 
 def _render_inbox(request, user):
-    with notifications.lock(user.pk):
-        # Clear the list of new notifications, then grab them all from the
-        # database.  blocking is false to avoid deadlock.  The lock is to
-        # prevent updates from being sent to the DB while we're grabbing items
-        # from the DB.  This prevents double posting and dropped updates
-        # (hopefully).
-        notifications.get(user.pk, blocking=False)
-        # Chain and sort the notifications by date.
-        notif_list = list(chain(
-            user.postnotification_set.all(),
-            user.commentnotification_set.all(),
-        ))
+    # Chain and sort the notifications by date.
+    notif_list = list(chain(
+        user.postnotification_set.all(),
+        user.commentnotification_set.all(),
+    ))
     notif_list.sort(key=lambda notif: notif.date_created, reverse=True)
     return render(request, 'inbox.html', {'user': user,
                                           'notifications': notif_list})

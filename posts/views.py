@@ -56,9 +56,7 @@ class PostViews(object):
                 notification.content = notif_member
                 notification.user = user
                 notification.save()
-                with notifications.lock(user.pk):
-                    print "WROTE A NOTIFICATION FOR", user.first_name
-                    notifications.put(notification)
+                notifications.set(notification)
 
     def comment(self, request, postid):
         '''
@@ -113,13 +111,13 @@ class PostViews(object):
                 #          has a group with matching group id (pk)
                 post.author = post_author
                 post.save()
+                # is anybody listening?
+                # if so, send new post to everyone and reset
+                grpid = int(grpid)
 
                 # Send notifications.
                 self._send_notifications(
                     request.user.pk, grpid, PostNotification, post)
-                # is anybody listening?
-                # if so, send new post to everyone and reset
-                grpid = int(grpid)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(post)
                     # self.group_event = None

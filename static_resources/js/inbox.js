@@ -5,26 +5,24 @@
  * based on example from
  * http://techoctave.com/c7/posts/60-simple-long-polling-example-with-javascript-and-jquery
  */
+function update_notifications() {
+    $.ajax({url: "update/", success: function(data) {
+    	$data = $(data);
+    	if ($data.hasClass("notification")) {
+            // returned data is a proper notification.
+            var $newNotif = $data
+            var $noNotif = $('.alert.alert-warning');
+            $newNotif.hide();
+            $newNotif.find(".avatar").show();
+            $newNotif.find(".timeago").timeago().show();
 
-// Pulls a list of notifications from the server and then inserts them into the inbox
-function update() {
-    $.ajax({url: "update/", success: function(data) { // Ajax retrieval
-		$(data).find('li').each(function() { // For each notification in the list
-			if ($(this).hasClass("notification")) {
-				// returned data is a proper notification.
-				var $noNotif = $('.alert.alert-warning');
-				$(this).hide();
-				$(this).find(".avatar").show();
-				$(this).find(".timeago").timeago().show();
-	
-				// Remove the "no updates" notification.
-				removeNoUpdateWarning($noNotif);
-				$("#notifications").prepend(this);
-				$(this).fadeIn();
-				animateResize($(this).find(".avatar"), $(this).height());
-			}
-		});
-    }, dataType: "html", complete: update, timeout: 25000});
+            // Remove the "no updates" notification.
+            removeNoUpdateWarning($noNotif);
+            $("#notifications").prepend($newNotif);
+            $newNotif.fadeIn();
+            animateResize($newNotif.find(".avatar"), $($newNotif).height());
+        }
+    }, dataType: "html", complete: update_notifications, timeout: 25000});
 }
 
 function removeNoUpdateWarning($noNotif) {
@@ -119,8 +117,9 @@ $(document).ready(function() {
 	    });
 	});	
 	$('abbr.timeago').timeago().fadeIn();
-  update();
+  update_notifications();
 	initShowNotifications();
+	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
 
 $(window).load(function() {
