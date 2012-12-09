@@ -17,11 +17,13 @@ Bulletin is being developed by
 ## Directories
 
 * /bulletin_project - project settings
-* /bulletin - app directory
-* /prototype - app prototype directory
-* /templates - template files
+* /groups - model/view/form for groups
+* /posts - model/view/form for posts and comments
+* /registration - all the registration goodies including email
+* /session - session stuff
 * /static_resources - anything that python doesn't dynamically generate, e.g. css, js, img
   * when server is ran, you can find these files at /static/
+* /templates - template files
 
 ## Virtual environment setup
 *Pretty much how Heroku says to do it.* (for reference - https://devcenter.heroku.com/articles/django)
