@@ -1,6 +1,6 @@
 # Django settings for bulletin project.
 import os
-DEBUG = True
+DEBUG = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -158,7 +158,7 @@ INSTALLED_APPS = (
     'django_nose',
     'gunicorn', # The server!
     'groups',   # General user and account management.
-    'posts',   # Inter-user communication (handles posts/invites/comments) 
+    'posts',   # Inter-user communication (handles posts/invites/comments)
     'session',
     'registration',
     'south',
