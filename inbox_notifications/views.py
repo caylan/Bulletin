@@ -29,7 +29,7 @@ class InboxNotifications(object):
         '''
         Sets the event for the notification.
         '''
-        user_id = notification.user.pk
+        user_id = notification.user.id
         if user_id in self.notifications:
             self.notifications[user_id].set(notification)
             del self.notifications[user_id]
@@ -48,7 +48,7 @@ notifications = InboxNotifications()
 
 @login_required
 def update(request):
-    update_content = notifications.get(request.user.pk)
+    update_content = notifications.get(request.user.id)
     context = {'notification': update_content}
 
     '''

@@ -49,9 +49,9 @@ class PostViews(object):
         -- notif_member: the member to be placed in the notif_type when being
                          sent to the users.
         '''
-        group = Group.objects.all().get(pk=grpid)
+        group = Group.objects.all().get(id=grpid)
         for user in group.members.all():
-            if user.pk != ignore_id:
+            if user.id != ignore_id:
                 notification = notif_type()
                 notification.content = notif_member
                 notification.user = user
@@ -86,7 +86,7 @@ class PostViews(object):
                 grpid = int(comment_post.author.group.pk)
                 # Send notifications.
                 self._send_notifications(
-                    request.user.pk, grpid, CommentNotification, comment)
+                    request.user.id, grpid, CommentNotification, comment)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(comment)
                     # self.group_event = None
@@ -117,7 +117,7 @@ class PostViews(object):
 
                 # Send notifications.
                 self._send_notifications(
-                    request.user.pk, grpid, PostNotification, post)
+                    request.user.id, grpid, PostNotification, post)
                 if grpid in self.group_event:
                     self.group_event[grpid].set(post)
                     # self.group_event = None
@@ -129,10 +129,6 @@ class PostViews(object):
         '''
         wait until a post or comment has been made, render and return it
         '''
-        # first, comfirm authorized user
-        if not request.user.is_authenticated():
-            return HttpResponseForbidden("403 Forbidden")
-
         grpid = int(grpid)
         if grpid not in self.group_event:
             self.group_event[grpid] = gevent.AsyncResult()
