@@ -323,6 +323,10 @@ $(document).ready(function() {
 	initShowComments();
 	initShowPosts();
 	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
+	if ($('#invites').children().length > 0) {
+		$('#invite-header').fadeIn();
+		$('#invite-header').css('text-align', 'center');
+	}
 });
 
 $(window).load(function() {

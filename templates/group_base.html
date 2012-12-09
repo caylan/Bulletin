@@ -64,19 +64,20 @@
 						</div>
 						{% if is_admin %}
 						{% if invites %}
-							<span class="nav-header">Pending Invites</span>	
+							
 						{% endif %}
+						<div id='invite-header' class="nav-header hide">Pending Invites</div>
 						<ul id="invites" class="nav nav-list clearfix">
 							{% if invites %}
 								{% for invite in invites %}
-									<li>
 									{% if invite.acceptance == 'P' %}
+										<li>
 										<abbr class="" title="{{ invite.recipient_email }}">
 										<img memid="{{ invite.pk }}" class="member-avatar pull-left clear-fix pending" src="{{ invite.recipient_email|gravatar:'40' }}" alt="member's gravatar" />
 										<i class="remove-btn remove-invite icon-remove"></i>
 										</abbr>
+										</li>
 									{% endif %}
-									</li>
 								{% endfor %}
 							{% endif %}
 						</ul>

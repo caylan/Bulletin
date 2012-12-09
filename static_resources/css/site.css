@@ -373,6 +373,11 @@ abbr {
 	display: block;
 }
 
+#invite-header {
+	margin: auto;
+	text-align: center;
+}
+
 .comments .comment:first-child {
    padding-top: 2px;
 }
