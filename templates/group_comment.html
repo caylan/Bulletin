@@ -1,5 +1,6 @@
 {% load gravatar %}
 <li class="media comment" post="{{ comment.post.pk }}">
+    <a id="comment{{ comment.pk }}"></a>
     <div class="comment-avatar-container pull-left media-object">
         <img class="comment-avatar pull-left media-object"
              src="{{ comment.author.user.email|gravatar:'24' }}"

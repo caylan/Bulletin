@@ -158,7 +158,8 @@ INSTALLED_APPS = (
     'django_nose',
     'gunicorn', # The server!
     'groups',   # General user and account management.
-    'posts',   # Inter-user communication (handles posts/invites/comments)
+    'posts',   # Inter-user communication (handles posts/invites/comments) 
+    'inbox_notifications',  # modules pertaining to the inbox notifications.
     'session',
     'registration',
     'south',
