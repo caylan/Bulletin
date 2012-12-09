@@ -356,6 +356,7 @@ $(document).ready(function() {
 	lastCommentTimestamp();
 	initShowComments();
 	initShowPosts();
+	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
 
 $(window).load(function() {

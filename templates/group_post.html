@@ -24,7 +24,7 @@
             "></div>
             {% if post.comment_set.all %}
             {% if post.comment_set.all|length > 7 %}
-                <a href="javascript:void(0);" class="comment show-comments"><i class="icon-comments-alt"></i> Show all comments
+                <a href="javascript:void(0);" class="comment show-comments"><i class="icon-comment"></i> Show all comments
                 </a>
                 <div class="hide hidden-comments">
                 {% for comment in post.comment_set.all %}
