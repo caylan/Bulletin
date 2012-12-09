@@ -132,13 +132,13 @@ class PostViews(object):
         grpid = int(grpid)
         if grpid not in self.group_event:
             self.group_event[grpid] = gevent.AsyncResult()
-        update_content = self.group_event[grpid].get()
+        update_content = self.group_event[grpid].get(timeout=20)
         if type(update_content) is Comment:
             return render(request, 'group_comment.html', {'comment': update_content})
         elif type(update_content) is Post:
             return render(request, 'group_post.html', {'post': update_content})
         else:
-            # i have no idea how this happened
+            #  We got here likely because of a timeout.
             return HttpResponseServerError("unhandled return type: {0}".format(type(update_content)))
 
 # called by the urlpatterns
