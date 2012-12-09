@@ -9,7 +9,7 @@ from django.http import (
 from django.shortcuts import render
 from forms import CommentForm, PostForm
 from models import Comment, Post
-from groups.models import Group
+from groups.models import Group, Membership
 from gevent import event as gevent
 import time
 
@@ -95,6 +95,12 @@ class PostViews(object):
         '''
         wait until a post or comment has been made, render and return it
         '''
+        # first, comfirm authorized user
+        try:
+            request.user.membership_set.get(group__pk=grpid)
+        except:
+            return HttpResponseForbidden("403 Forbidden")
+
         grpid = int(grpid)
         if grpid not in self.group_event:
             self.group_event[grpid] = gevent.AsyncResult()
