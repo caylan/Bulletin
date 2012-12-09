@@ -38,6 +38,26 @@ class InboxNotifications(object):
         self.notifications[user_id].put(notification)
 
     def lock(self, uid):
+        '''
+        Returns a lock to the queue corresponding to the uid.  If one would like
+        to prevent deadlock whilst reading from the queue, make sure to disable
+        blocking while reading from the queue.
+
+        In order to use the lock, one must create either a) a sandwich of lock
+        acquisition and release, or b) a with statement using the lock.
+
+        ex:
+
+        obj.lock(123).acquire()
+        do_work()
+        obj.lock(123).release()
+
+        #  ^ this is ugly, though, so the following is preferred.
+
+        with obj.lock(123):
+            do_work()
+        # now the lock has been released!
+        '''
         self._set_queue(uid)
         return self.locks[uid]
 
