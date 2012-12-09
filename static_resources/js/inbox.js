@@ -117,7 +117,7 @@ $(document).ready(function() {
 	    });
 	});	
 	$('abbr.timeago').timeago().fadeIn();
-  update_notifications();
+	update_notifications();
 	initShowNotifications();
 	$('.hero-unit').css('min-height', $('#left-column').height() - 26);
 });
