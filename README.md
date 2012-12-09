@@ -47,6 +47,14 @@ file.
 
         pip install django psycopg2 dj-database-url   # for example.
 
+If this is the first time running the virtual environment - you need to set up the database
+
+        python manage.py syncdb
+
+Then run the server
+
+        python manage.py runserver
+
 After installing any new apps, always make sure to update the new requirements:
 
         pip freeze > requirements.txt
