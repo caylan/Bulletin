@@ -9,7 +9,7 @@
 // Pulls a list of notifications from the server and then inserts them into the inbox
 function update() {
     $.ajax({url: "update/", success: function(data) { // Ajax retrieval
-		$.each(data, function() { // For each notification in the list
+		$(data).find('li').each(function() { // For each notification in the list
 			$data = $(this);
 			if ($data.hasClass("notification")) {
 				// returned data is a proper notification.
