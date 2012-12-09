@@ -53,10 +53,6 @@
 								<li class='member-container pull-left {% if is_admin and member == user %} current-user {% endif %}'>
 									<abbr class="" title="{{ member.get_full_name }} ({{ member.get_full_name }})">
 										<img memid="{{ member.pk }}" class="member-avatar pull-left clear-fix" src="{{ member.email|gravatar:'42' }}" alt="member's gravatar" /></abbr>
-									<!--<div class="member-name" memid="{{ member.pk }}">
-										<img class="pull-left clear-fix" src="{{ member.email|gravatar:'30' }}" alt="member's gravatar" />
-										{{ member.get_full_name }}
-									</div>-->
 									{% if is_admin and member != user %}
 									<i class="remove-btn remove-user icon-trash"></i></a>
 									{% endif %}
