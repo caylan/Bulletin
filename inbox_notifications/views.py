@@ -90,7 +90,7 @@ def update(request):
     # than deadlock (this happens because a lock must be acquired to put an
     # update when running a post, but this could potentially block).
     update_content = notifications.get(request.user.pk)
-    context = {'notifications': update_content[0]}
+    context = {'notifications': update_content}
 
     '''
     Make the grand assumption that this will always be a proper list of
@@ -98,4 +98,4 @@ def update(request):
 
     TODO: Perhaps enforce this some way...
     '''
-    return render(request, 'inbox_notification.html', context)
+    return render(request, 'inbox_notification_list.html', context)
