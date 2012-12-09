@@ -30,7 +30,7 @@ class InboxNotifications(object):
         Sets the event for the notification.
         '''
         uid = notification.user.id
-        if user in self.notifications:
+        if uid in self.notifications:
             self.notifications[uid].set(notification)
             del self.notifications[uid]
 

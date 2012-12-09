@@ -85,6 +85,7 @@ class PostViews(object):
                 # if so, send new comment to everyone and reset
                 grpid = int(comment_post.author.group.pk)
                 # Send notifications.
+                uid = request.user.id
                 self._send_notifications(
                     uid, grpid, CommentNotification, comment)
                 if grpid in self.group_event:
